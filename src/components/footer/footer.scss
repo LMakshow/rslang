@@ -1,0 +1,34 @@
+@import '../styles/base/constants';
+
+.footer {
+  background-color: $color-additional;
+  padding: 10px $width-max-padding;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.github {
+  display: flex;
+  align-items: center;
+
+  &__image,
+  &__link:not(:last-child) {
+    margin-right: $indent-basic;
+  }
+}
+
+.rs-school {
+  display: flex;
+  align-items: center;
+
+  &__text {
+    margin-right: $indent-basic;
+  }
+
+  &__image {
+    fill: currentColor;
+  }
+}

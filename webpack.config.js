@@ -5,7 +5,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const baseConfig = {
   entry: [path.resolve(__dirname, './src/index.ts')],
@@ -24,7 +24,7 @@ const baseConfig = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader'],
       },
       {
         test: /\.tsx?$/,
@@ -35,8 +35,7 @@ const baseConfig = {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: 'asset/resource',
         generator: {
-          publicPath: 'assets/images/',
-          outputPath: 'assets/images/',
+          filename: 'assets/images/[name][ext]',
         },
       },
     ],
@@ -54,14 +53,14 @@ const baseConfig = {
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, './src/assets/'),
-    //       to: path.resolve(__dirname, './dist/assets/'),
-    //     },
-    //   ],
-    // }),
+    new CopyPlugin({
+       patterns: [
+         {
+           from: path.resolve(__dirname, './src/assets/'),
+          to: path.resolve(__dirname, './dist/assets/'),
+         },
+       ],
+     }),
   ],
   experiments: {
     topLevelAwait: true,

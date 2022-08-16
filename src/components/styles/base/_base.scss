@@ -1,0 +1,25 @@
+@import 'constants';
+
+@import url('https://fonts.googleapis.com/css2?family=Arimo&family=Balsamiq+Sans:wght@400;700&display=swap');
+
+html {
+  font-size: 10px;
+  font-family: $font-family-basic;
+}
+
+.wrapper {
+  max-width: $width-max;
+  margin: 0 auto;
+}
+
+.heading {
+  font-family: $font-family-additional;
+  @include font(normal, 700, 8rem, 100%);
+}
+
+.text {
+  @include font(normal, 400, 2.6rem, 3rem);
+}
+
+
+

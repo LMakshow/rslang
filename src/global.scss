@@ -1,1 +1,10 @@
-@import './components/sass/_reset';
+@import 'components/styles/base/reset';
+@import 'components/styles/base/constants';
+@import 'components/styles/base/base';
+
+@import 'components/styles/components/buttons';
+@import 'components/styles/components/links';
+
+@import 'components/header/header';
+@import 'components/footer/footer';
+@import 'components/pages/main-page/main-page';
