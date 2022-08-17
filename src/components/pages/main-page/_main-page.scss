@@ -1,0 +1,90 @@
+@import '../../styles/base/constants';
+
+.main {
+  z-index: 0;
+
+  &__wrapper {
+    background: url("../../../assets/images/main-page/background.jpg") no-repeat;
+    padding: 84px 180px 71px 180px;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 10px solid $color-basic;
+    border-top: 10px solid $color-basic;
+  }
+
+  &__heading {
+    color: $color-basic;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 0 10px 70px 10px;
+  }
+
+  &__content {
+    max-width: 640px;
+  }
+
+  &__image {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    position: relative;
+  }
+
+  &__dog {
+    width: 625px;
+    filter: drop-shadow(0 11.2338px 12.1699px rgba(0, 0, 0, 0.72));
+  }
+
+  &__items {
+    padding-bottom: 70px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    position: relative;
+
+    color: $color-basic;
+    @include font(normal, 400, 4rem, 100%);
+
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+
+    &:before {
+      content: url("../../../assets/images/icons/paw.svg");
+      margin-right: 20px;
+    }
+
+  }
+
+  &__buttons {
+    display: flex;
+
+    .button {
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
+    }
+  }
+
+}
+
+.speech {
+  padding: 38px 60px 58px 60px;
+  width: 370px;
+
+  background: url("../../../assets/images/main-page/speak-window.svg") center / contain no-repeat;
+  position: absolute;
+  bottom: 350px;
+  right: 250px;
+  z-index: 2;
+
+  &__text {
+    color: $color-basic;
+    font-family: $font-family-additional;
+    @include font(normal, 400, 3rem, 110%);
+    text-align: center;
+  }
+}

@@ -1,0 +1,29 @@
+$width-max: 1920px;
+
+$width-max-padding: 150px;
+$indent-basic: 40px;
+
+$font-family-basic: 'Arimo', ‘Arial’, sans-serif;
+$font-family-additional: 'Balsamiq Sans', ‘Comic Sans’, cursive;
+
+
+$color-basic: #000000;
+$color-additional: #FFFFFF;
+
+$color-button-basic-hover: #DDF3FF;
+$color-button-basic-active: #ADE2FF;
+
+$color-button-additional: #0056D8;
+$color-button-additional-hover: #0095E9;
+$color-button-additional-active: #00B1E9;
+
+$color-link-basic-active: #4F0000;
+
+
+
+@mixin font($style, $weight, $size, $height) {
+  font-style: $style;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $height;
+}
