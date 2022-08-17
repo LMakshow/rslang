@@ -1,22 +1,27 @@
 @import '../../styles/base/constants';
 
 .main {
-  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 0;
   background: url("../../../assets/images/main-page/background.jpg") no-repeat;
   background-size: cover;
-  height: calc(100vh - 82px - 82.5px);
+  min-height: calc(100vh - 82px - 82.5px);
 
   &__wrapper {
     display: flex;
     align-items: center;
     height: 100%;
+    flex: 0 1 100%;
+    justify-content: center;
   }
 
   &__container {
     display: flex;
     justify-content: space-around;
     flex: 0 0 87%;
-    margin: 0 auto;
   }
 
   &__heading {
