@@ -1,15 +1,22 @@
 @import '../../styles/base/constants';
 
 .main {
-  z-index: 0;
+  z-index: -1;
+  background: url("../../../assets/images/main-page/background.jpg") no-repeat;
+  background-size: cover;
+  height: calc(100vh - 82px - 82.5px);
 
   &__wrapper {
-    background: url("../../../assets/images/main-page/background.jpg") no-repeat;
-    padding: 84px 180px 71px 180px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__container {
     display: flex;
     justify-content: space-around;
-    border-bottom: 10px solid $color-basic;
-    border-top: 10px solid $color-basic;
+    flex: 0 0 87%;
+    margin: 0 auto;
   }
 
   &__heading {
