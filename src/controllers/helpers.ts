@@ -1,4 +1,9 @@
-const renderElement = (tag: string, templateElement: string, container: HTMLElement, classStyle?: string) => {
+const renderElement = (
+  tag: string,
+  templateElement: string,
+  container: HTMLElement,
+  classStyle?: string,
+) => {
   const element: HTMLElement = document.createElement(tag) as HTMLElement;
 
   if (classStyle) {
@@ -7,7 +12,6 @@ const renderElement = (tag: string, templateElement: string, container: HTMLElem
 
   element.innerHTML = templateElement;
   container.append(element);
-}
+};
 
 export default renderElement;
-

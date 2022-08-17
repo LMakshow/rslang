@@ -9,7 +9,7 @@ const templateFooter: string = `
     <span>adypr</span>
   </a>
   <a class="github__link text link-basic" href="https://github.com/rgvder" target="_blank">
-    <span>bella rgvder</span>
+    <span>rgvder</span>
   </a>
 </div>
   <div class="rs-school">
