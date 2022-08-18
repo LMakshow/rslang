@@ -7,6 +7,12 @@ html {
   font-family: $font-family-basic;
 }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .wrapper {
   max-width: $width-max;
   margin: 0 auto;
@@ -18,7 +24,7 @@ html {
 }
 
 .text {
-  @include font(normal, 400, 2.6rem, 3rem);
+  @include font(normal, 400, 2.2rem, 3rem);
 }
 
 
