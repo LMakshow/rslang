@@ -8,7 +8,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const baseConfig = {
-  entry: [path.resolve(__dirname, './src/index.ts')],
+  entry: {
+    main: [path.resolve(__dirname, './src/index.ts')],
+    textbook: [path.resolve(__dirname, './src/components/pages/textbook/textbook.ts')],
+  },
   mode: 'development',
   devServer: {
     static: {
@@ -44,7 +47,7 @@ const baseConfig = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, './dist'),
     clean: true,
   },
@@ -52,15 +55,21 @@ const baseConfig = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
+      chunks: ['main'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/components/pages/textbook/textbook.html'),
+      filename: 'textbook.html',
+      chunks: ['textbook'],
     }),
     new CopyPlugin({
-       patterns: [
-         {
-           from: path.resolve(__dirname, './src/assets/'),
+      patterns: [
+        {
+          from: path.resolve(__dirname, './src/assets/'),
           to: path.resolve(__dirname, './dist/assets/'),
-         },
-       ],
-     }),
+        },
+      ],
+    }),
   ],
   experiments: {
     topLevelAwait: true,

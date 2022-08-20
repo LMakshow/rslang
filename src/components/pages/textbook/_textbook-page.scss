@@ -1,3 +1,5 @@
+@import '../../../global.scss';
+
 .textbook {
     background: url("../../../assets/images/textbook/cloud-right.png") right 112%, url("../../../assets/images/textbook/cloud-left.png") left 112%, url("../../../assets/images/textbook/textbook-background.jpg") center;
     background-repeat: no-repeat;
@@ -42,6 +44,7 @@
 
 &__content {
     grid-area: categories;
+    padding-left: 50px;
 }
 
 &__list {
