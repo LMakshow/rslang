@@ -2,9 +2,11 @@ const templateMain: string = `
   <div class="main__wrapper wrapper">
     <div class="main__container">
       <div class="main__content">
-        <h1 class="main__heading heading">
-          Учи английский просто и с умом!
-        </h1>
+        <div class="main__content_heading">
+          <h1 class="main__heading heading">
+            Учи английский просто и с умом!
+          </h1>
+        </div>
         <ul class="main__items">
           <li class="main__item">3600 слов для любого уровня</li>
           <li class="main__item">Мини-игры для запоминания</li>
