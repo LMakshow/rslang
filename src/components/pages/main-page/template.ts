@@ -4,7 +4,7 @@ const templateMain: string = `
       <div class="main__content">
         <div class="main__content_heading">
           <h1 class="main__heading heading">
-            Учи английский просто и с умом!
+            Учи английский просто и&nbsp;с&nbsp;умом!
           </h1>
         </div>
         <ul class="main__items">
