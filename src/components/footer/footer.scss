@@ -22,7 +22,7 @@
     }
 
     @media (max-width: $width-mobile) {
-      justify-content: center;
+      justify-content: space-around;
       flex-basis: 89.1%;
       gap: 22px;
     }

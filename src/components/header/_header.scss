@@ -15,8 +15,10 @@
   }
 
   &__wrapper {
-    flex: 0 1 84.4%;
     display: flex;
+    gap: 30px;
+    max-width: 1620px;
+    width: 95%;
 
     @media (max-width: $width-desktop) {
       flex-basis: 97.2%;
@@ -101,6 +103,7 @@
   align-items: center;
   justify-content: space-between;
   flex: 0 1 73%;
+  gap: 40px;
 
   @media (max-width: $width-laptop) {
     flex-basis: 55.7%;
@@ -306,7 +309,3 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
-
-
-
-

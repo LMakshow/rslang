@@ -50,24 +50,23 @@
 
   &__content {
     display: flex;
-    flex: 0 1 38.4%;
     flex-direction: column;
     justify-content: space-between;
     min-height: 540px;
+    max-width: 640px;
+    gap: 20px;
 
     @media (max-width: $width-desktop) {
       max-width: 540px;
       min-height: 391px;
-      flex-basis: 45.5%;
     }
 
     @media (max-width: $width-laptop) {
-      flex-basis: 55%;
+      min-height: auto;
     }
 
     @media (max-width: $width-mobile) {
       align-items: center;
-      min-height: 454px;
     }
 
     &_heading {
@@ -158,7 +157,8 @@
     justify-content: space-between;
 
     @media (max-width: $width-mobile) {
-      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 22px;
     }
   }
