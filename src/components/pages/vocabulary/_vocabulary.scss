@@ -1,0 +1,231 @@
+.vocab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 0;
+  background: url("assets/images/vocabulary/background-A1.svg") center / cover no-repeat;
+  min-height: calc(100vh - 82px - 82.5px);
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex: 0 1 100%;
+    justify-content: center;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-around;
+    flex: 0 0 87%;
+  }
+}
+
+.vocab__container {
+  display: flex;
+}
+
+.a1 {
+  --color-main: #FCF1FC;
+  --color-btn: #F3DCFC;
+  --color-accent: #D189E9;
+  --color-dark: #58166E;
+  --color-dark-accent: #3A0E48;
+  --filter-btn: invert(87%) sepia(19%) saturate(262%) hue-rotate(233deg) brightness(98%) contrast(102%);
+  --filter-accent: invert(84%) sepia(32%) saturate(6419%) hue-rotate(218deg) brightness(95%) contrast(93%);
+  --filter-dark: invert(12%) sepia(57%) saturate(4414%) hue-rotate(277deg) brightness(85%) contrast(96%);
+  --filter-dark-accent: invert(13%) sepia(42%) saturate(2118%) hue-rotate(257deg) brightness(90%) contrast(109%);
+}
+
+.words-page {
+  width: 832px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.words-page__nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.words-page__return {
+  display: flex;
+  font-family: $font-family-additional;
+  @include font(normal, 400, 4rem, 110%);
+  filter: var(--filter-dark);
+  gap: 10px;
+
+  &:hover {
+    filter: var(--filter-dark-accent);
+    cursor: pointer;
+  }
+}
+
+.page-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-selector__btn {
+  position: relative;
+  width: 12px;
+  height: 22px;
+  box-sizing: content-box;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-dark);
+  background-color: $color-additional;
+
+  &.active {
+    border-width: 4px;
+    border-radius: 8px;
+  }
+
+  &.learned {
+    background-color: var(--color-btn);
+    background: url(assets/images/icons/checkmark.svg) center no-repeat;
+  }
+
+  &::after {
+    content: attr(data-page);
+    @include font(normal, 400, 1.8rem, 110%);
+    width: 30px;
+    bottom: 115%;
+    left: 50%;
+    margin-left: -15px;
+    background-color: var(--color-dark);
+    color: #fff;
+    text-align: center;
+    padding: 3px 0;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1;
+    display: none;
+  }
+
+  &:hover {
+    background-color: var(--color-accent);
+    cursor: pointer;
+
+    &::after {
+      display: inline-block;
+    }
+  }
+
+
+}
+
+.page-switch {
+  display: flex;
+  width: 165px;
+  justify-content: space-between;
+  font-family: $font-family-basic;
+  @include font(normal, 400, 2.2rem, 110%);
+}
+
+.page-switch__btn {
+  display: flex;
+  align-items: center;
+  filter: var(--filter-dark);
+
+  &:hover {
+    filter: var(--filter-dark-accent);
+    cursor: pointer;
+  }
+
+  &.left {
+    transform: rotate(180deg);
+  }
+
+  &.disabled {
+    filter: var(--filter-accent);
+    cursor: auto;
+  }
+}
+
+.word-list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 8px;
+  margin-top: 10px;
+}
+
+.word-list__card {
+  position: relative;
+  background: url(assets/images/vocabulary/word-card.svg) center / 95% no-repeat, var(--color-main);
+  width: 190px;
+  height: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  transition: all 0.3s;
+
+  &.active {
+    border: 2px solid var(--color-dark);
+  }
+
+  &.hard {
+    background-color: var(--color-accent);
+  }
+
+  &.learned {
+    background-color: $color-additional;
+    opacity: 0.7;
+
+    &::after {
+      content: " ";
+      position: absolute;
+      background: url(assets/images/icons/checkmark.svg) center/contain no-repeat;
+      width: 35px;
+      height: 35px;
+      bottom: 2px;
+      left: 5px;
+    }
+  }
+
+  &:hover {
+    border: 2px solid var(--color-dark);
+    cursor: pointer;
+    transform: scale(1.04);
+  }
+}
+
+.word-list__english-word {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  @include font(normal, 700, 2rem, 2.3rem);
+  height: 50%;
+}
+
+.word-list__russian-word {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  @include font(normal, 400, 1.6rem, 1.5rem);
+  height: 50%;
+  padding-bottom: 20px;
+}
+
+.words-page__games {
+  display: flex;
+  gap: 32px;
+  justify-content: flex-end;
+  background-image: url("./assets/images/vocabulary/Resleeng-A1.png");
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  padding-left: 110px;
+  margin-left: -110px;
+  margin-top: 16px;
+  padding-bottom: 32px;
+  padding-top: 16px;
+}
