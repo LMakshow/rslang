@@ -1,0 +1,117 @@
+.textbook {
+    background: url("../../../assets/images/textbook/cloud-right.png") right 112%, url("../../../assets/images/textbook/cloud-left.png") left 112%, url("../../../assets/images/textbook/textbook-background.jpg") center;
+    background-repeat: no-repeat;
+    background-size: 75vh auto, 75vh auto, cover;
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+&__wrapper {
+    max-width: 1440px;
+}
+
+&__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: "heading categories categories categories"
+                         "dog categories categories categories";
+    justify-content: center;
+    gap: 1.5vw;
+
+}
+
+&__heading {
+    @include font(normal, 700, 6rem, 6rem);
+    font-family: $font-family-additional;
+    grid-area: heading;
+    text-align: center;
+}
+
+
+&__image {
+   width: calc(22.8vh + 160px);
+  
+    display: block;
+    height: fit-content;
+    grid-area: dog;
+
+}
+
+&__content {
+    grid-area: categories;
+}
+
+&__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4rem;
+}
+
+&__item {
+    width: 270px;
+    height: 240px;
+    background-repeat: no-repeat;
+    transition: 0.2s ease;
+    background-size: contain;
+    background-position: center;
+
+    &:hover {
+        transform: rotate(-5deg) scale(1.04);
+    }
+
+
+    &-a1 {
+        background-image: url("../../../assets/images/textbook/category-a1.png");
+    }
+
+    &-a2 {
+        background-image: url("../../../assets/images/textbook/category-a2.png");
+    }
+
+    &-b1 {
+        background-image: url("../../../assets/images/textbook/category-b1.png");
+    }
+
+    &-b2 {
+        background-image: url("../../../assets/images/textbook/category-b2.png");
+    }
+    &-c1 {
+        background-image: url("../../../assets/images/textbook/category-c1.png");
+    }
+    &-c2 {
+        background-image: url("../../../assets/images/textbook/category-c2.png");
+    }
+
+}
+
+&__link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 30px 38px 45px;
+    
+}
+
+&__title {
+    @include font(normal, 400, 5.4rem, 5.4rem);
+    font-family: $font-family-additional;
+
+}
+&__subtitle {
+    @include font(normal, 700, 3rem, 3.5rem);
+    margin: 0 10px 10px;
+
+}
+
+&__description {
+    @include font(normal, 400, 1.8rem, 2rem);
+    text-align: center;
+
+}
+}

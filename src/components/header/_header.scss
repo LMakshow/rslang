@@ -12,6 +12,13 @@
 
     position: relative;
   }
+
+  &-nologo {
+    @extend .header;
+    .logo {
+      background-image: none;
+    }
+  }
 }
 
 .logo {
