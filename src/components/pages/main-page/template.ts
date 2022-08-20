@@ -13,7 +13,7 @@ const templateMain: string = `
           <li class="main__item">Статистика в доступной форме</li>
         </ul>
         <div class="main__buttons">
-          <a class="button button-additional button-start" href="#">Начать!</a>
+          <a class="button button-additional button-start" href="textbook.html">Начать!</a>
           <a class="button button-basic button-team" href="#">О команде</a>
         </div>
       </div>
