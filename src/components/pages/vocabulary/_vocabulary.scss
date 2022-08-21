@@ -4,7 +4,7 @@
   align-items: center;
 
   z-index: 0;
-  background: url("assets/images/vocabulary/background-A1.svg") center / cover no-repeat;
+  background: url("./assets/images/vocabulary/background-A1.svg") center / cover no-repeat;
   min-height: calc(100vh - 82px - 82.5px);
 
   &__wrapper {
@@ -90,7 +90,7 @@
 
   &.learned {
     background-color: var(--color-btn);
-    background: url(assets/images/icons/checkmark.svg) center no-repeat;
+    background: url("./assets/images/icons/checkmark.svg") center no-repeat;
   }
 
   &::after {
@@ -130,7 +130,8 @@
   @include font(normal, 400, 2.2rem, 110%);
 }
 
-.page-switch__btn {
+.page-switch__btn,
+.word-display__btn {
   display: flex;
   align-items: center;
   filter: var(--filter-dark);
@@ -160,7 +161,7 @@
 
 .word-list__card {
   position: relative;
-  background: url(assets/images/vocabulary/word-card.svg) center / 95% no-repeat, var(--color-main);
+  background: url("./assets/images/vocabulary/word-card.svg") center / 95% no-repeat, var(--color-main);
   width: 190px;
   height: 84px;
   display: flex;
@@ -184,7 +185,7 @@
     &::after {
       content: " ";
       position: absolute;
-      background: url(assets/images/icons/checkmark.svg) center/contain no-repeat;
+      background: url("./assets/images/icons/checkmark.svg") center/contain no-repeat;
       width: 35px;
       height: 35px;
       bottom: 2px;
@@ -228,4 +229,151 @@
   margin-top: 16px;
   padding-bottom: 32px;
   padding-top: 16px;
+}
+
+.words-page__audio-img,
+.words-page__sprint-img {
+  transition: 0.3s all;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.04);
+  }
+}
+
+.word-display {
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: center;
+  background: url("./assets/images/vocabulary/word-display-backgrnd-a1.svg") center/cover no-repeat;
+  border: solid 5px $color-basic;
+  padding: 16px 16px;
+}
+
+.word-display__text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.word-display__nav {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.word-display__en {
+  @include font(normal, 700, 3.4rem, auto);
+}
+
+.word-display__ru,
+.word-display__sound {
+  @include font(normal, 400, 2.2rem, auto);
+  text-align: center;
+}
+
+.word-display__transcription {
+  display: flex;
+  gap: 15px;
+  margin-top: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-listen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-btn);
+
+  &>.btn-listen__img {
+    filter: var(--filter-dark)
+  }
+
+  &:hover {
+    background-color: var(--color-accent);
+    cursor: pointer;
+  }
+}
+
+.word-display__picture {
+  width: 100%;
+  position: relative;
+}
+
+.btn-hard,
+.btn-learn {
+  display: flex;
+  position: absolute;
+  height: 32px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: var(--color-btn);
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--color-accent);
+    cursor: pointer;
+  }
+
+  &>.btn-hard__img,
+  &>.btn-learn__img {
+    filter: var(--filter-dark)
+  }
+}
+
+.btn-hard {
+  left: 8px;
+  top: 8px;
+  width: 130px;
+}
+
+.btn-learn {
+  right: 8px;
+  top: 8px;
+  width: 144px;
+}
+
+.btn-hard__txt,
+.btn-learn__txt {
+  padding-top: 4px;
+  font-family: $font-family-additional;
+  @include font(normal, 700, 1.6rem, 100%);
+  color: var(--color-dark);
+}
+
+.word-display__meaning,
+.word-display__example {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.word-display__meaning-head,
+.word-display__example-head {
+  font-family: $font-family-additional;
+  color: var(--color-dark);
+  @include font(normal, 700, 1.8rem, 2.1rem);
+  text-align: left;
+}
+
+.word-display__meaning-en,
+.word-display__example-en {
+  text-align: left;
+  @include font(normal, 400, 1.8rem, 2.1rem);
+}
+
+.word-display__meaning-ru,
+.word-display__example-ru {
+  text-align: right;
+  @include font(normal, 400, 1.8rem, 2.1rem);
 }
