@@ -6,7 +6,7 @@ const templateHeader: string = `
     </div>
     <div class="mobile-blackout"></div>
     <div class="logo">
-      <a href="index.html">
+      <a href="index.html" class="logo__url">
       <h2 class="logo__text">RS Lang</h2>
       </a>
     </div>

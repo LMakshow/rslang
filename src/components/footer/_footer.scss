@@ -5,6 +5,7 @@
   margin-top: auto;
   background-color: $color-additional;
   border-top: 10px solid $color-basic;
+  z-index: 1;
 
   &__wrapper {
     display: flex;

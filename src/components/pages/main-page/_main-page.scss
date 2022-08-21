@@ -9,7 +9,7 @@
   overflow: hidden;
 
   z-index: 0;
-  background: url("../../../assets/images/main-page/background.jpg") no-repeat;
+  background: url("./assets/images/main-page/background.jpg") no-repeat;
   background-size: cover;
   background-position-x: center;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
@@ -146,7 +146,7 @@
     }
 
     &:before {
-      content: url("../../../assets/images/icons/paw.svg");
+      content: url("./assets/images/icons/paw.svg");
       margin-right: 20px;
     }
 
@@ -169,7 +169,7 @@
   padding: 38px 60px 58px 60px;
   width: 370px;
 
-  background: url("../../../assets/images/main-page/speak-window.svg") center / contain no-repeat;
+  background: url("./assets/images/main-page/speak-window.svg") center / contain no-repeat;
   position: absolute;
   bottom: 89%;
   left: 2%;

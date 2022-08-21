@@ -18,12 +18,22 @@
   &__container {
     display: flex;
     justify-content: space-around;
-    flex: 0 0 87%;
-  }
-}
+    gap: 30px;
+    max-width: 1380px;
+    width: 97%;
+    margin: 24px auto;
 
-.vocab__container {
-  display: flex;
+
+    @media (max-width: $width-laptop) {
+      max-width: 1240px;
+      gap: 16px;
+    }
+
+    @media (max-width: $width-tablet) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 }
 
 .a1 {
@@ -41,8 +51,22 @@
 .words-page {
   width: 832px;
   display: flex;
+  flex-shrink: 0;
   justify-content: space-between;
   flex-direction: column;
+
+
+  @media (max-width: $width-desktop) {
+    width: 810px;
+  }
+
+  @media (max-width: $width-laptop) {
+    width: 630px;
+  }
+
+  @media (max-width: $width-mobile) {
+    width: 97%;
+  }
 }
 
 .words-page__nav {
@@ -51,6 +75,10 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+
+  @media (max-width: $width-mobile) {
+    justify-content: center;
+  }
 }
 
 .words-page__return {
@@ -60,16 +88,41 @@
   filter: var(--filter-dark);
   gap: 10px;
 
+  @media (max-width: $width-mobile) {
+    gap: 5px;
+    font-size: 2.7rem;
+    height: 16px;
+    line-height: 16px;
+  }
+
+  @media (max-width: 374px) {
+    display: none;
+  }
+
   &:hover {
     filter: var(--filter-dark-accent);
     cursor: pointer;
   }
 }
 
-.page-selector {
+
+.page-selector,
+.page-selector-block {
   display: flex;
   align-items: center;
   gap: 4px;
+
+  @media (max-width: $width-mobile) {
+    gap: 5px;
+  }
+}
+
+.page-selector-block {
+  @media (max-width: $width-mobile) {
+    width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 .page-selector__btn {
@@ -128,6 +181,14 @@
   justify-content: space-between;
   font-family: $font-family-basic;
   @include font(normal, 400, 2.2rem, 110%);
+
+  @media (max-width: $width-laptop) {
+    width: 150px;
+  }
+
+  @media (max-width: $width-laptop) {
+    display: none;
+  }
 }
 
 .page-switch__btn,
@@ -157,6 +218,15 @@
   column-gap: 24px;
   row-gap: 8px;
   margin-top: 10px;
+
+  @media (max-width: $width-desktop) {
+    column-gap: 16px;
+  }
+
+  @media (max-width: $width-mobile) {
+    justify-content: center;
+    column-gap: 12px;
+  }
 }
 
 .word-list__card {
@@ -169,6 +239,11 @@
   align-items: center;
   border-radius: 8px;
   transition: all 0.3s;
+
+  @media (max-width: $width-laptop) {
+    width: 144px;
+    height: 64px;
+  }
 
   &.active {
     border: 2px solid var(--color-dark);
@@ -206,6 +281,10 @@
   text-align: center;
   @include font(normal, 700, 2rem, 2.3rem);
   height: 50%;
+
+  @media (max-width: $width-laptop) {
+    font-size: 1.5rem;
+  }
 }
 
 .word-list__russian-word {
@@ -215,6 +294,10 @@
   @include font(normal, 400, 1.6rem, 1.5rem);
   height: 50%;
   padding-bottom: 20px;
+
+  @media (max-width: $width-laptop) {
+    font-size: 1.2rem;
+  }
 }
 
 .words-page__games {
@@ -226,14 +309,44 @@
   background-repeat: no-repeat;
   padding-left: 110px;
   margin-left: -110px;
-  margin-top: 16px;
-  padding-bottom: 32px;
-  padding-top: 16px;
+  margin-top: 8px;
+  padding-top: 24px;
+  padding-bottom: 92px;
+  margin-bottom: -68px;
+
+
+  @media (max-width: $width-desktop) {
+    background-size: 290px;
+  }
+
+  @media (max-width: $width-laptop) {
+    gap: 16px;
+    background-size: 268px;
+    padding-top: 16px;
+  }
+
+  @media (max-width: $width-mobile) {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 16px;
+    width: 460px;
+    align-self: center;
+    padding-left: 160px;
+    margin-left: -160px;
+  }
 }
 
 .words-page__audio-img,
 .words-page__sprint-img {
   transition: 0.3s all;
+
+  @media (max-width: $width-laptop) {
+    width: 220px;
+  }
+
+  @media (max-width: $width-laptop) {
+    width: 178px;
+  }
 
   &:hover {
     cursor: pointer;
@@ -245,18 +358,67 @@
   display: flex;
   flex-direction: column;
   width: 430px;
+  justify-content: flex-start;
+
+  @media (max-width: $width-desktop) {
+    width: 320px;
+  }
+
+  @media (max-width: $width-tablet) {
+    width: 730px;
+    order: -1;
+  }
+
+  @media (max-width: $width-mobile) {
+    width: 90%;
+    min-width: 320px;
+  }
+}
+
+.word-display__box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   gap: 24px;
   justify-content: space-between;
   align-items: center;
   background: url("./assets/images/vocabulary/word-display-backgrnd-a1.svg") center/cover no-repeat;
   border: solid 5px $color-basic;
   padding: 16px 16px;
+
+  @media (max-width: $width-desktop) {
+    gap: 8px;
+  }
+
+  @media (max-width: $width-desktop) {
+    padding: 8px 8px;
+  }
+
+  @media (max-width: $width-tablet) {
+    padding: 10px 5px;
+    flex-wrap: wrap;
+    height: 350px;
+  }
+
+  @media (max-width: $width-mobile) {
+    padding: 8px 8px;
+    flex-wrap: nowrap;
+    height: auto;
+  }
 }
 
 .word-display__text {
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  @media (max-width: $width-tablet) {
+    width: 290px;
+  }
+
+  @media (max-width: $width-mobile) {
+    width: 100%;
+  }
 }
 
 .word-display__nav {
@@ -291,6 +453,7 @@
   height: 40px;
   border-radius: 50%;
   background-color: var(--color-btn);
+  transition: all 0.2s;
 
   &>.btn-listen__img {
     filter: var(--filter-dark)
@@ -303,8 +466,22 @@
 }
 
 .word-display__picture {
-  width: 100%;
   position: relative;
+  margin: 0 -4px;
+
+  @media (max-width: $width-tablet) {
+    order: 1;
+    margin: auto;
+  }
+
+  @media (max-width: $width-mobile) {
+    order: 0;
+    margin: 0 -4px;
+  }
+}
+
+.word-display__picture-img {
+  width: 100%;
 }
 
 .btn-hard,
@@ -356,6 +533,14 @@
   flex-direction: column;
   gap: 8px;
   width: 100%;
+
+  @media (max-width: $width-tablet) {
+    width: 290px;
+  }
+
+  @media (max-width: $width-mobile) {
+    width: 100%;
+  }
 }
 
 .word-display__meaning-head,
@@ -366,14 +551,28 @@
   text-align: left;
 }
 
+.word-display__meaning-head {
+  @media (max-width: $width-desktop) {
+    display: none;
+  }
+}
+
 .word-display__meaning-en,
 .word-display__example-en {
   text-align: left;
   @include font(normal, 400, 1.8rem, 2.1rem);
+
+  @media (max-width: $width-desktop) {
+    font-size: 1.6rem;
+  }
 }
 
 .word-display__meaning-ru,
 .word-display__example-ru {
   text-align: right;
   @include font(normal, 400, 1.8rem, 2.1rem);
+
+  @media (max-width: $width-desktop) {
+    font-size: 1.6rem;
+  }
 }
