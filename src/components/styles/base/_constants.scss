@@ -1,10 +1,16 @@
 $width-max: 1920px;
+$width-desktop: 1366px;
+$width-laptop: 1160px;
+$width-tablet: 1023px;
+$width-mobile: 700px;
 
-$width-max-padding: 150px;
 $indent-basic: 40px;
 
-$font-family-basic: 'Arimo', ‘Arial’, sans-serif;
-$font-family-additional: 'Balsamiq Sans', ‘Comic Sans’, cursive;
+$header-height: 82px;
+$footer-height: 82.5px;
+
+$font-family-basic: 'Arimo', 'Arial', sans-serif;
+$font-family-additional: 'Balsamiq Sans', 'Comic Sans', cursive;
 
 
 $color-basic: #000000;
@@ -16,6 +22,7 @@ $color-button-basic-active: #ADE2FF;
 $color-button-additional: #0056D8;
 $color-button-additional-hover: #0095E9;
 $color-button-additional-active: #00B1E9;
+$color-mobile-menu: #ADE2FF;
 
 $color-link-basic-active: #4F0000;
 

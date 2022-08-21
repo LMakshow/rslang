@@ -3,6 +3,11 @@
 .link-basic {
     color: $color-basic;
     transition: color .3s linear;
+
+  svg {
+    fill: currentColor;
+  }
+
   span {
     position: relative;
 

@@ -21,10 +21,27 @@ body {
 .heading {
   font-family: $font-family-additional;
   @include font(normal, 700, 8rem, 100%);
+
+  @media (max-width: $width-desktop) {
+    font-size: 6rem;
+  }
+
+  @media (max-width: $width-mobile) {
+    font-size: 3.4rem;
+  }
 }
 
 .text {
   @include font(normal, 400, 2.2rem, 3rem);
+
+  @media (max-width: $width-mobile) {
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+  }
+}
+
+.hidden {
+  overflow: hidden;
 }
 
 

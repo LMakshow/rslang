@@ -11,6 +11,10 @@
   transition: box-shadow .3s linear,
               background-color .3s linear;
 
+  @media (max-width: $width-desktop) {
+    width: 250px;
+  }
+
   &:active {
     box-shadow: 0 0 14px rgba(0, 0, 0, 0.25);
   }
