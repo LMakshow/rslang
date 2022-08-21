@@ -46,3 +46,9 @@
     background-color: $color-button-additional-active;
   }
 }
+
+.button-transparent {
+  @include font(normal, 700, 1.8rem, 100%);
+  color: $color-basic;
+  background: inherit;
+}

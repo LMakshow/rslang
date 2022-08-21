@@ -2,11 +2,11 @@
   box-sizing: border-box;
 }
 
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
+input {
   -webkit-appearance: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
 
 body {
@@ -15,14 +15,15 @@ body {
   min-height: 100%;
 }
 
-button {
-  margin: 0;
-  padding: 0;
-}
-
 textarea:focus,
 input:focus {
   outline: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: inherit;
 }
 
 h1,
@@ -30,7 +31,9 @@ h2,
 h3,
 p,
 ul,
-ol {
+ol,
+button,
+input {
   margin: 0;
   padding: 0;
 }
