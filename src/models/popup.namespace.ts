@@ -10,5 +10,5 @@ export namespace Popup {
   export const templateMap: Record<Type, string> = {
     [Type.Entrance]: templatePopupEntrance,
     [Type.Registration]: templatePopupRegistration,
-  }
+  };
 }

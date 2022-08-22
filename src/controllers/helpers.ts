@@ -11,7 +11,7 @@ const renderElement = (
   templateElement: string,
   container: HTMLElement,
   classStyle?: string | string[],
-  isAfter?: boolean
+  isAfter?: boolean,
 ) => {
   const element: HTMLElement = document.createElement(tag) as HTMLElement;
 
@@ -25,7 +25,11 @@ const renderElement = (
 
   element.innerHTML = templateElement;
 
-  isAfter ? container.after(element) : container.append(element);
+  if (isAfter) {
+    container.after(element);
+  } else {
+    container.append(element);
+  }
 };
 
 export default renderElement;
