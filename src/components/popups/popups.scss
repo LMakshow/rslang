@@ -16,6 +16,19 @@
   opacity: 0;
   transition: opacity .3s linear;
   pointer-events: none;
+
+  @media (max-height: 566px) {
+    overflow-y: auto;
+    align-items: flex-start;
+  }
+
+  @media (max-width: $width-mobile) {
+    @media (max-height: 714px) {
+      padding-top: $header-height;
+      overflow-y: auto;
+      align-items: flex-start;
+    }
+  }
 }
 
 .popup-overlay-active {
@@ -34,15 +47,18 @@
 
   @media (max-width: $width-tablet){
     width: 637px;
-    height: 465px;
+    min-height: 513px;
   }
 
   @media (max-width: $width-mobile) {
-    height: 86.1%;
+    height: 714px;
+    width: 90%;
+  }
+
+  @media (max-width: 400px) {
+    width: 100%;
     border-left: 0;
     border-right: 0;
-    width: 100%;
-    max-height: 714px;
   }
 
   &__wrapper {
@@ -53,7 +69,7 @@
     align-items: center;
 
     border: 6px solid $color-basic;
-    background-position-x: center;
+    background-position: center;
     background-repeat: no-repeat;
 
     @media (max-width: $width-mobile){
@@ -62,9 +78,12 @@
 
     @media (max-width: $width-mobile) {
       overflow: hidden;
+      background-size: cover;
+    }
+
+    @media (max-width: 400px) {
       border-left: 0;
       border-right: 0;
-      background-size: cover;
     }
   }
 
@@ -131,7 +150,7 @@
     }
 
     &_text {
-      max-width: 91%;
+      max-width: 270px;
       @include font(normal, 400, 1.8rem, 2.1rem);
     }
   }
@@ -203,6 +222,9 @@
     }
 
     &_button {
+      @media (max-width: $width-mobile) {
+        margin-left: 10px;
+      }
     }
   }
 }
@@ -210,15 +232,16 @@
 .entrance-popup {
   .popup {
     &__wrapper {
-      background-image: url("./../../assets/images/popups/background-entrance.png");
+      background-image: url("./assets/images/popups/background-entrance.png");
     }
   }
 }
 
 .registration-popup {
+
   .popup {
     &__wrapper {
-      background-image: url("./../../assets/images/popups/background-registration.png");
+      background-image: url("./assets/images/popups/background-registration.png");
     }
 
     &__image {
@@ -229,13 +252,20 @@
       }
 
       @media (max-width: $width-mobile) {
+        flex-basis: 30%;
+        width: 234px;
+      }
+    }
+
+    &__dog {
+      @media (max-width: $width-tablet) {
         width: 234px;
       }
     }
 
     &__content {
       @media (max-width: $width-tablet) {
-        padding: 6px;
+        padding: 24px 0;
       }
     }
 
@@ -260,11 +290,7 @@
 
     &__header {
       &_text {
-        max-width: 76%;
-
-        @media (max-width: $width-tablet) {
-          max-width: 80%;
-        }
+        max-width: 253px;
       }
     }
 

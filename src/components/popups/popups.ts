@@ -1,12 +1,13 @@
 import templatePopupEntrance from './entrance/template';
 import templatePopupRegistration from './registration/template';
 import { Popup } from '../../models/popup.namespace';
+import renderElement from '../../controllers/helpers';
 
 export const renderPopupOverlay: () => void = () => {
-  const popup: HTMLElement = document.createElement('div');
+  renderElement('div', '', document.body, 'popup-overlay');
 
-  document.body.append(popup);
-  popup.classList.add('popup-overlay');
+  const popup: HTMLElement = document.querySelector('.popup-overlay');
+
   popup.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
 
