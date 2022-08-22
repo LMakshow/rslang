@@ -4,7 +4,7 @@
   align-items: center;
 
   z-index: 0;
-  background: url("./assets/images/vocabulary/background-A1.svg") center / cover no-repeat;
+  background: url("./assets/images/vocabulary/background-A2.svg") center / cover no-repeat;
   min-height: calc(100vh - 82px - 82.5px);
 
   &__wrapper {
@@ -46,6 +46,18 @@
   --filter-accent: invert(84%) sepia(32%) saturate(6419%) hue-rotate(218deg) brightness(95%) contrast(93%);
   --filter-dark: invert(12%) sepia(57%) saturate(4414%) hue-rotate(277deg) brightness(85%) contrast(96%);
   --filter-dark-accent: invert(13%) sepia(42%) saturate(2118%) hue-rotate(257deg) brightness(90%) contrast(109%);
+}
+
+.a2 {
+  --color-main: #E5F9FF;
+  --color-btn: #BAEEFF;
+  --color-accent: #6ED4F4;
+  --color-dark: #0E6885;
+  --color-dark-accent: #034256;
+  --filter-btn: invert(96%) sepia(78%) saturate(2672%) hue-rotate(171deg) brightness(102%) contrast(103%);
+  --filter-accent: invert(91%) sepia(22%) saturate(4959%) hue-rotate(166deg) brightness(102%) contrast(91%);
+  --filter-dark: invert(14%) sepia(91%) saturate(4101%) hue-rotate(182deg) brightness(99%) contrast(89%);
+  --filter-dark-accent: invert(19%) sepia(25%) saturate(3291%) hue-rotate(162deg) brightness(93%) contrast(98%);
 }
 
 .words-page {
@@ -142,8 +154,7 @@
   }
 
   &.learned {
-    background-color: var(--color-btn);
-    background: url("./assets/images/icons/checkmark.svg") center no-repeat;
+    background: url("./assets/images/icons/checkmark.svg") center no-repeat, var(--color-btn);
   }
 
   &::after {
@@ -304,7 +315,7 @@
   display: flex;
   gap: 32px;
   justify-content: flex-end;
-  background-image: url("./assets/images/vocabulary/Resleeng-A1.png");
+  background-image: url("./assets/images/vocabulary/Resleeng-A2.png");
   background-position: 0px 0px;
   background-repeat: no-repeat;
   padding-left: 110px;
@@ -382,7 +393,7 @@
   gap: 24px;
   justify-content: space-between;
   align-items: center;
-  background: url("./assets/images/vocabulary/word-display-backgrnd-a1.svg") center/cover no-repeat;
+  background: url("./assets/images/vocabulary/word-display-backgrnd-a2.png") center/cover no-repeat;
   border: solid 5px $color-basic;
   padding: 16px 16px;
 
