@@ -4,12 +4,14 @@
  * @param templateElement - innerHTML of the element to create
  * @param container - parent of the element
  * @param classStyle - add a style (string) or multiple styles (string array)
+ * @param isAfter - if true, the created element is added at the end of the container
  */
 const renderElement = (
   tag: string,
   templateElement: string,
   container: HTMLElement,
   classStyle?: string | string[],
+  isAfter?: boolean,
 ) => {
   const element: HTMLElement = document.createElement(tag) as HTMLElement;
 
@@ -22,7 +24,12 @@ const renderElement = (
   }
 
   element.innerHTML = templateElement;
-  container.append(element);
+
+  if (isAfter) {
+    container.after(element);
+  } else {
+    container.append(element);
+  }
 };
 
 export default renderElement;
