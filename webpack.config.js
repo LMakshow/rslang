@@ -11,6 +11,7 @@ const baseConfig = {
   entry: {
     main: [path.resolve(__dirname, './src/index.ts')],
     textbook: [path.resolve(__dirname, './src/components/pages/textbook/textbook.ts')],
+    vocabulary: [path.resolve(__dirname, './src/components/pages/vocabulary/vocabulary.ts')],
   },
   mode: 'development',
   devServer: {
@@ -27,7 +28,7 @@ const baseConfig = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.tsx?$/,
@@ -36,10 +37,7 @@ const baseConfig = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/images/[name][ext]',
-        },
+        type: 'asset',
       },
     ],
   },
@@ -50,6 +48,14 @@ const baseConfig = {
     filename: '[name].js',
     path: path.resolve(__dirname, './dist'),
     clean: true,
+    assetModuleFilename: (pathData) => {
+      const filepath = path
+        .dirname(pathData.filename)
+        .split('/')
+        .slice(1)
+        .join('/');
+      return `${filepath}/[name][ext]`;
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -61,6 +67,11 @@ const baseConfig = {
       template: path.resolve(__dirname, './src/components/pages/textbook/textbook.html'),
       filename: 'textbook.html',
       chunks: ['textbook'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/components/pages/vocabulary/vocabulary.html'),
+      filename: 'vocabulary.html',
+      chunks: ['vocabulary'],
     }),
     new CopyPlugin({
       patterns: [

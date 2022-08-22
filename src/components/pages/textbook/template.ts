@@ -6,7 +6,7 @@ const templateTextbook: string = `
       <div class="textbook__content">
         <ul class="textbook__list">
             <li class="textbook__item textbook__item-a1">
-            <a class="textbook__link" href="#">
+            <a class="textbook__link" href="vocabulary.html">
               <h3 class="textbook__title">A1</h3>
               <h4 class="textbook__subtitle">Начальный</h4>
               <p class="textbook__description">Повседневные фразы и личные темы</p>
