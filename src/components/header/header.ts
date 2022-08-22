@@ -1,5 +1,6 @@
 import templateHeader from './template';
 import renderElement from '../../controllers/helpers';
+import { renderPopupOverlay } from '../popups/popups';
 
 const closeMobileMenu: () => void = () => {
   const header: HTMLElement = document.querySelector('.header');
@@ -24,6 +25,7 @@ const renderMobileMenu: () => void = () => {
 export const addHeader: () => void = () => {
   renderElement('header', templateHeader, document.body, 'header');
   renderMobileMenu();
+  renderPopupOverlay();
 };
 
 export default addHeader;

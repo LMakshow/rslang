@@ -2,7 +2,7 @@ const templatePopupEntrance: string = `
    <div class="popup entrance-popup">
     <div class="popup__wrapper">
       <div class="popup__image">
-      <img class="popup__dog" src="assets/images/popups/popup-entrance.svg" alt="Entrance">
+      <img class="popup__dog" src="./assets/images/popups/popup-entrance.svg" alt="Entrance">
       </div>
       <div class="popup__content">
         <div class="popup__header">

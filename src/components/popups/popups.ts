@@ -1,5 +1,6 @@
 import templatePopupEntrance from './entrance/template';
 import templatePopupRegistration from './registration/template';
+import { Popup } from '../../models/popup.namespace';
 
 export const renderPopupOverlay: () => void = () => {
   const popup: HTMLElement = document.createElement('div');
@@ -48,11 +49,7 @@ const createPopup: () => void = () => {
 
     destroyPopup();
 
-    if (eventTargetClosest.dataset.popup === 'entrance') {
-      addPopup(templatePopupEntrance);
-    } else {
-      addPopup(templatePopupRegistration);
-    }
+    addPopup(Popup.templateMap[eventTargetClosest.dataset.popup as Popup.Type]);
 
   })
 };
