@@ -45,7 +45,7 @@ const templateTeam: string = `
                 </div>
                 
             </div>
-            <button class="team__button">Вернуться на главную</button>
+            <button class="team__button" onclick="window.location.href = 'index.html';">Вернуться на главную</button>
         </div>
     </div>
 </div>

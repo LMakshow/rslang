@@ -5,12 +5,18 @@
 
     &__wrapper {
         max-width: 1669px;
+
+        @media (max-width: $width-desktop) {
+            // max-width: 915px;
+        }
     }
 
     &__container {
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding-left: 35px;
+        padding-right: 35px;
     }
 
     &__heading {
@@ -26,22 +32,26 @@
         background-color: $color-additional;
         text-align: center;
         padding: 25px;
+        margin-bottom: 2.9vw;
     }
 
     &__cards {
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-between;
         gap: 30px;
         margin-bottom: 24px;
+
+        @media (max-width: $width-desktop) {
+            flex-wrap: wrap;
+        }
     }
 
     &__card {
-        max-width: 382px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        max-width: 382px;
         padding: 1.58vw 1.3vw;
         box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.25);
         &:nth-child(1) {
