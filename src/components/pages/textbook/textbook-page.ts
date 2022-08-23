@@ -12,6 +12,7 @@ const saveGroupNum: () => void = () => {
 
     localStorage.setItem('group', eventTargetClosest.dataset.group);
     localStorage.setItem('page', '0');
+    localStorage.removeItem('id');
   });
 }
 

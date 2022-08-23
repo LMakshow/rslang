@@ -8,7 +8,7 @@ import renderElement from '../../../controllers/helpers';
 import { Word } from '../../../models/word.interface';
 import { getWords } from '../../../controllers/api-services/vocabulary';
 import { Words } from '../../../models/words.interface';
-import selectWordCard from './word-card';
+import { initWordCard, selectWordCard } from './word-card';
 
 export let mapOfWords: Record<string, Word> = {};
 
@@ -18,7 +18,7 @@ const templateWordCard = (word: Word) =>
     <div class="word-list__russian-word">${word.wordTranslate}</div>
   </div>`;
 
-const setPage = (currentPage: number = 0) => {
+const setPage = (currentPage: number = 0, isRemoveId?: boolean) => {
   const currentPageNext: HTMLElement = document.querySelector(`[data-page="${currentPage + 1}"]`);
   const currentPageActive: HTMLElement = document.querySelector('.page-selector__btn.active');
   const currentPageNumSpan: HTMLSpanElement = document.querySelector('.page-num__curr-page');
@@ -26,9 +26,20 @@ const setPage = (currentPage: number = 0) => {
   localStorage.setItem('page', `${+currentPage}`);
   currentPageActive?.classList?.remove('active');
   currentPageNext.classList.add('active');
-
   currentPageNumSpan.textContent = `${currentPage + 1}`;
+
+  if (isRemoveId) {
+    localStorage.removeItem('id');
+  }
+
   renderWordList();
+}
+
+const addSwitches: () => void = () => {
+  const buttonSwitchLeft: HTMLElement = document.querySelector('.page-switch__btn.left');
+  const buttonSwitchRight: HTMLElement = document.querySelector('.page-switch__btn.right');
+
+  buttonSwitchLeft.addEventListener('click', () => {})
 }
 
 const addPagination: () => void = () => {
@@ -42,7 +53,7 @@ const addPagination: () => void = () => {
 
     const currentPage: string = eventTargetClosest.dataset.page;
 
-    setPage(+currentPage - 1);
+    setPage(+currentPage - 1, true);
   });
 
   setPage(+localStorage.getItem('page'));
@@ -71,6 +82,7 @@ const renderWordList: () => void = () => {
 
 const renderVocabulary: () => void = () => {
   renderElement('main', templateVocab, document.body, 'vocab');
+  initWordCard();
 };
 
 addHeader();

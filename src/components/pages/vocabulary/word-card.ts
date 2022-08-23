@@ -2,6 +2,7 @@ import { Word } from '../../../models/word.interface';
 import { mapOfWords } from './vocabulary';
 import renderElement from '../../../controllers/helpers';
 import { SERVER } from '../../../controllers/loader';
+import { doc } from 'prettier';
 
 const wordDisplayBox = (word: Word) => `
       <div class="word-display__text">
@@ -51,12 +52,11 @@ const enableAudio = (word: Word) => {
 
     const arrayOfAudio: HTMLAudioElement[] = [audioWord, audioMeaning, audioExample];
 
-    arrayOfAudio.forEach((audio: HTMLAudioElement, index: number = 0) => {
-      playAudio(arrayOfAudio[0]);
+    playAudio(arrayOfAudio[0]);
 
+    arrayOfAudio.forEach((audio: HTMLAudioElement, index: number) => {
       audio.addEventListener("ended", event => {
-        index++;
-        playAudio(arrayOfAudio[index]);
+        playAudio(arrayOfAudio[index + 1]);
 
       });
     });
@@ -64,26 +64,32 @@ const enableAudio = (word: Word) => {
 }
 
 const selectWordCard = () => {
+  const wordId: string = localStorage.getItem('id') || Object.keys(mapOfWords)[0];
+  const eventTargetClosest: HTMLElement = document.querySelector(`[data-word="${wordId}"]`);
+
+    const wordActive: HTMLElement = document.querySelector('.word-list__card.active');
+    const wordDisplay: HTMLElement = document.querySelector('.word-display');
+
+    wordActive?.classList?.remove('active');
+    wordDisplay.innerHTML = '';
+    eventTargetClosest.classList.add('active');
+
+    renderElement('div', wordDisplayBox(mapOfWords[wordId]), wordDisplay, 'word-display__box');
+    enableAudio(mapOfWords[wordId]);
+};
+
+const initWordCard: () => void = () => {
   document.body.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.word-list__card');
-    const wordActive: HTMLElement = document.querySelector('.word-list__card.active');
-    const wordDisplay: HTMLElement = document.querySelector('.word-display');
-    const wordDisplayBoxHTML: HTMLElement = document.querySelector('.word-display__box');
 
     if (!eventTargetClosest) {
       return;
     }
+    localStorage.setItem('id', eventTargetClosest?.dataset?.word);
 
-    wordActive?.classList?.remove('active');
-    wordDisplayBoxHTML?.remove();
-
-    eventTargetClosest.classList.add('active');
-
-    renderElement('div', wordDisplayBox(mapOfWords[eventTargetClosest?.dataset?.word]), wordDisplay, 'word-display__box');
-
-    enableAudio(mapOfWords[eventTargetClosest?.dataset?.word]);
+    selectWordCard();
   });
-};
+}
 
-export default selectWordCard;
+export { initWordCard, selectWordCard };

@@ -45,7 +45,7 @@ const templateVocab: string = `
         <img src="./assets/images/icons/arrow-circle.svg" class="page-switch__btn left disabled" alt="<">
         <div class="page-num"><span class="page-num__curr-page"></span><span>&nbsp;из&nbsp;</span><span
             class="page-num__total-page">30</span></div>
-        <img src="./assets/images/icons/arrow-circle.svg" alt=">" class="page-switch__btn">
+        <img src="./assets/images/icons/arrow-circle.svg" alt=">" class="page-switch__btn right">
       </div>
     </div>
     <div class="word-list"></div>
