@@ -2,7 +2,9 @@ const templateTextbook: string = `
   <div class="textbook__wrapper  wrapper">
     <div class="textbook__container">
       <h2 class="textbook__heading">Выберите категорию</h2>
-      <img class="textbook__image" src="assets/images/textbook/textbook-dog.png" alt="Risling">
+      <div  class="textbook__image">
+        <img class="textbook__dog" src="assets/images/textbook/textbook-dog.png" alt="Risling">
+      </div>
       <div class="textbook__content">
         <ul class="textbook__list">
             <li class="textbook__item textbook__item-a1" data-group="0">
