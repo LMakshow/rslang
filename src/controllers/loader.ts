@@ -2,7 +2,7 @@ import { BaseObject } from '../models/base.interface';
 import { mapToURLParams } from './api-services/param.helper';
 import { Words } from '../models/words.interface';
 
-const SERVER = 'https://rslang-team-bam.herokuapp.com/';
+export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 
 export default class Loader {
   private static errorHandler(res: Response): Response {

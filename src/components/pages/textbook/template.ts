@@ -5,7 +5,7 @@ const templateTextbook: string = `
       <img class="textbook__image" src="assets/images/textbook/textbook-dog.png" alt="Risling">
       <div class="textbook__content">
         <ul class="textbook__list">
-            <li class="textbook__item textbook__item-a1">
+            <li class="textbook__item textbook__item-a1" data-group="0">
             <a class="textbook__link" href="vocabulary.html">
               <h3 class="textbook__title">A1</h3>
               <h4 class="textbook__subtitle">Начальный</h4>
