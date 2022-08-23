@@ -4,7 +4,7 @@ const templateVocab: string = `
   <div class="words-page">
     <div class="words-page__nav">
       <a href="textbook.html" class="words-page__return">
-      <img src="./assets/images/icons/arrow-back.svg" class="words-page__return-img" alt="<">A1</a>
+      <img src="./assets/images/icons/arrow-back.svg" class="words-page__return-img" alt="<"></a>
       <div class="page-selector-block">
       <div class="page-selector">
         <div class="page-selector__btn" data-page="1"></div>
