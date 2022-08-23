@@ -12,6 +12,7 @@ const baseConfig = {
     main: [path.resolve(__dirname, './src/index.ts')],
     textbook: [path.resolve(__dirname, './src/components/pages/textbook/textbook.ts')],
     vocabulary: [path.resolve(__dirname, './src/components/pages/vocabulary/vocabulary.ts')],
+    team: [path.resolve(__dirname, './src/components/pages/team/team.ts')],
   },
   mode: 'development',
   devServer: {
@@ -72,6 +73,11 @@ const baseConfig = {
       template: path.resolve(__dirname, './src/components/pages/vocabulary/vocabulary.html'),
       filename: 'vocabulary.html',
       chunks: ['vocabulary'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/components/pages/team/team.html'),
+      filename: 'team.html',
+      chunks: ['team'],
     }),
     new CopyPlugin({
       patterns: [

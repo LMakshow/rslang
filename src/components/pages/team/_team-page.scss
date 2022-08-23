@@ -1,0 +1,126 @@
+.team {
+    background: url("./assets/images/team/team-background.jpg") no-repeat center;
+    background-size: cover;
+    flex-grow: 1;
+
+    &__wrapper {
+        max-width: 1669px;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__heading {
+        background-color: #ADE2FF;
+        border: 5px solid #000000;
+        @include font(normal, 700, 3.4rem, 3.9rem);
+        text-align: center;
+        
+        padding: 13px 6.2vw;
+    }
+
+    &__content {
+        background-color: $color-additional;
+        text-align: center;
+        padding: 25px;
+    }
+
+    &__cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+        margin-bottom: 24px;
+    }
+
+    &__card {
+        max-width: 382px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.58vw 1.3vw;
+        box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.25);
+        &:nth-child(1) {
+            background-color: #EAD6FF;
+            background-image: url('./assets/images/team/team-card1.jpg');
+            background-size: cover;
+        }
+        &:nth-child(2) {
+            background-color: #AEE042;
+            background-image: url('./assets/images/team/team-card2.jpg');
+            background-size: cover;
+        }
+        &:nth-child(3) {
+            background-color: #FFC680;
+            background-image: url('./assets/images/team/team-card3.jpg');
+            background-size: cover;
+        }
+        &:nth-child(4) {
+            background-color: #FFB9B7;
+            background-image: url('./assets/images/team/team-card4.jpg');
+            background-size: cover;
+        }
+    }
+
+    &__name {
+        @include font(normal, 400, 3.2rem, 3.2rem);
+        font-family: $font-family-additional;
+        margin: 0 0 8px;
+    }
+
+    &__link {
+        display: block;
+        background: url("./assets/images/team/git-logo.svg") no-repeat left center;
+        background-size: contain;
+        height: 3.5rem;
+        padding-left: 5.1rem;
+        @include font(normal, 400, 2.2rem, 2.5rem);
+        display: flex;
+        align-items: center;
+        margin-bottom: 32px;
+    }
+
+    &__cloud {
+        background-color: #FEFEFE;
+        border: 3px solid #000000;
+        border-radius: 32px;
+        border-top-right-radius: 0;
+        @include font(normal, 400, 1.6rem, 1.8rem);
+        padding: 6px 14px;
+        position: relative;
+        margin-bottom: 17px;
+        text-align: left;
+
+        &:after {
+            display: block;
+            position: absolute;
+            content: '';
+            background: url("./assets/images/team/cloud-corner.png") no-repeat;
+            height: 32px;
+            width: 24px;
+            top: -31px;
+            right: -3px;
+        }
+
+    }
+
+    &__description {
+        @include font(normal, 400, 1.8rem, 2rem);
+        text-align: left;
+    }
+
+    &__button {
+        background-color: #0056D8;
+        color: #FFFFFF;
+        padding: 16px 52px;
+        border: 4px solid #000000;
+        border-radius: 10px;
+        @include font(normal, 700, 2.8rem, 2.8rem);
+
+    }
+
+}
