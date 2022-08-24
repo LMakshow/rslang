@@ -42,7 +42,7 @@ const templateVocab: string = `
         </div>
       </div>
       <div class="page-switch">
-        <img src="./assets/images/icons/arrow-circle.svg" class="page-switch__btn left disabled" alt="<">
+        <img src="./assets/images/icons/arrow-circle.svg" class="page-switch__btn left" alt="<">
         <div class="page-num"><span class="page-num__curr-page"></span><span>&nbsp;из&nbsp;</span><span
             class="page-num__total-page">30</span></div>
         <img src="./assets/images/icons/arrow-circle.svg" alt=">" class="page-switch__btn right">

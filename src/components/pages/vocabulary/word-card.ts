@@ -7,9 +7,9 @@ import { doc } from 'prettier';
 const wordDisplayBox = (word: Word) => `
       <div class="word-display__text">
         <div class="word-display__nav">
-          <img src="./assets/images/icons/arrow-big.svg" class="word-display__btn left disabled" alt="<">
+          <img src="./assets/images/icons/arrow-big.svg" class="word-display__btn left" alt="<">
           <div class="word-display__en">${word.word}</div>
-          <img src="./assets/images/icons/arrow-big.svg" class="word-display__btn" alt=">">
+          <img src="./assets/images/icons/arrow-big.svg" class="word-display__btn right" alt=">">
         </div>
         <div class="word-display__ru">${word.wordTranslate}</div>
         <div class="word-display__transcription">
@@ -63,19 +63,51 @@ const enableAudio = (word: Word) => {
   })
 }
 
+const addCardSwitches: () => void = () => {
+  document.body.addEventListener('click', (event: MouseEvent) => {
+    const eventTarget: HTMLElement = event.target as HTMLElement;
+    const eventTargetClosest: HTMLElement = eventTarget.closest('.word-display__btn');
+    const wordActive: HTMLElement = document.querySelector('.word-list__card.active');
+    let siblingWordId: string;
+
+    if (!eventTargetClosest) {
+      return;
+    }
+
+    if (eventTargetClosest.classList.contains('left')) {
+      siblingWordId = (wordActive.previousElementSibling as HTMLElement)?.dataset?.word;
+    } else {
+      siblingWordId = (wordActive.nextElementSibling as HTMLElement)?.dataset?.word;
+    }
+
+    if (!siblingWordId) {
+      return;
+    }
+
+    localStorage.setItem('id', siblingWordId);
+    selectWordCard();
+  })
+}
+
 const selectWordCard = () => {
   const wordId: string = localStorage.getItem('id') || Object.keys(mapOfWords)[0];
   const eventTargetClosest: HTMLElement = document.querySelector(`[data-word="${wordId}"]`);
 
-    const wordActive: HTMLElement = document.querySelector('.word-list__card.active');
-    const wordDisplay: HTMLElement = document.querySelector('.word-display');
+  const wordActive: HTMLElement = document.querySelector('.word-list__card.active');
+  const wordDisplay: HTMLElement = document.querySelector('.word-display');
 
-    wordActive?.classList?.remove('active');
-    wordDisplay.innerHTML = '';
-    eventTargetClosest.classList.add('active');
+  wordActive?.classList?.remove('active');
+  wordDisplay.innerHTML = '';
+  eventTargetClosest.classList.add('active');
 
-    renderElement('div', wordDisplayBox(mapOfWords[wordId]), wordDisplay, 'word-display__box');
-    enableAudio(mapOfWords[wordId]);
+  renderElement('div', wordDisplayBox(mapOfWords[wordId]), wordDisplay, 'word-display__box');
+  enableAudio(mapOfWords[wordId]);
+
+  const buttonCardSwitchLeft: HTMLElement = document.querySelector('.word-display__btn.left');
+  const buttonCardSwitchRight: HTMLElement = document.querySelector('.word-display__btn.right');
+
+  buttonCardSwitchLeft.classList.toggle('disabled', !eventTargetClosest.previousElementSibling);
+  buttonCardSwitchRight.classList.toggle('disabled', !eventTargetClosest.nextElementSibling);
 };
 
 const initWordCard: () => void = () => {
@@ -90,6 +122,8 @@ const initWordCard: () => void = () => {
 
     selectWordCard();
   });
+
+  addCardSwitches();
 }
 
 export { initWordCard, selectWordCard };

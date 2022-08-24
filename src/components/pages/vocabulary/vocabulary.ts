@@ -10,6 +10,8 @@ import { getWords } from '../../../controllers/api-services/vocabulary';
 import { Words } from '../../../models/words.interface';
 import { initWordCard, selectWordCard } from './word-card';
 
+const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
+
 export let mapOfWords: Record<string, Word> = {};
 
 const templateWordCard = (word: Word) =>
@@ -23,6 +25,9 @@ const setPage = (currentPage: number = 0, isRemoveId?: boolean) => {
   const currentPageActive: HTMLElement = document.querySelector('.page-selector__btn.active');
   const currentPageNumSpan: HTMLSpanElement = document.querySelector('.page-num__curr-page');
 
+  const buttonSwitchLeft: HTMLElement = document.querySelector('.page-switch__btn.left');
+  const buttonSwitchRight: HTMLElement = document.querySelector('.page-switch__btn.right');
+
   localStorage.setItem('page', `${+currentPage}`);
   currentPageActive?.classList?.remove('active');
   currentPageNext.classList.add('active');
@@ -32,17 +37,33 @@ const setPage = (currentPage: number = 0, isRemoveId?: boolean) => {
     localStorage.removeItem('id');
   }
 
+  buttonSwitchLeft.classList.toggle('disabled', currentPage < 1);
+  buttonSwitchRight.classList.toggle('disabled', currentPage >= 29);
+
+
   renderWordList();
 }
 
 const addSwitches: () => void = () => {
-  const buttonSwitchLeft: HTMLElement = document.querySelector('.page-switch__btn.left');
-  const buttonSwitchRight: HTMLElement = document.querySelector('.page-switch__btn.right');
+  document.body.addEventListener('click', (event: MouseEvent) => {
+    const eventTarget: HTMLElement = event.target as HTMLElement;
+    const eventTargetClosest: HTMLElement = eventTarget.closest('.page-switch__btn');
 
-  buttonSwitchLeft.addEventListener('click', () => {})
+    if (!eventTargetClosest) {
+      return;
+    }
+
+    if (eventTargetClosest.classList.contains('left')) {
+      setPage(+localStorage.getItem('page') - 1, true);
+    } else {
+      setPage(+localStorage.getItem('page') + 1, true);
+    }
+  })
 }
 
 const addPagination: () => void = () => {
+  addSwitches();
+
   document.body.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('[data-page]');
@@ -60,6 +81,11 @@ const addPagination: () => void = () => {
 };
 
 const initWordList: () => void = () => {
+  const vocab: HTMLElement = document.querySelector('.vocab');
+  const numOfGroup: number = +localStorage.getItem('group');
+
+  vocab.classList.add(`${TEXTBOOK_GROUPS[numOfGroup]}`, `colors-${TEXTBOOK_GROUPS[numOfGroup]}`);
+
   addPagination();
 }
 
