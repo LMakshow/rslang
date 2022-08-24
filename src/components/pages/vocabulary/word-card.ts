@@ -11,7 +11,10 @@ const playAudio = (audio: HTMLAudioElement) => {
 const enableAudio = (word: Word) => {
   const buttonListen: HTMLButtonElement = document.querySelector('.btn-listen');
 
-  buttonListen.addEventListener('click', () => {
+  const playAllAudio = () => {
+    buttonListen.classList.add('active');
+    buttonListen.removeEventListener('click', playAllAudio);
+
     const audioWord: HTMLAudioElement = new Audio(`${SERVER + word.audio}`);
     const audioMeaning: HTMLAudioElement = new Audio(`${SERVER + word.audioMeaning}`);
     const audioExample: HTMLAudioElement = new Audio(`${SERVER + word.audioExample}`);
@@ -22,10 +25,17 @@ const enableAudio = (word: Word) => {
 
     arrayOfAudio.forEach((audio: HTMLAudioElement, index: number) => {
       audio.addEventListener('ended', () => {
-        playAudio(arrayOfAudio[index + 1]);
+        if (arrayOfAudio[index + 1]) {
+          playAudio(arrayOfAudio[index + 1]);
+        } else {
+          buttonListen.classList.remove('active');
+          buttonListen.addEventListener('click', playAllAudio);
+        }
       });
     });
-  });
+  };
+
+  buttonListen.addEventListener('click', playAllAudio);
 };
 
 const selectWordCard = () => {
