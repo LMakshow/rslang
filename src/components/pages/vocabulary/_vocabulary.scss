@@ -77,7 +77,7 @@
     & .words-page__return::after {
       content: "C1";
     }
-    
+
     & .words-page__games {
       background-image: url("./assets/images/vocabulary/resleeng-c1.png");
     }
@@ -93,7 +93,7 @@
     & .words-page__return::after {
       content: "C2";
     }
-    
+
     & .words-page__games {
       background-image: url("./assets/images/vocabulary/resleeng-c2.png");
     }
@@ -241,7 +241,7 @@
   width: 832px;
   display: flex;
   flex-shrink: 0;
-  justify-content: space-between;
+  // justify-content: space-between;
   flex-direction: column;
 
 
@@ -482,10 +482,16 @@
   text-align: center;
   @include font(normal, 400, 1.6rem, 1.5rem);
   height: 50%;
+  padding-right: 19px;
+  padding-left: 10px;
   padding-bottom: 20px;
 
   @media (max-width: $width-laptop) {
     font-size: 1.2rem;
+    line-height: 1rem;
+    padding-right: 10px;
+    padding-left: 5px;
+    padding-bottom: 14px;
   }
 }
 
@@ -499,8 +505,8 @@
   margin-left: -100px;
   margin-top: 8px;
   padding-top: 24px;
-  padding-bottom: 92px;
-  margin-bottom: -68px;
+  padding-bottom: 132px;
+  margin-bottom: -108px;
 
   @media (max-width: $width-desktop) {
     background-size: 290px;
@@ -510,6 +516,8 @@
     gap: 16px;
     background-size: 268px;
     padding-top: 16px;
+    padding-left: 50px;
+    margin-left: -50px;
   }
 
   @media (max-width: $width-mobile) {
@@ -584,7 +592,7 @@
   @media (max-width: $width-tablet) {
     padding: 10px 5px;
     flex-wrap: wrap;
-    height: 350px;
+    height: 400px;
   }
 
   @media (max-width: $width-mobile) {
@@ -643,12 +651,20 @@
   transition: all 0.2s;
 
   &>.btn-listen__img {
-    filter: var(--filter-dark-accent)
+    filter: var(--filter-dark-accent);
   }
 
   &:hover {
     background-color: var(--color-accent);
     cursor: pointer;
+  }
+
+  &.active {
+    background-color: var(--color-dark-accent);
+
+    &>.btn-listen__img {
+      filter: invert(100%);
+    }
   }
 }
 
