@@ -14,7 +14,7 @@ const templateMain: string = `
         </ul>
         <div class="main__buttons">
           <a class="button button-additional button-start" href="textbook.html">Начать!</a>
-          <a class="button button-basic button-team" href="#">О команде</a>
+          <a class="button button-basic button-team" href="team.html">О команде</a>
         </div>
       </div>
       <div class="main__image">
