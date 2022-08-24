@@ -9,10 +9,9 @@ import { Word } from '../../../models/word.interface';
 import { getWords } from '../../../controllers/api-services/vocabulary';
 import { Words } from '../../../models/words.interface';
 import { initWordCard, selectWordCard } from './word-card';
+import { setWords } from './words-map';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
-
-export let mapOfWords: Record<string, Word> = {};
 
 const renderWordList: () => void = () => {
   const wordList: HTMLElement = document.querySelector('.word-list') as HTMLElement;
@@ -25,10 +24,12 @@ const renderWordList: () => void = () => {
 
     wordList.innerHTML = templatesOfWords;
 
-    mapOfWords = words.reduce((wordsMap: Record<string, Word>, word: Word) => {
-      wordsMap[word.id] = word;
-      return wordsMap;
-    }, {});
+    setWords(
+      words.reduce(
+        (wordsMap: Record<string, Word>, word: Word) => ({ ...wordsMap, [word.id]: word }),
+        {},
+      ),
+    );
 
     selectWordCard();
   });
