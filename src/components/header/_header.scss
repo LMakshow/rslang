@@ -1,17 +1,17 @@
 @import '../styles/base/constants';
 
 .header {
-  padding: 18.5px 0;
+  height: 82px;
   background-color: $color-additional;
   border-bottom: 10px solid $color-basic;
   display: flex;
+  align-items: center;
 
   z-index: 1;
 
   @media (max-width: $width-mobile) {
     position: sticky;
-
-    z-index: 4;
+    z-index: 6;
   }
 
   &__wrapper {
@@ -35,7 +35,7 @@
 
   &__container {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     flex: 0 1 100%;
     position: relative;
 
@@ -47,21 +47,55 @@
 }
 
 .logo {
-  background: url("./assets/images/main-page/logo-main-page.svg") no-repeat;
-  width: 408px;
-  height: 175px;
 
-  position: absolute;
-  top: -19px;
-  left: -107px;
+  &__text {
+    font-family: $font-family-additional;
+    @include font(normal, 700, 5.4rem, 6.5rem);
+    color: $color-basic;
+    text-align: center;
 
-  @media (max-width: $width-tablet) {
-    background-size: 315px 135px;
-    width: 315px;
-    height: 135px;
+    @media (max-width: $width-tablet) {
+      font-size: 4rem;
+      line-height: 4.8rem;
+    }
 
-    top: -28px;
-    left: -92px;
+    @media (max-width: $width-mobile) {
+      font-size: 3rem;
+      line-height: 3.6rem;
+    }
+  }
+}
+
+.main-page {
+
+  .header {
+
+    &__container {
+      justify-content: end;
+
+      @media (max-width: $width-mobile) {
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .logo {
+    position: absolute;
+    top: -19px;
+    left: -103px;
+
+    background: url("./assets/images/main-page/logo-main-page.svg") no-repeat;
+    width: 408px;
+    height: 175px;
+
+    @media (max-width: $width-tablet) {
+      background-size: 315px 135px;
+      width: 315px;
+      height: 135px;
+
+      top: -28px;
+      left: -92px;
+    }
 
     @media (max-width: $width-mobile) {
       display: flex;
@@ -70,32 +104,22 @@
       height: auto;
       position: static;
     }
-  }
 
-  &__text {
-    font-family: $font-family-additional;
-    @include font(normal, 700, 5.4rem, 6.5rem);
-    color: $color-basic;
-    text-align: center;
-    margin-left: 30px;
-    margin-top: 5px;
+    &__text {
+      margin-top: 5px;
 
-    @media (max-width: $width-tablet) {
-      margin-left: 18px;
-      margin-top: 20px;
+      @media (max-width: $width-tablet) {
+        margin-left: 18px;
+        margin-top: 20px;
+      }
 
-      font-size: 4rem;
-      line-height: 4.8rem;
-    }
-
-    @media (max-width: $width-mobile) {
-      margin-left: 0;
-      margin-top: 0;
-
-      font-size: 3rem;
-      line-height: 3.6rem;
+      @media (max-width: $width-mobile) {
+        margin-left: 0;
+        margin-top: 0;
+      }
     }
   }
+
 }
 
 .navigation {

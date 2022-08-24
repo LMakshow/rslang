@@ -25,7 +25,6 @@ const renderMobileMenu: () => void = () => {
 export const addHeader: () => void = () => {
   renderElement('header', templateHeader, document.body, 'header');
   renderMobileMenu();
-  renderPopupOverlay();
 };
 
 export default addHeader;
