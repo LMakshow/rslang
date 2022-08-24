@@ -14,7 +14,7 @@ const saveGroupNum: () => void = () => {
     localStorage.setItem('page', '0');
     localStorage.removeItem('id');
   });
-}
+};
 
 export const addTextbook: () => void = () => {
   renderElement('main', templateTextbook, document.body, 'textbook');

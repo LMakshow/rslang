@@ -2,7 +2,7 @@ import '../../../global.scss';
 import { addHeader } from '../../header/header';
 import { addFooter } from '../../footer/footer';
 
-import templateVocab from './template';
+import { templateVocab, templateWordCard } from './templates';
 import renderElement from '../../../controllers/helpers';
 
 import { Word } from '../../../models/word.interface';
@@ -14,11 +14,25 @@ const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
 
 export let mapOfWords: Record<string, Word> = {};
 
-const templateWordCard = (word: Word) =>
-  `<div class="word-list__card" data-word="${word.id}">
-    <div class="word-list__english-word">${word.word}</div>
-    <div class="word-list__russian-word">${word.wordTranslate}</div>
-  </div>`;
+const renderWordList: () => void = () => {
+  const wordList: HTMLElement = document.querySelector('.word-list') as HTMLElement;
+
+  getWords({
+    group: +localStorage.getItem('group'),
+    page: +localStorage.getItem('page'),
+  }).then((words: Words) => {
+    const templatesOfWords: string = words.map((word) => templateWordCard(word)).join('');
+
+    wordList.innerHTML = templatesOfWords;
+
+    mapOfWords = words.reduce((wordsMap: Record<string, Word>, word: Word) => {
+      wordsMap[word.id] = word;
+      return wordsMap;
+    }, {});
+
+    selectWordCard();
+  });
+};
 
 const setPage = (currentPage: number = 0, isRemoveId?: boolean) => {
   const currentPageNext: HTMLElement = document.querySelector(`[data-page="${currentPage + 1}"]`);
@@ -40,9 +54,8 @@ const setPage = (currentPage: number = 0, isRemoveId?: boolean) => {
   buttonSwitchLeft.classList.toggle('disabled', currentPage < 1);
   buttonSwitchRight.classList.toggle('disabled', currentPage >= 29);
 
-
   renderWordList();
-}
+};
 
 const addSwitches: () => void = () => {
   document.body.addEventListener('click', (event: MouseEvent) => {
@@ -58,8 +71,8 @@ const addSwitches: () => void = () => {
     } else {
       setPage(+localStorage.getItem('page') + 1, true);
     }
-  })
-}
+  });
+};
 
 const addPagination: () => void = () => {
   addSwitches();
@@ -87,24 +100,7 @@ const initWordList: () => void = () => {
   vocab.classList.add(`${TEXTBOOK_GROUPS[numOfGroup]}`, `colors-${TEXTBOOK_GROUPS[numOfGroup]}`);
 
   addPagination();
-}
-
-const renderWordList: () => void = () => {
-  const wordList: HTMLElement = document.querySelector('.word-list') as HTMLElement;
-
-  getWords({ group: +localStorage.getItem('group'), page: +localStorage.getItem('page') }).then((words: Words) => {
-    const templatesOfWords: string = words.map((word) => templateWordCard(word)).join('');
-
-    wordList.innerHTML = templatesOfWords;
-
-    mapOfWords = words.reduce((map: Record<string, Word>, word: Word) => {
-      map[word.id] = word;
-      return map;
-    }, {})
-
-    selectWordCard();
-  });
-}
+};
 
 const renderVocabulary: () => void = () => {
   renderElement('main', templateVocab, document.body, 'vocab');
