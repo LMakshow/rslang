@@ -85,12 +85,24 @@ const wordDisplayBox = (word: Word) => `
   </div>
   <div class="word-display__picture">
     <img src="${SERVER + word.image}" alt="${word.word} image" class="word-display__picture-img">
-    <button class="btn-hard"><img src="./assets/images/icons/btn-hard.svg" class="btn-hard__img" alt="💼">
-      <div class="btn-hard__txt">В сложные</div>
+    <button class="btn-hard no-display">
+      <div class="btn-hard__img"></div>
     </button>
-    <button class="btn-learn"><img src="./assets/images/icons/btn-learn.svg" class="btn-learn__img" alt="📋">
-      <div class="btn-learn__txt">В изученные</div>
+    <button class="btn-learn no-display">
+      <div class="btn-learn__img"></div>
     </button>
+    <div class="games-stat no-display">
+    <div class="games-stat__audio">
+      <img src="./assets/images/icons/icon-audio.svg" height="20" class="games-stat__audio-icon" alt="🔊" title="Ответов в мини-игре Аудиовызов: успешных / всего">
+      <span class="games-stat__audio-success">0</span><span class="games-stat__divider">/</span>
+      <span class="games-stat__audio-total">0</span>
+    </div>
+    <div class="games-stat__sprint">
+      <img src="./assets/images/icons/icon-sprint.svg" height="20" class="games-stat__sprint-icon" alt="🏃" title="Ответов в мини-игре Спринт: успешных / всего">
+      <span class="games-stat__sprint-success">0</span><span class="games-stat__divider">/</span>
+      <span class="games-stat__sprint-total">0</span>
+    </div>
+  </div>
   </div>
   <div class="word-display__meaning">
     <div class="word-display__meaning-head">Значение:</div>
