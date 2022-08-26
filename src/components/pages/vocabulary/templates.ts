@@ -1,7 +1,7 @@
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
 
-const templateVocab: string = `
+const templateVocab = (groupNumber: number) =>  `
 <div class="vocab__wrapper wrapper">
 <div class="vocab__container">
   <div class="words-page">
@@ -53,7 +53,7 @@ const templateVocab: string = `
     </div>
     <div class="word-list"></div>
     <div class="words-page__games">
-      <a href="#"><img src="./assets/images/vocabulary/game-audio.png" alt="Мини-игра Аудиовызов"
+      <a href="audiocall.html?group=${groupNumber}"><img src="./assets/images/vocabulary/game-audio.png" alt="Мини-игра Аудиовызов"
           class="words-page__audio-img"></a>
       <a href="#"><img src="./assets/images/vocabulary/game-sprint.png" alt="Мини-игра Спринт"
           class="words-page__sprint-img"></a>

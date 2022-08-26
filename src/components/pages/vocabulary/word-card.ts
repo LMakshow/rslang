@@ -1,8 +1,9 @@
 import { Word } from '../../../models/word.interface';
-import renderElement from '../../../controllers/helpers';
+import { renderElement } from '../../../controllers/helpers';
 import { SERVER } from '../../../controllers/loader';
 import { wordDisplayBox } from './templates';
 import { getWords } from './words-map';
+import { getStorageItem, setStorageItem } from './storage';
 
 const playAudio = (audio: HTMLAudioElement) => {
   audio?.play();
@@ -39,7 +40,7 @@ const enableAudio = (word: Word) => {
 };
 
 const selectWordCard = () => {
-  const wordId: string = localStorage.getItem('id') || Object.keys(getWords())[0];
+  const wordId: string = (getStorageItem('id') as string) || Object.keys(getWords())[0];
   const eventTargetClosest: HTMLElement = document.querySelector(`[data-word="${wordId}"]`);
 
   const wordActive: HTMLElement = document.querySelector('.word-list__card.active');
@@ -80,7 +81,7 @@ const addCardSwitches: () => void = () => {
       return;
     }
 
-    localStorage.setItem('id', siblingWordId);
+    setStorageItem('id', siblingWordId);
     selectWordCard();
   });
 };
@@ -93,7 +94,7 @@ const initWordCard: () => void = () => {
     if (!eventTargetClosest) {
       return;
     }
-    localStorage.setItem('id', eventTargetClosest?.dataset?.word);
+    setStorageItem('id', eventTargetClosest?.dataset?.word);
 
     selectWordCard();
   });

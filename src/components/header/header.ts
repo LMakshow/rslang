@@ -1,5 +1,5 @@
 import templateHeader from './template';
-import renderElement from '../../controllers/helpers';
+import { renderElement } from '../../controllers/helpers';
 
 const closeMobileMenu: () => void = () => {
   const header: HTMLElement = document.querySelector('.header');

@@ -1,5 +1,5 @@
 import templateFooter from './template';
-import renderElement from '../../controllers/helpers';
+import { renderElement } from '../../controllers/helpers';
 import { renderPopupOverlay } from '../popups/popups';
 
 export const addFooter: () => void = () => {

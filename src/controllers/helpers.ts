@@ -6,6 +6,8 @@
  * @param classStyle - add a style (string) or multiple styles (string array)
  * @param isAfter - if true, the created element is added at the end of the container
  */
+import { Words } from '../models/words.interface';
+
 const renderElement = (
   tag: string,
   templateElement: string,
@@ -20,7 +22,7 @@ const renderElement = (
   }
 
   if (Array.isArray(classStyle)) {
-    classStyle.forEach((style) => element.classList.add(style));
+    classStyle.filter(Boolean).forEach((style) => element.classList.add(style));
   }
 
   element.innerHTML = templateElement;
@@ -32,4 +34,11 @@ const renderElement = (
   }
 };
 
-export default renderElement;
+const getGroupNumber: () => number = () => {
+  const query = new URLSearchParams(location.search);
+  const numOfGroup: number | null = query.has('group') ? +query.get('group') : null;
+
+  return numOfGroup;
+}
+
+export { renderElement, getGroupNumber };

@@ -1,5 +1,5 @@
 import { Popup } from '../../models/popup.namespace';
-import renderElement from '../../controllers/helpers';
+import { renderElement } from '../../controllers/helpers';
 
 const addPopup = (template: string) => {
   const popup: HTMLElement = document.querySelector('.popup-overlay');

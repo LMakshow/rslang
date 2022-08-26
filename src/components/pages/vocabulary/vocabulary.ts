@@ -3,24 +3,26 @@ import { addHeader } from '../../header/header';
 import { addFooter } from '../../footer/footer';
 
 import { templateVocab, templateWordCard } from './templates';
-import renderElement from '../../../controllers/helpers';
+import { getGroupNumber, renderElement } from '../../../controllers/helpers';
 
 import { Word } from '../../../models/word.interface';
 import { getWords } from '../../../controllers/api-services/vocabulary';
 import { Words } from '../../../models/words.interface';
 import { initWordCard, selectWordCard } from './word-card';
 import { setWords } from './words-map';
+import { getGroupPage, getStorageItem, savePages, setStorageItem } from './storage';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
+const groupNumber: number = getGroupNumber() || 0;
 
 const renderWordList: () => void = () => {
   const wordList: HTMLElement = document.querySelector('.word-list') as HTMLElement;
 
   getWords({
-    group: +localStorage.getItem('group'),
-    page: +localStorage.getItem('page'),
+    group: groupNumber,
+    page: getGroupPage(groupNumber),
   }).then((words: Words) => {
-    const templatesOfWords: string = words.map((word) => templateWordCard(word)).join('');
+    const templatesOfWords: string = words.map((word: Word) => templateWordCard(word)).join('');
 
     wordList.innerHTML = templatesOfWords;
 
@@ -43,18 +45,19 @@ const setPage = (currentPage: number = 0, isRemoveId?: boolean) => {
   const buttonSwitchLeft: HTMLElement = document.querySelector('.page-switch__btn.left');
   const buttonSwitchRight: HTMLElement = document.querySelector('.page-switch__btn.right');
 
-  localStorage.setItem('page', `${+currentPage}`);
+  setStorageItem('page', `${+currentPage}`);
   currentPageActive?.classList?.remove('active');
   currentPageNext.classList.add('active');
   currentPageNumSpan.textContent = `${currentPage + 1}`;
 
   if (isRemoveId) {
-    localStorage.removeItem('id');
+    setStorageItem('id', null);
   }
 
   buttonSwitchLeft.classList.toggle('disabled', currentPage < 1);
   buttonSwitchRight.classList.toggle('disabled', currentPage >= 29);
 
+  savePages(groupNumber, currentPage);
   renderWordList();
 };
 
@@ -68,9 +71,9 @@ const addSwitches: () => void = () => {
     }
 
     if (eventTargetClosest.classList.contains('left')) {
-      setPage(+localStorage.getItem('page') - 1, true);
+      setPage(getGroupPage(groupNumber) - 1, true);
     } else {
-      setPage(+localStorage.getItem('page') + 1, true);
+      setPage(getGroupPage(groupNumber) + 1, true);
     }
   });
 };
@@ -91,20 +94,19 @@ const addPagination: () => void = () => {
     setPage(+currentPage - 1, true);
   });
 
-  setPage(+localStorage.getItem('page'));
+  setPage(getGroupPage(groupNumber));
 };
 
 const initWordList: () => void = () => {
   const vocab: HTMLElement = document.querySelector('.vocab');
-  const numOfGroup: number = +localStorage.getItem('group');
 
-  vocab.classList.add(`${TEXTBOOK_GROUPS[numOfGroup]}`, `colors-${TEXTBOOK_GROUPS[numOfGroup]}`);
+  vocab.classList.add(`${TEXTBOOK_GROUPS[groupNumber]}`, `colors-${TEXTBOOK_GROUPS[groupNumber]}`);
 
   addPagination();
 };
 
 const renderVocabulary: () => void = () => {
-  renderElement('main', templateVocab, document.body, 'vocab');
+  renderElement('main', templateVocab(groupNumber), document.body, 'vocab');
   initWordCard();
 };
 
