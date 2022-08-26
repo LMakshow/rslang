@@ -33,8 +33,8 @@
                 <div class="page-selector__btn" data-page="13"></div>
                 <div class="page-selector__btn" data-page="14"></div>
                 <div class="page-selector__btn" data-page="15"></div>
-                </div>
-                <div class="page-selector">
+              </div>
+              <div class="page-selector">
                 <div class="page-selector__btn" data-page="16"></div>
                 <div class="page-selector__btn" data-page="17"></div>
                 <div class="page-selector__btn" data-page="18"></div>
@@ -50,8 +50,8 @@
                 <div class="page-selector__btn" data-page="28"></div>
                 <div class="page-selector__btn" data-page="29"></div>
                 <div class="page-selector__btn" data-page="30"></div>
-                </div>
               </div>
+            </div>
             <div class="page-switch">
               <img src="./assets/images/icons/arrow-circle.svg" class="page-switch__btn left disabled" alt="<">
               <div class="page-num"><span class="page-num__curr-page">1</span><span>&nbsp;из&nbsp;</span><span
@@ -165,12 +165,24 @@
             </div>
             <div class="word-display__picture">
               <img src="./assets/images/temp/01_0007 1.jpg" alt="Camera image" class="word-display__picture-img">
-              <button class="btn-hard"><img src="./assets/images/icons/btn-hard.svg" class="btn-hard__img" alt="💼">
-                <div class="btn-hard__txt">В сложные</div>
+              <button class="btn-hard"><div class="btn-hard__img"></div>
+                <!-- <div class="btn-hard__txt">В сложные</div> -->
               </button>
-              <button class="btn-learn"><img src="./assets/images/icons/btn-learn.svg" class="btn-learn__img" alt="📋">
-                <div class="btn-learn__txt">В изученные</div>
+              <button class="btn-learn"><div class="btn-learn__img"></div>
+                <!-- <div class="btn-learn__txt">В изученные</div> -->
               </button>
+              <div class="games-stat">
+                <div class="games-stat__audio">
+                  <img src="./assets/images/icons/icon-audio.svg" height="20" class="games-stat__audio-icon" alt="🔊" title="Ответов в мини-игре Аудиовызов: успешных / всего">
+                  <span class="games-stat__audio-success">1</span><span class="games-stat__divider">/</span><span
+                    class="games-stat__audio-total">4</span>
+                </div>
+                <div class="games-stat__sprint">
+                  <img src="./assets/images/icons/icon-sprint.svg" height="20" class="games-stat__sprint-icon" alt="🏃" title="Ответов в мини-игре Спринт: успешных / всего">
+                  <span class="games-stat__sprint-success">2</span><span class="games-stat__divider">/</span><span
+                    class="games-stat__sprint-total">3</span>
+                </div>
+              </div>
             </div>
             <div class="word-display__meaning">
               <div class="word-display__meaning-head">Значение:</div>

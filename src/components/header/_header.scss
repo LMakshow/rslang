@@ -71,7 +71,7 @@
   .header {
 
     &__container {
-      justify-content: end;
+      justify-content: flex-end;
 
       @media (max-width: $width-mobile) {
         justify-content: space-between;
