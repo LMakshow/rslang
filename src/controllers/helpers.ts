@@ -41,4 +41,24 @@ const getGroupNumber: () => number = () => {
   return numOfGroup;
 }
 
-export { renderElement, getGroupNumber };
+const countGameResults: (rightWords: Words, wrongWords: Words) => string = (
+  rightWords: Words,
+  wrongWords: Words) => {
+  const mark: number = rightWords.length * 100 / (rightWords.length + wrongWords.length);
+
+  switch (true) {
+    case mark === 100:
+      return 'Идеально!';
+    case  mark >= 80:
+      return 'Отлично!';
+    case  mark >= 60:
+      return 'Хорошо!';
+    case  mark >= 40:
+      return 'Неплохо!';
+
+    default:
+      return 'Еще раз?';
+  }
+}
+
+export { renderElement, getGroupNumber, countGameResults };

@@ -1,5 +1,7 @@
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
+import { SERVER } from '../../../controllers/loader';
+import { countGameResults } from '../../../controllers/helpers';
 
 const templateAudiocall: string = `
   <div class="audiocall__wrapper wrapper">
@@ -36,9 +38,10 @@ const templateAudiocallListening = (wordsArray: Words) => `
 <div class="audiocall-game">
   <div class="audiocall-game__wrapper wrapper">
   
+     <div class="audiocall-game__container">
      <div class="audiocall-game__listening">
         <div class="audiocall-game__listening-button-wrapper">
-          <button class="audiocall-game__listening-button">
+          <button class="audiocall-game__listening-button button-play-audio">
             <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="45" cy="45" r="45" fill="#FAD243"/>
               <path fill-rule="evenodd" clip-rule="evenodd" d="M59.9037 71.2001C54.5592 71.2001 51.5021 66.9926 49.8734 61.7905C49.2815 59.877 48.7208 57.8167 46.0197 55.0688C41.0935 50.0514 38.9798 44.3243 38.9798 38.7106C38.9798 29.3478 46.3579 22.2501 54.4613 22.2501C64.0667 22.2501 71.338 30.665 66.5609 43.8081L62.3 42.2751C66.0625 31.5172 60.2997 27.2252 54.3301 27.1117C49.1503 27.0116 44.4778 31.584 43.8392 36.924C43.2829 41.5831 44.5022 47.219 48.9567 51.4933C52.8171 55.1957 53.3422 57.6476 54.0475 60.0751C55.674 65.6732 58.2372 66.5343 60.0661 66.4141C64.3448 66.1315 66.2071 61.6415 62.1665 56.5373L66.2205 54.2567C68.0917 57.0135 68.9594 59.9794 68.975 62.3001C69.0106 67.7513 64.6607 71.2001 59.9037 71.2001ZM32.6096 56.5395L29.5235 60.0751C23.7118 54.9064 20.025 47.3614 20.025 38.9354C20.025 30.5093 23.7118 22.9643 29.5235 17.7979L32.6096 21.3312C27.7658 25.6388 24.6886 31.9266 24.6886 38.9354C24.6886 45.9441 27.7658 52.2297 32.6096 56.5395ZM33.5886 38.9354C33.5886 34.7279 35.4331 30.9565 38.339 28.3711L35.2551 24.8444C31.3792 28.2887 28.925 33.3172 28.925 38.9354C28.925 44.5535 31.3792 49.582 35.2551 53.0263L38.339 49.4997C35.4331 46.9142 33.5886 43.1406 33.5886 38.9354ZM59.2562 51.5333C56.4972 52.9907 54.0008 50.8903 52.8927 48.3204C51.8336 45.8707 52.4766 43.065 54.5993 40.8133C56.0611 39.2624 56.8732 37.4068 56.5662 35.9917C56.4527 35.4532 56.1301 34.7346 55.2668 34.3808C54.4013 34.0226 53.5046 34.1338 52.7815 34.5365C51.62 35.1818 50.6966 36.7504 50.3785 38.6283L47.0877 38.0721C47.5816 35.1707 49.1035 32.7588 51.1617 31.6196C52.7882 30.7184 54.7239 30.5471 56.535 31.2925C58.2349 31.9911 59.4342 33.4485 59.8325 35.2908C60.3754 37.8162 59.274 40.7198 57.0245 43.105C61.608 44.2487 62.1687 49.7578 59.2562 51.5333Z" fill="#482800"/>
@@ -48,6 +51,7 @@ const templateAudiocallListening = (wordsArray: Words) => `
         <div class="audiocall-game__image">
           <img class="audiocall-game__dog" src="./assets/images/game-audiocall/audiocall-dog.svg" alt="Audiocall dog">
         </div>
+     </div>
      </div>
      
      <div class="audiocall-game__content audiocall-content">
@@ -88,7 +92,7 @@ const templateAudiocallListening = (wordsArray: Words) => `
         <span class="audiocall-content__text">5. ${wordsArray[4].wordTranslate}</span>
         </div>
       </div>
-      <button class="button audiocall-content__button">Не знаю</button>
+      <button class="button audiocall-content__button button-dont-know" data-id="button-dont-know">Не знаю</button>
      </div>
   
   </div>
@@ -97,15 +101,65 @@ const templateAudiocallListening = (wordsArray: Words) => `
 const templateResults = (word: Word) => `
      <div class="audiocall-game__results audiocall-results">
       <div class="audiocall-results__content">
-        <span class="audiocall-results__name">rgbrt</span>
-        <span class="audiocall-results__translation">апап</span>
+        <span class="audiocall-results__name">${word.word}</span>
+        <span class="audiocall-results__translation">${word.wordTranslate}</span>
         <div class="audiocall-results__listening">
-        <button class="audiocall-results__button"></button>
-        <span class="audiocall-results__transcription">апап</span>
+          <button class="audiocall-results__button button-play-audio">
+            <svg width="40" height="40" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="45" cy="45" r="45" fill="#FAD243"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M59.9037 71.2001C54.5592 71.2001 51.5021 66.9926 49.8734 61.7905C49.2815 59.877 48.7208 57.8167 46.0197 55.0688C41.0935 50.0514 38.9798 44.3243 38.9798 38.7106C38.9798 29.3478 46.3579 22.2501 54.4613 22.2501C64.0667 22.2501 71.338 30.665 66.5609 43.8081L62.3 42.2751C66.0625 31.5172 60.2997 27.2252 54.3301 27.1117C49.1503 27.0116 44.4778 31.584 43.8392 36.924C43.2829 41.5831 44.5022 47.219 48.9567 51.4933C52.8171 55.1957 53.3422 57.6476 54.0475 60.0751C55.674 65.6732 58.2372 66.5343 60.0661 66.4141C64.3448 66.1315 66.2071 61.6415 62.1665 56.5373L66.2205 54.2567C68.0917 57.0135 68.9594 59.9794 68.975 62.3001C69.0106 67.7513 64.6607 71.2001 59.9037 71.2001ZM32.6096 56.5395L29.5235 60.0751C23.7118 54.9064 20.025 47.3614 20.025 38.9354C20.025 30.5093 23.7118 22.9643 29.5235 17.7979L32.6096 21.3312C27.7658 25.6388 24.6886 31.9266 24.6886 38.9354C24.6886 45.9441 27.7658 52.2297 32.6096 56.5395ZM33.5886 38.9354C33.5886 34.7279 35.4331 30.9565 38.339 28.3711L35.2551 24.8444C31.3792 28.2887 28.925 33.3172 28.925 38.9354C28.925 44.5535 31.3792 49.582 35.2551 53.0263L38.339 49.4997C35.4331 46.9142 33.5886 43.1406 33.5886 38.9354ZM59.2562 51.5333C56.4972 52.9907 54.0008 50.8903 52.8927 48.3204C51.8336 45.8707 52.4766 43.065 54.5993 40.8133C56.0611 39.2624 56.8732 37.4068 56.5662 35.9917C56.4527 35.4532 56.1301 34.7346 55.2668 34.3808C54.4013 34.0226 53.5046 34.1338 52.7815 34.5365C51.62 35.1818 50.6966 36.7504 50.3785 38.6283L47.0877 38.0721C47.5816 35.1707 49.1035 32.7588 51.1617 31.6196C52.7882 30.7184 54.7239 30.5471 56.535 31.2925C58.2349 31.9911 59.4342 33.4485 59.8325 35.2908C60.3754 37.8162 59.274 40.7198 57.0245 43.105C61.608 44.2487 62.1687 49.7578 59.2562 51.5333Z" fill="#482800"/>
+            </svg>
+          </button>
+          <span class="audiocall-results__transcription">${word.transcription}</span>
         </div>
+      </div>
+      <div class="audiocall-results__picture">
+      <img class="audiocall-results__image" src="${SERVER + word.image}" alt="${word.word} image">
       </div>
     </div>`;
 
+const templateStatisticWord = (word: Word) => `
+  <div class="statistic-item">
+  <audio src="${SERVER + word.audio}"></audio>
+    <button class="statistic-item__button">
+       <svg width="24" height="24" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="45" cy="45" r="45" fill="#FAD243"/>
+         <path fill-rule="evenodd" clip-rule="evenodd" d="M59.9037 71.2001C54.5592 71.2001 51.5021 66.9926 49.8734 61.7905C49.2815 59.877 48.7208 57.8167 46.0197 55.0688C41.0935 50.0514 38.9798 44.3243 38.9798 38.7106C38.9798 29.3478 46.3579 22.2501 54.4613 22.2501C64.0667 22.2501 71.338 30.665 66.5609 43.8081L62.3 42.2751C66.0625 31.5172 60.2997 27.2252 54.3301 27.1117C49.1503 27.0116 44.4778 31.584 43.8392 36.924C43.2829 41.5831 44.5022 47.219 48.9567 51.4933C52.8171 55.1957 53.3422 57.6476 54.0475 60.0751C55.674 65.6732 58.2372 66.5343 60.0661 66.4141C64.3448 66.1315 66.2071 61.6415 62.1665 56.5373L66.2205 54.2567C68.0917 57.0135 68.9594 59.9794 68.975 62.3001C69.0106 67.7513 64.6607 71.2001 59.9037 71.2001ZM32.6096 56.5395L29.5235 60.0751C23.7118 54.9064 20.025 47.3614 20.025 38.9354C20.025 30.5093 23.7118 22.9643 29.5235 17.7979L32.6096 21.3312C27.7658 25.6388 24.6886 31.9266 24.6886 38.9354C24.6886 45.9441 27.7658 52.2297 32.6096 56.5395ZM33.5886 38.9354C33.5886 34.7279 35.4331 30.9565 38.339 28.3711L35.2551 24.8444C31.3792 28.2887 28.925 33.3172 28.925 38.9354C28.925 44.5535 31.3792 49.582 35.2551 53.0263L38.339 49.4997C35.4331 46.9142 33.5886 43.1406 33.5886 38.9354ZM59.2562 51.5333C56.4972 52.9907 54.0008 50.8903 52.8927 48.3204C51.8336 45.8707 52.4766 43.065 54.5993 40.8133C56.0611 39.2624 56.8732 37.4068 56.5662 35.9917C56.4527 35.4532 56.1301 34.7346 55.2668 34.3808C54.4013 34.0226 53.5046 34.1338 52.7815 34.5365C51.62 35.1818 50.6966 36.7504 50.3785 38.6283L47.0877 38.0721C47.5816 35.1707 49.1035 32.7588 51.1617 31.6196C52.7882 30.7184 54.7239 30.5471 56.535 31.2925C58.2349 31.9911 59.4342 33.4485 59.8325 35.2908C60.3754 37.8162 59.274 40.7198 57.0245 43.105C61.608 44.2487 62.1687 49.7578 59.2562 51.5333Z" fill="#482800"/>
+       </svg>
+    </button>
+    <span class="statistic-item__text"><span class="statistic-item__name">${word.word}</span> - ${word.wordTranslate}</span>
+  </div>
+`;
 
+const templateGameResults = (rightWords: Words, wrongWords: Words) => `
+  <div class="game-results">
+    <span class="game-results__heading">Правильных ответов:  ${rightWords.length} из ${rightWords.length + wrongWords.length}</span>
+    
+    <div class="game-results__wrapper">
+      <div class="game-results__mark">
+        <span class="game-results__text">
+          ${countGameResults(rightWords, wrongWords)}
+        </span>
+      </div>
+      <div class="game-results__statistic">
+        <div class="statistic statistic__wrong">
+          <span class="statistic__heading">Ошибки:</span>
+          <div class="statistic__items">
+            ${wrongWords.map((word: Word) => templateStatisticWord(word)).join('')}
+          </div>
+        </div>
+  
+        <div class="statistic statistic__right">
+          <span class="statistic__heading">Правильные ответы:</span>
+          <div class="statistic__items">
+            ${rightWords.map((word: Word) => templateStatisticWord(word)).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
 
-export { templateAudiocall, templateAudiocallWindow, templateAudiocallListening };
+  </div>
+  
+`;
+
+export { templateAudiocall, templateAudiocallWindow, templateAudiocallListening, templateResults, templateGameResults };
