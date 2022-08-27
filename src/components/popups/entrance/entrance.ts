@@ -9,11 +9,11 @@ const entrance = () => {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = (document.querySelector('input[type=email]') as HTMLInputElement).value;
+    const email = (document.querySelector('input[type=email]') as HTMLInputElement).value.toLowerCase();
     const password = (document.querySelector('input[type=password]') as HTMLInputElement).value;
     Loader.loginUser({ email, password }).then(() => {
       form.innerHTML = '<h4 class="popup__success">Вход выполнен!</h4>';
-      setTimeout(document.location.reload, 2000);
+      setTimeout(document.location.reload.bind(document.location), 2000);
     }).catch(() => {
       message.style.visibility = 'visible';
     });

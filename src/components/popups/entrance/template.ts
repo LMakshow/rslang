@@ -10,7 +10,7 @@ const templatePopupEntrance: string = `
           <p class="popup__header_text">Рислинг очень рад вас видеть! Войдите, чтобы видеть свой прогресс и сохранённые слова</p>
         </div>
         <form class="popup__inputs"  id="entranceForm">
-          <input class="popup__input" type="email" placeholder="Email"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$" required>
+          <input class="popup__input" type="email" placeholder="Email" required>
           <input class="popup__input" type="password" placeholder="Пароль"  minlength="8" required>
           <div class="popup__footer">
             <button class="button button-additional popup__button button-entrance">Войти</button>
