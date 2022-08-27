@@ -30,7 +30,7 @@ const templateAudiocallWindow: string = `
     
     <div class="game-window__begin">
       <p class="game-window__text">Используются слова со страницы учебника</p>
-      <button class="button game-window__buttonBegin">Начать!</button>
+      <button class="button game-window__buttonBegin button-play-game">Начать!</button>
     </div>
 `;
 
@@ -142,14 +142,14 @@ const templateGameResults = (rightWords: Words, wrongWords: Words) => `
         </span>
       </div>
       <div class="game-results__statistic">
-        <div class="statistic statistic__wrong">
+        <div class="statistic statistic-wrong">
           <span class="statistic__heading">Ошибки:</span>
           <div class="statistic__items">
             ${wrongWords.map((word: Word) => templateStatisticWord(word)).join('')}
           </div>
         </div>
   
-        <div class="statistic statistic__right">
+        <div class="statistic statistic-right">
           <span class="statistic__heading">Правильные ответы:</span>
           <div class="statistic__items">
             ${rightWords.map((word: Word) => templateStatisticWord(word)).join('')}
@@ -157,9 +157,18 @@ const templateGameResults = (rightWords: Words, wrongWords: Words) => `
         </div>
       </div>
     </div>
-
+    <div class="game-results__buttons">
+    <button class="button game-results__button game-results__button_play-game">Еще раз!</button>
+    <a class="button game-results__button game-results__button_textbook" href="textbook.html">В учебник</a>
+    </div>
   </div>
   
 `;
 
-export { templateAudiocall, templateAudiocallWindow, templateAudiocallListening, templateResults, templateGameResults };
+export {
+  templateAudiocall,
+  templateAudiocallWindow,
+  templateAudiocallListening,
+  templateResults,
+  templateGameResults,
+};

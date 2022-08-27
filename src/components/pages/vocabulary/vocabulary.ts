@@ -10,7 +10,11 @@ import { getWords } from '../../../controllers/api-services/vocabulary';
 import { Words } from '../../../models/words.interface';
 import { initWordCard, selectWordCard } from './word-card';
 import { setWords } from './words-map';
-import { getGroupPage, getStorageItem, savePages, setStorageItem } from './storage';
+import {
+  getGroupPage,
+  savePages,
+  setStorageItem,
+} from './storage';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
 const groupNumber: number = getGroupNumber() || 0;

@@ -1,7 +1,7 @@
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
 
-const templateVocab = (groupNumber: number) =>  `
+const templateVocab = (groupNumber: number) => `
 <div class="vocab__wrapper wrapper">
 <div class="vocab__container">
   <div class="words-page">

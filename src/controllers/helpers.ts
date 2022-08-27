@@ -39,26 +39,27 @@ const getGroupNumber: () => number = () => {
   const numOfGroup: number | null = query.has('group') ? +query.get('group') : null;
 
   return numOfGroup;
-}
+};
 
 const countGameResults: (rightWords: Words, wrongWords: Words) => string = (
   rightWords: Words,
-  wrongWords: Words) => {
-  const mark: number = rightWords.length * 100 / (rightWords.length + wrongWords.length);
+  wrongWords: Words,
+) => {
+  const mark: number = (rightWords.length * 100) / (rightWords.length + wrongWords.length);
 
   switch (true) {
     case mark === 100:
       return 'Идеально!';
-    case  mark >= 80:
+    case mark >= 80:
       return 'Отлично!';
-    case  mark >= 60:
+    case mark >= 60:
       return 'Хорошо!';
-    case  mark >= 40:
+    case mark >= 40:
       return 'Неплохо!';
 
     default:
       return 'Еще раз?';
   }
-}
+};
 
 export { renderElement, getGroupNumber, countGameResults };

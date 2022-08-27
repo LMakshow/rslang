@@ -16,35 +16,36 @@ const groupNumber: number = getGroupNumber();
 let pageWords: Words;
 let pageWordsSet: Set<Word>;
 let rightAnswer: Word;
+let allGroupWords: Words;
 
 const rightWords: Words = [];
 const wrongWords: Words = [];
 
-const randomizerWord = (pageWordsSet: Set<Word>) => {
-  const rightAnswer: Word = Array.from(pageWordsSet)[Math.floor(Math.random() * pageWordsSet.size)];
+const randomizerWord = (wordsSet: Set<Word>) => {
+  const answer: Word = Array.from(wordsSet)[Math.floor(Math.random() * wordsSet.size)];
 
-  pageWordsSet.delete(rightAnswer);
+  wordsSet.delete(answer);
 
-  return rightAnswer;
-}
+  return answer;
+};
 
-const randomizerWords = (array: Words, rightAnswer: Word) => {
-  const wordsSet: Set<Word> = new Set([rightAnswer]);
+const randomizerWords = (array: Words, answer: Word) => {
+  const wordsSet: Set<Word> = new Set([answer]);
 
   while (wordsSet.size < 5) {
     wordsSet.add(array[Math.floor(Math.random() * array.length)]);
   }
 
   const result: Words = Array.from(wordsSet).slice(1);
-  result.splice(Math.floor(Math.random() * result.length), 0, rightAnswer);
+  result.splice(Math.floor(Math.random() * result.length), 0, answer);
 
   return result;
-}
+};
 
 const playAudio: (word: Word) => void = (word: Word) => {
   const audio: HTMLAudioElement = new Audio(`${SERVER + word.audio}`);
   audio.autoplay = true;
-}
+};
 
 const startRound = () => {
   const audiocall: HTMLButtonElement = document.querySelector('.audiocall');
@@ -54,19 +55,22 @@ const startRound = () => {
 
   audiocall.innerHTML = templateAudiocallListening(audiocallWords);
   playAudio(rightAnswer);
-}
+};
+
+const formPageWords: (array: Words) => void = (array: Words) => {
+  pageWords = array;
+  pageWordsSet = new Set(array);
+};
 
 const startAudiocall = (group: number, page: number) => {
   getWords({
-    group: group,
-    page: page,
+    group,
+    page,
   }).then((words: Words) => {
-    pageWords = words;
-    pageWordsSet = new Set(words);
-
+    formPageWords(words);
     startRound();
   });
-}
+};
 
 const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
   const promiseArray: Promise<Words>[] = Array(30)
@@ -75,6 +79,7 @@ const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
 
   return Promise.all(promiseArray).then((wordsArray: Words[]) => {
     const array: Words = wordsArray.flat();
+    allGroupWords = array;
     const wordsSet: Set<Word> = new Set();
 
     while (wordsSet.size < 20) {
@@ -82,30 +87,58 @@ const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
     }
 
     return Array.from(wordsSet);
-  })
-}
+  });
+};
 
-const renderButtonContinue: () => void = () => {
+const randomizerArrayOfWords: (array: Words) => Words = (array: Words) => {
+  const randomWordsSet: Set<Word> = new Set();
+
+  while (randomWordsSet.size < 20) {
+    randomWordsSet.add(array[Math.floor(Math.random() * array.length)]);
+  }
+
+  return Array.from(randomWordsSet);
+};
+
+const renderGameResultsScreen: () => void = () => {
   const audiocallGameContent: HTMLElement = document.querySelector('.audiocall-game__content');
-  const audiocallGameWrapper: HTMLElement = document.querySelector('.audiocall-game__wrapper');
-  const buttonDontKnow: HTMLElement = document.querySelector('.button-dont-know');
-
-  buttonDontKnow.remove();
-  renderElement('button', 'Продолжить', audiocallGameContent, ['button', 'audiocall-content__button', 'button-continue']);
-
   const buttonContinue: HTMLElement = document.querySelector('.button-continue');
+  const audiocallGameWrapper: HTMLElement = document.querySelector('.audiocall-game__wrapper');
 
-  if (pageWordsSet.size < 17) {
+  if (!pageWordsSet.size) {
     buttonContinue.remove();
     renderElement('button', 'Результаты', audiocallGameContent, ['button', 'audiocall-content__button', 'button-results']);
 
     const buttonResults: HTMLElement = document.querySelector('.button-results');
 
     buttonResults.addEventListener('click', () => {
+      const audiocallGame: HTMLElement = document.querySelector('.audiocall-game');
       audiocallGameWrapper.innerHTML = templateGameResults(rightWords, wrongWords);
-    })
+
+      const statisticRight: HTMLElement = document.querySelector('.statistic-right');
+      const statisticWrong: HTMLElement = document.querySelector('.statistic-wrong');
+
+      audiocallGame.classList.add('results');
+
+      if (!rightWords.length) {
+        statisticRight?.remove();
+      }
+
+      if (!wrongWords.length) {
+        statisticWrong?.remove();
+      }
+    });
   }
-}
+};
+
+const changeButtonContinue: () => void = () => {
+  const audiocallGameContent: HTMLElement = document.querySelector('.audiocall-game__content');
+  const buttonDontKnow: HTMLElement = document.querySelector('.button-dont-know');
+
+  buttonDontKnow.remove();
+  renderElement('button', 'Продолжить', audiocallGameContent, ['button', 'audiocall-content__button', 'button-continue']);
+  renderGameResultsScreen();
+};
 
 const addEventListeners: () => void = () => {
   //переход из ссылки хэдера Аудиовызов
@@ -119,12 +152,10 @@ const addEventListeners: () => void = () => {
 
     getGroupWords(+eventTargetClosest.dataset.group)
       .then((words: Words) => {
-        pageWords = words;
-        pageWordsSet = new Set(words);
-
+        formPageWords(words);
         startRound();
       });
-  })
+  });
 // проигрывание аудио
   document.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
@@ -135,7 +166,7 @@ const addEventListeners: () => void = () => {
     }
 
     playAudio(rightAnswer);
-  })
+  });
 // выбор варианта ответа
   document.addEventListener('click', (event: MouseEvent) => {
     const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
@@ -164,8 +195,8 @@ const addEventListeners: () => void = () => {
     audiocallGameContainer.innerHTML = templateResults(rightAnswer);
     eventTargetRight.classList.add('right');
 
-    renderButtonContinue();
-  })
+    changeButtonContinue();
+  });
 // нажатие на кнопку Продолжить
   document.addEventListener('click', (event: MouseEvent) => {
     const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
@@ -178,44 +209,62 @@ const addEventListeners: () => void = () => {
 
     audiocallGameContainer.innerHTML = '';
     startRound();
+  });
+// начало игры по кнопке Начать
+  document.addEventListener('click', (event: MouseEvent) => {
+    const eventTarget: HTMLElement = event.target as HTMLElement;
+    const eventTargetClosest: HTMLElement = eventTarget.closest('.button-play-game');
 
-  })
-// появление страницы результатов и статистики
+    if (!eventTargetClosest) {
+      return;
+    }
+
+    startAudiocall(groupNumber, getGroupPage(groupNumber));
+  });
+// начало игры по кнопке Еще раз(страница результатов)
+  document.addEventListener('click', (event: MouseEvent) => {
+    const eventTarget: HTMLElement = event.target as HTMLElement;
+    const eventTargetClosest: HTMLElement = eventTarget.closest('.game-results__button_play-game');
+
+    if (!eventTargetClosest) {
+      return;
+    }
+
+    rightWords.length = 0;
+    wrongWords.length = 0;
+
+    if (Number.isInteger(getGroupNumber())) {
+      startAudiocall(groupNumber, getGroupPage(groupNumber));
+    } else {
+      formPageWords(randomizerArrayOfWords(allGroupWords));
+      startRound();
+    }
+  });
+// включение аудио на странице результатов игры
   document.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.statistic-item__button');
-    const wordAudio: HTMLAudioElement = eventTargetClosest?.previousElementSibling as HTMLAudioElement;
+    const wordAudio: HTMLAudioElement = eventTargetClosest
+      ?.previousElementSibling as HTMLAudioElement;
 
     if (!eventTargetClosest) {
       return;
     }
 
     wordAudio.play();
-  })
-}
-
-const beginAudiocall: () => void = () => {
-  const buttonBegin: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
-
-  buttonBegin.addEventListener('click', () => {
-    startAudiocall(groupNumber, getGroupPage(groupNumber));
-
-    console.log(rightAnswer);
-  })
-}
+  });
+};
 
 const addAudiocallWindow: () => void = () => {
   const audiocallWindow: HTMLElement = document.querySelector('.game-window');
 
   renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', `${Number.isInteger(getGroupNumber()) ? 'active' : ''}`]);
-
   addEventListeners();
 };
 
 const addAudiocall: () => void = () => {
   renderElement('main', templateAudiocall, document.body, 'audiocall');
   addAudiocallWindow();
-  beginAudiocall();
 };
 
 export { addAudiocall };
