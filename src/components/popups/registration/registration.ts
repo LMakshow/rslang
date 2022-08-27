@@ -12,6 +12,7 @@ const registration = () => {
       Loader.loginUser({ email, password });
     }).then(() => {
       form.innerHTML = '<h4 class="popup__success">Поздравляем, вы зарегистрированы!</h4>';
+      setTimeout(document.location.reload, 2000);
     })
       .catch((err) => {
         console.log('Login error', err);

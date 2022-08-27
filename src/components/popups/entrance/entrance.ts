@@ -13,6 +13,7 @@ const entrance = () => {
     const password = (document.querySelector('input[type=password]') as HTMLInputElement).value;
     Loader.loginUser({ email, password }).then(() => {
       form.innerHTML = '<h4 class="popup__success">Вход выполнен!</h4>';
+      setTimeout(document.location.reload, 2000);
     }).catch(() => {
       message.style.visibility = 'visible';
     });
