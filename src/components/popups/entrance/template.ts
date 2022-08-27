@@ -19,7 +19,7 @@ const templatePopupEntrance: string = `
               <button class="button-transparent popup__proposal_button" data-popup="registration">Регистрация</button>
             </div>
           </div>
-          <p class="popup__error">Неверное имя или пароль.</p>
+          <p class="popup__error no-display">Неверное имя или пароль.</p>
         </form>
       </div>
     </div>

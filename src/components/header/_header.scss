@@ -218,8 +218,6 @@
     }
 
     &_text {
-      text-align: right;
-
       @media (max-width: $width-tablet) {
         width: 0;
         opacity: 0;

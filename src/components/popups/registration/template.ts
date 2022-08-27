@@ -20,6 +20,7 @@ const templatePopupRegistration: string = `
               <button class="button-transparent popup__proposal_button" data-popup="entrance">Войти</button>
             </div>
           </div>
+          <p class="popup__error no-display">Ошибка регистрации. Может, такой пользователь уже есть?</p>
         </form>
       </div>
     </div>

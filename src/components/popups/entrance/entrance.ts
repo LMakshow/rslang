@@ -4,7 +4,7 @@ const entrance = () => {
   const form = document.getElementById('entranceForm') as HTMLFormElement;
   const message = document.querySelector('.popup__error') as HTMLParagraphElement;
   form.addEventListener('input', () => {
-    message.style.visibility = 'hidden';
+    message.classList.add('no-display');
   });
 
   form.addEventListener('submit', (e) => {
@@ -15,7 +15,7 @@ const entrance = () => {
       form.innerHTML = '<h4 class="popup__success">Вход выполнен!</h4>';
       setTimeout(document.location.reload.bind(document.location), 2000);
     }).catch(() => {
-      message.style.visibility = 'visible';
+      message.classList.remove('no-display');
     });
   });
 };

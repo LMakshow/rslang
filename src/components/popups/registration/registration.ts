@@ -2,6 +2,11 @@ import Loader from '../../../controllers/loader';
 
 const registration = () => {
   const form = document.getElementById('registrationForm') as HTMLFormElement;
+  const message = document.querySelector('.popup__error') as HTMLParagraphElement;
+
+  form.addEventListener('input', () => {
+    message.classList.add('no-display');
+  });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -15,7 +20,8 @@ const registration = () => {
       setTimeout(document.location.reload.bind(document.location), 2000);
     })
       .catch((err) => {
-        console.log('Login error', err);
+        message.classList.remove('no-display');
+        console.log('Registration error', err);
       });
   });
 };

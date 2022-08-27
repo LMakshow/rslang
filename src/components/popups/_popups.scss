@@ -230,9 +230,9 @@
   }
 
   &__error {
-    visibility: hidden;
     font-size: 1.8rem;
     color: red;
+    text-align: center;
   }
 
   &__success {
