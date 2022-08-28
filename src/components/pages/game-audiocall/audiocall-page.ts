@@ -10,6 +10,7 @@ import { getGroupPage } from '../vocabulary/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
+import { randomizerWord } from '../game-common/game-common';
 
 const groupNumber: number = getGroupNumber();
 
@@ -20,14 +21,6 @@ let allGroupWords: Words;
 
 const rightWords: Words = [];
 const wrongWords: Words = [];
-
-const randomizerWord = (wordsSet: Set<Word>) => {
-  const answer: Word = Array.from(wordsSet)[Math.floor(Math.random() * wordsSet.size)];
-
-  wordsSet.delete(answer);
-
-  return answer;
-};
 
 const randomizerWords = (array: Words, answer: Word) => {
   const wordsSet: Set<Word> = new Set([answer]);

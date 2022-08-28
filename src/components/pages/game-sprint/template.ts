@@ -15,7 +15,7 @@ const templateSprintWindow: string = `
     <div class="game-window__text-content">
       <h4 class="game-window__heading">Спринт</h4>
       <p class="game-window__text">Правильный перевод или нет? Дайте как можно больше ответов за 30 секунд!</p>
-      <p class="game-window__note">Для управления с клавиатуры: Если перевод неправильный — “◀” , если правильный — “▶”.</p>
+      <p class="game-window__note">Для управления с клавиатуры: Если перевод неправильный&nbsp;—&nbsp;“◀”, если правильный&nbsp;—&nbsp;“▶”.</p>
     </div>
     
     <div class="game-window__categories">
