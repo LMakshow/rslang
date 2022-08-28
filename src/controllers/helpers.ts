@@ -35,7 +35,7 @@ const renderElement = (
 };
 
 const getGroupNumber: () => number = () => {
-  const query = new URLSearchParams(location.search);
+  const query = new URLSearchParams(window.location.search);
   const numOfGroup: number | null = query.has('group') ? +query.get('group') : null;
 
   return numOfGroup;
