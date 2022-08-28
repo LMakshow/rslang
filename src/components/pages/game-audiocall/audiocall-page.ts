@@ -14,7 +14,6 @@ import { randomizerWord } from '../game-common/game-common';
 import {
   addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall,
 } from '../../../controllers/api-services/games';
-import { randomizerWord } from '../game-common/game-common';
 
 const groupNumber: number = getGroupNumber();
 
