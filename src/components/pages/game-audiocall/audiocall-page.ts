@@ -10,6 +10,7 @@ import { getGroupPage } from '../vocabulary/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
+import { randomizerWord } from '../game-common/game-common';
 import {
   addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall,
 } from '../../../controllers/api-services/games';
