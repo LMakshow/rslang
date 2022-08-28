@@ -13,14 +13,14 @@ const templateStatisticWord = (word: Word) => `
   </div>
 `;
 
-const templateGameResults = (rightWords: Words, wrongWords: Words) => `
+const templateGameResults = (rightWords: Words, wrongWords: Words, gameResults?: string) => `
   <div class="game-results">
     <span class="game-results__heading">Правильных ответов:  ${rightWords.length} из ${rightWords.length + wrongWords.length}</span>
     
     <div class="game-results__wrapper">
       <div class="game-results__mark">
         <span class="game-results__text">
-          ${countGameResults(rightWords, wrongWords)}
+          ${gameResults || countGameResults(rightWords, wrongWords)}
         </span>
       </div>
       <div class="game-results__statistic">
