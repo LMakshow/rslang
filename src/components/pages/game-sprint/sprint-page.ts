@@ -57,7 +57,8 @@ const comboCounter = () => {
 const renderGameResultsScreen: () => void = () => {
   const gameWrapper: HTMLElement = document.querySelector('.sprint-game__wrapper');
   const sprintGame: HTMLElement = document.querySelector('.sprint-game');
-  gameWrapper.innerHTML = templateGameResults(rightWords, wrongWords);
+  const gameResults = `Очки: ${score}`;
+  gameWrapper.innerHTML = templateGameResults(rightWords, wrongWords, gameResults);
 
   const statisticRight: HTMLElement = document.querySelector('.statistic-right');
   const statisticWrong: HTMLElement = document.querySelector('.statistic-wrong');
