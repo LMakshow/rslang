@@ -55,7 +55,7 @@ const templateVocab = (groupNumber: number) => `
     <div class="words-page__games">
       <a href="audiocall.html?group=${groupNumber}"><img src="./assets/images/vocabulary/game-audio.png" alt="Мини-игра Аудиовызов"
           class="words-page__audio-img"></a>
-      <a href="#"><img src="./assets/images/vocabulary/game-sprint.png" alt="Мини-игра Спринт"
+      <a href="sprint.html?group=${groupNumber}""><img src="./assets/images/vocabulary/game-sprint.png" alt="Мини-игра Спринт"
           class="words-page__sprint-img"></a>
     </div>
   </div>
