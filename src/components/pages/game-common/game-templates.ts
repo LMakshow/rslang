@@ -41,7 +41,7 @@ const templateGameResults = (rightWords: Words, wrongWords: Words) => `
     </div>
     <div class="game-results__buttons">
     <button class="button game-results__button game-results__button_play-game">Еще раз!</button>
-    <a class="button game-results__button game-results__button_textbook" href="textbook.html">В учебник</a>
+    <a class="button game-results__button game-results__button_textbook" href="vocabulary.html">В учебник</a>
     </div>
   </div>
   
