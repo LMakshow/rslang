@@ -5,7 +5,11 @@
 
   z-index: 0;
   background: center / cover no-repeat;
-  min-height: calc(100vh - 82px - 82.5px);
+  min-height: calc(100vh - #{$header-height} - #{$footer-height});
+
+  @media (max-width: $width-mobile) {
+    min-height: calc(100vh - #{$header-height} - #{$footer-mobile-height});
+  }
 
   &.a1 {
     background-image: url("./assets/images/vocabulary/background-a1.svg");

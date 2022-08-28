@@ -10,6 +10,10 @@
   background-size: cover;
   background-position-x: center;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
+
+  @media (max-width: $width-mobile) {
+    min-height: calc(100vh - #{$header-height} - #{$footer-mobile-height});
+  }
 }
 
 .sprint-game {
