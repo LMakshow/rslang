@@ -23,7 +23,9 @@ let score: number;
 let combo: number;
 let comboMod: number;
 let time: number;
+let timer: NodeJS.Timer;
 
+let gameStarted: boolean;
 let gameWords: Words;
 let gameWordsCurrent: Set<Word>;
 
@@ -83,6 +85,8 @@ const newGameRound = async () => {
       const newWords = await getVocabWords(groupNumber, pageNumberCurrent);
       gameWordsCurrent = new Set([...gameWordsCurrent, ...newWords]);
     } else {
+      clearInterval(timer);
+      gameStarted = false;
       renderGameResultsScreen();
     }
   }
@@ -123,7 +127,44 @@ const startGame = () => {
   comboMod = 1;
   time = Date.now() + 30000;
 
+  gameStarted = true;
+  timer = setInterval(() => {
+    const timeNumber = document.querySelector('.sprint-time__number');
+    if (timeNumber) timeNumber.innerHTML = String(Math.floor((time - Date.now()) / 1000));
+
+    if ((time - Date.now()) < 0) {
+      clearInterval(timer);
+      gameStarted = false;
+      renderGameResultsScreen();
+    }
+  }, 1000);
   newGameRound();
+};
+
+const clickCorrect = () => {
+  if (correctAnswer) {
+    score += 10 * comboMod;
+    combo += 1;
+    comboCounter();
+    rightWords.push(rightWord);
+  } else {
+    combo = 0;
+    comboCounter();
+    wrongWords.push(rightWord);
+  }
+};
+
+const clickWrong = () => {
+  if (!correctAnswer) {
+    score += 10 * comboMod;
+    combo += 1;
+    comboCounter();
+    rightWords.push(rightWord);
+  } else {
+    combo = 0;
+    comboCounter();
+    wrongWords.push(rightWord);
+  }
 };
 
 const addEventListeners: () => void = () => {
@@ -178,24 +219,30 @@ const addEventListeners: () => void = () => {
       return;
     }
 
-    if ((correctAnswer && eventTargetClosest === eventTargetCorrect)
-      || (!correctAnswer && eventTargetClosest === eventTargetWrong)) {
-      score += 10 * comboMod;
-      combo += 1;
-      comboCounter();
-      rightWords.push(rightWord);
+    if (eventTargetClosest === eventTargetCorrect) {
+      clickCorrect();
     }
 
-    if ((correctAnswer && eventTargetClosest === eventTargetWrong)
-      || (!correctAnswer && eventTargetClosest === eventTargetCorrect)) {
-      combo = 0;
-      comboCounter();
-      wrongWords.push(rightWord);
+    if (eventTargetClosest === eventTargetWrong) {
+      clickWrong();
     }
 
-    if (time - Date.now() < 0) {
-      renderGameResultsScreen();
-    } else newGameRound();
+    newGameRound();
+  });
+
+  // Выбор варианта ответа с помощью клавиатуры
+  document.addEventListener('keydown', (e) => {
+    if (!gameStarted) return;
+
+    if (e.code === 'ArrowLeft') {
+      clickWrong();
+      newGameRound();
+    }
+
+    if (e.code === 'ArrowRight') {
+      clickCorrect();
+      newGameRound();
+    }
   });
 
   // начало игры по кнопке Еще раз(страница результатов)
