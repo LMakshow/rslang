@@ -327,6 +327,15 @@
     height: 400px;
     scrollbar-width: thin;
     scrollbar-color: var(--color-accent) var(--color-btn);
+
+    &::-webkit-scrollbar {
+      width: 7px;
+      background-color: var(--color-btn);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-accent);
+    }
   }
 
   &__text {
