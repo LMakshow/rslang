@@ -10,6 +10,9 @@ import { getGroupPage } from '../vocabulary/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
+import {
+  addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall,
+} from '../../../controllers/api-services/games';
 
 const groupNumber: number = getGroupNumber();
 
@@ -105,7 +108,7 @@ const renderGameResultsScreen: () => void = () => {
   const buttonContinue: HTMLElement = document.querySelector('.button-continue');
   const audiocallGameWrapper: HTMLElement = document.querySelector('.audiocall-game__wrapper');
 
-  if (!pageWordsSet.size) {
+  if (pageWordsSet.size < 17) {
     buttonContinue.remove();
     renderElement('button', 'Результаты', audiocallGameContent, ['button', 'audiocall-content__button', 'button-results']);
 
@@ -181,15 +184,27 @@ const addEventListeners: () => void = () => {
 
     if (eventTargetClosest.dataset.id === rightAnswer.id) {
       rightWords.push(rightAnswer);
+
+      if (localStorage.getItem('token')) {
+        addUsersRightWordFromAudiocall(rightAnswer.id);
+      }
     }
 
     if (eventTargetClosest.dataset.id === 'button-dont-know') {
       wrongWords.push(rightAnswer);
+
+      if (localStorage.getItem('token')) {
+        addUsersWrongWordFromAudiocall(rightAnswer.id);
+      }
     }
 
     if (eventTargetClosest.dataset.id !== rightAnswer.id && eventTargetClosest.dataset.id !== 'button-dont-know') {
       eventTargetClosest.classList.add('wrong');
       wrongWords.push(rightAnswer);
+
+      if (localStorage.getItem('token')) {
+        addUsersWrongWordFromAudiocall(rightAnswer.id);
+      }
     }
 
     audiocallGameContainer.innerHTML = templateResults(rightAnswer);
