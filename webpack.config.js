@@ -14,6 +14,7 @@ const baseConfig = {
     vocabulary: [path.resolve(__dirname, './src/components/pages/vocabulary/vocabulary.ts')],
     team: [path.resolve(__dirname, './src/components/pages/team/team.ts')],
     audiocall: [path.resolve(__dirname, './src/components/pages/game-audiocall/audiocall.ts')],
+    sprint: [path.resolve(__dirname, './src/components/pages/game-sprint/sprint.ts')],
   },
   mode: 'development',
   devServer: {
@@ -84,6 +85,11 @@ const baseConfig = {
       template: path.resolve(__dirname, './src/components/pages/game-audiocall/audiocall.html'),
       filename: 'audiocall.html',
       chunks: ['audiocall'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/components/pages/game-sprint/sprint.html'),
+      filename: 'sprint.html',
+      chunks: ['sprint'],
     }),
     new CopyPlugin({
       patterns: [

@@ -141,7 +141,7 @@ const changeButtonContinue: () => void = () => {
 };
 
 const addEventListeners: () => void = () => {
-  //переход из ссылки хэдера Аудиовызов
+  // переход из ссылки хэдера Аудиовызов
   document.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.game-window__button[data-group]');
@@ -156,7 +156,7 @@ const addEventListeners: () => void = () => {
         startRound();
       });
   });
-// проигрывание аудио
+  // проигрывание аудио
   document.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.button-play-audio');
@@ -167,7 +167,7 @@ const addEventListeners: () => void = () => {
 
     playAudio(rightAnswer);
   });
-// выбор варианта ответа
+  // выбор варианта ответа
   document.addEventListener('click', (event: MouseEvent) => {
     const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
 
@@ -197,7 +197,7 @@ const addEventListeners: () => void = () => {
 
     changeButtonContinue();
   });
-// нажатие на кнопку Продолжить
+  // нажатие на кнопку Продолжить
   document.addEventListener('click', (event: MouseEvent) => {
     const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
     const eventTarget: HTMLElement = event.target as HTMLElement;
@@ -210,7 +210,7 @@ const addEventListeners: () => void = () => {
     audiocallGameContainer.innerHTML = '';
     startRound();
   });
-// начало игры по кнопке Начать
+  // начало игры по кнопке Начать
   document.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.button-play-game');
@@ -221,7 +221,7 @@ const addEventListeners: () => void = () => {
 
     startAudiocall(groupNumber, getGroupPage(groupNumber));
   });
-// начало игры по кнопке Еще раз(страница результатов)
+  // начало игры по кнопке Еще раз(страница результатов)
   document.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.game-results__button_play-game');
@@ -240,7 +240,7 @@ const addEventListeners: () => void = () => {
       startRound();
     }
   });
-// включение аудио на странице результатов игры
+  // включение аудио на странице результатов игры
   document.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.statistic-item__button');
@@ -263,7 +263,7 @@ const addAudiocallWindow: () => void = () => {
 };
 
 const addAudiocall: () => void = () => {
-  renderElement('main', templateAudiocall, document.body, 'audiocall');
+  renderElement('main', templateAudiocall, document.body, ['audiocall', 'color-audiocall']);
   addAudiocallWindow();
 };
 
