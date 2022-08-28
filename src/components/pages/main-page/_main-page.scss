@@ -25,7 +25,7 @@
   &__container {
     display: flex;
     justify-content: space-around;
-    align-items: end;
+    align-items: flex-end;
     flex: 0 0 87%;
 
     @media (max-width: $width-tablet) {
@@ -78,7 +78,7 @@
     display: flex;
     flex: 0 1 37.3%;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
 
     position: relative;
 

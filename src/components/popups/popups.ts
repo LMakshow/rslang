@@ -1,5 +1,6 @@
 import { Popup } from '../../models/popup.namespace';
 import { renderElement } from '../../controllers/helpers';
+import { addAutorization } from '../autorization/autorization';
 
 const addPopup = (template: string) => {
   const popup: HTMLElement = document.querySelector('.popup-overlay');
@@ -29,6 +30,7 @@ const createPopup: () => void = () => {
     destroyPopup();
 
     addPopup(Popup.templateMap[eventTargetClosest.dataset.popup as Popup.Type]);
+    addAutorization(eventTargetClosest.dataset.popup);
   });
 };
 
@@ -45,6 +47,7 @@ export const renderPopupOverlay: () => void = () => {
     }
 
     destroyPopup();
+    document.location.reload();
   });
 
   createPopup();

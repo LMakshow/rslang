@@ -32,7 +32,7 @@ body {
 }
 
 .text {
-  @include font(normal, 400, 2.2rem, 3rem);
+  @include font(normal, 400, 2.2rem, auto);
 
   @media (max-width: $width-mobile) {
     font-size: 1.8rem;

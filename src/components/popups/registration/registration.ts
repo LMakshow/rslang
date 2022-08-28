@@ -1,0 +1,29 @@
+import Loader from '../../../controllers/loader';
+
+const registration = () => {
+  const form = document.getElementById('registrationForm') as HTMLFormElement;
+  const message = document.querySelector('.popup__error') as HTMLParagraphElement;
+
+  form.addEventListener('input', () => {
+    message.classList.add('no-display');
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = (document.querySelector('input[type=text]') as HTMLInputElement).value;
+    const email = (document.querySelector('input[type=email]') as HTMLInputElement).value.toLowerCase();
+    const password = (document.querySelector('input[type=password]') as HTMLInputElement).value;
+    Loader.createUser({ email, name, password }).then(() => {
+      Loader.loginUser({ email, password });
+    }).then(() => {
+      form.innerHTML = '<h4 class="popup__success">Поздравляем, вы зарегистрированы!</h4>';
+      setTimeout(document.location.reload.bind(document.location), 2000);
+    })
+      .catch((err) => {
+        message.classList.remove('no-display');
+        console.log('Registration error', err);
+      });
+  });
+};
+
+export { registration };
