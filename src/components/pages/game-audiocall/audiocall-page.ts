@@ -101,7 +101,7 @@ const renderGameResultsScreen: () => void = () => {
   const buttonContinue: HTMLElement = document.querySelector('.button-continue');
   const audiocallGameWrapper: HTMLElement = document.querySelector('.audiocall-game__wrapper');
 
-  if (pageWordsSet.size < 17) {
+  if (!pageWordsSet.size) {
     buttonContinue.remove();
     renderElement('button', 'Результаты', audiocallGameContent, ['button', 'audiocall-content__button', 'button-results']);
 
