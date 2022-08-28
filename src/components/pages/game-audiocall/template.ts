@@ -5,7 +5,7 @@ import { countGameResults } from '../../../controllers/helpers';
 
 const templateAudiocall: string = `
   <div class="audiocall__wrapper wrapper">
-    <div class="game-window"></div>
+    <div class="game-window game-window_audiocall"></div>
   </div>
 `;
 
