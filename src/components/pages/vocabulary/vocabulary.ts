@@ -13,6 +13,7 @@ import { setWords } from './words-map';
 import { addLearnedPages, addActiveWords } from './active-classes';
 import {
   getGroupPage,
+  getStorageItem,
   savePages,
   setStorageItem,
 } from './storage';
@@ -28,7 +29,7 @@ const renderWordList: () => void = () => {
     page: getGroupPage(groupNumber),
   }).then((words: Words) => {
     const templatesOfWords: string = words.map((word, i) => {
-      if (i === 0) setStorageItem('id', word.id);
+      if (i === 0 && !getStorageItem('id')) setStorageItem('id', word.id);
       return templateWordCard(word);
     }).join('');
 
