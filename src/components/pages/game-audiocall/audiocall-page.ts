@@ -40,7 +40,7 @@ const randomizerWords = (array: Words, answer: Word) => {
   }
 
   const result: Words = Array.from(wordsSet).slice(1);
-  result.splice(Math.floor(Math.random() * result.length), 0, answer);
+  result.splice(Math.floor(Math.random() * result.length + 1), 0, answer);
 
   return result;
 };
