@@ -68,6 +68,7 @@ const addCardButtons = () => {
   const btnLearn = document.querySelector('.btn-learn');
   const card = document.querySelector(`.word-list__card[data-word="${wordId}"]`);
   btnHard.addEventListener('click', () => {
+    if (!card) return;
     card.classList.toggle('hard');
     card.classList.remove('learned');
     btnHard.classList.toggle('active');
@@ -76,6 +77,7 @@ const addCardButtons = () => {
     checkPage();
   });
   btnLearn.addEventListener('click', () => {
+    if (!card) return;
     card.classList.toggle('learned');
     card.classList.remove('hard');
     btnHard.classList.remove('active');
