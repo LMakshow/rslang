@@ -1,6 +1,6 @@
 import templateTextbook from './template';
 import { renderElement } from '../../../controllers/helpers';
-import { setStorageItem } from '../vocabulary/storage';
+import { setStorageItem } from '../../../controllers/api-services/storage';
 
 const saveGroupNum: () => void = () => {
   document.body.addEventListener('click', (event: MouseEvent) => {

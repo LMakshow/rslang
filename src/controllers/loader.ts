@@ -1,10 +1,9 @@
 import { BaseObject } from '../models/base.interface';
 import { mapToURLParams } from './api-services/param.helper';
 import { Words } from '../models/words.interface';
-import { setStorageValues } from './api-services/storage';
+import { setStorageValues, getStorageItem } from './api-services/storage';
 import { UsersWord } from '../models/users-words.interface';
 import { Statistics } from '../models/statistics.interface';
-import { getStorageItem } from '../components/pages/vocabulary/storage';
 
 export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 

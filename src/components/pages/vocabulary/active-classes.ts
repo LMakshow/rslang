@@ -1,8 +1,7 @@
-import { setStorageValues } from '../../../controllers/api-services/storage';
 import Loader from '../../../controllers/loader';
 import { Statistics } from '../../../models/statistics.interface';
 import { ReceivedUserWords, ReceivedUserWord } from '../../../models/users-words.interface';
-import { getStorageItem } from './storage';
+import { setStorageValues, getStorageItem } from '../../../controllers/api-services/storage';
 
 const addActiveBtns = (
   word: HTMLDivElement,

@@ -3,7 +3,7 @@ import { BaseObject } from '../../../models/base.interface';
 import { Statistics } from '../../../models/statistics.interface';
 import { ReceivedUserWord, UsersWord } from '../../../models/users-words.interface';
 import { addActiveCardBtns } from './active-classes';
-import { getStorageItem } from './storage';
+import { getStorageItem } from '../../../controllers/api-services/storage';
 
 const sendWord = (wordId: string, difficulty: string) => {
   const query = `users/${localStorage.getItem('userId')}/words/${wordId}`;

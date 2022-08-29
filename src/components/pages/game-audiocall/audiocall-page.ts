@@ -6,7 +6,7 @@ import {
   templateResults,
 } from './template';
 import { getWords } from '../../../controllers/api-services/vocabulary';
-import { getGroupPage } from '../vocabulary/storage';
+import { getGroupPage } from '../../../controllers/api-services/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
