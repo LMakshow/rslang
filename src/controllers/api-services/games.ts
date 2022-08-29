@@ -15,28 +15,29 @@ const putUserWord: (wordId: string, params: UsersWord) => Promise<UsersWord> = (
   params: UsersWord,
 ) => Loader.udateWord(wordId, params).then((res: Response) => res.json());
 
+const checkDifficultyWhenRightAnswer = (usersWord: UsersWord) => {
+  const wordProperties = usersWord;
+  if (((wordProperties.optional.audioSuccess + wordProperties.optional.sprintSuccess) > 3
+    && wordProperties.difficulty === 'new')) {
+    wordProperties.difficulty = 'learned';
+  }
+
+  if (((wordProperties.optional.audioSuccess + wordProperties.optional.sprintSuccess) > 5
+    && wordProperties.difficulty === 'hard')) {
+    wordProperties.difficulty = 'learned';
+  }
+
+  return wordProperties;
+};
+
 const addUsersRightWordFromAudiocall = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
-      const usersWord: UsersWord = { ...wordProperties };
+      let usersWord: UsersWord = { ...wordProperties };
 
       usersWord.optional.audioSuccess += 1;
-
-      if (
-        ((usersWord.optional.audioSuccess + usersWord.optional.sprintSuccess) > 3
-          && usersWord.difficulty === 'new')
-      ) {
-        usersWord.difficulty = 'learned';
-      }
-
-      if (
-        ((usersWord.optional.audioTotal + usersWord.optional.sprintSuccess) > 5
-          && usersWord.difficulty === 'hard')
-      ) {
-        usersWord.difficulty = 'learned';
-      }
-
       usersWord.optional.audioTotal += 1;
+      usersWord = checkDifficultyWhenRightAnswer(usersWord);
 
       putUserWord(_wordId, (({ id, wordId, ...rest }: UsersWord) => rest)(usersWord));
     })
@@ -87,4 +88,67 @@ const addUsersWrongWordFromAudiocall = (_wordId: string) => {
     });
 };
 
-export { addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall };
+const addUsersRightWordFromSprint = (_wordId: string) => {
+  getUserWord(_wordId)
+    .then((wordProperties: UsersWord) => {
+      let usersWord: UsersWord = { ...wordProperties };
+
+      usersWord.optional.sprintSuccess += 1;
+      usersWord.optional.sprintTotal += 1;
+      usersWord = checkDifficultyWhenRightAnswer(usersWord);
+
+      putUserWord(_wordId, (({ id, wordId, ...rest }: UsersWord) => rest)(usersWord));
+    })
+    .catch(() => {
+      postUserWord(
+        _wordId,
+        {
+          difficulty: 'new',
+          optional: {
+            audioSuccess: 0,
+            audioTotal: 0,
+            sprintSuccess: 1,
+            sprintTotal: 1,
+          },
+        },
+      );
+    });
+};
+
+const addUsersWrongWordFromSprint = (_wordId: string) => {
+  getUserWord(_wordId)
+    .then((wordProperties: UsersWord) => {
+      const usersWord: UsersWord = { ...wordProperties };
+
+      if (
+        (usersWord.difficulty === 'learned')
+      ) {
+        usersWord.difficulty = 'new';
+      }
+
+      usersWord.optional.sprintTotal += 1;
+
+      putUserWord(_wordId, (({ id, wordId, ...rest }: UsersWord) => rest)(usersWord));
+    })
+    .catch(() => {
+      postUserWord(
+        _wordId,
+        {
+          difficulty: 'new',
+          optional: {
+            audioSuccess: 0,
+            audioTotal: 0,
+            sprintSuccess: 0,
+            sprintTotal: 1,
+          },
+        },
+      );
+    });
+};
+
+export {
+  addUsersRightWordFromAudiocall,
+  addUsersWrongWordFromAudiocall,
+  addUsersRightWordFromSprint,
+  addUsersWrongWordFromSprint,
+};

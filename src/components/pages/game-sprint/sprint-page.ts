@@ -10,6 +10,7 @@ import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import { playAudio, randomizerWord } from '../game-common/game-common';
 import { templateGameResults } from '../game-common/game-templates';
+import { addUsersRightWordFromSprint, addUsersWrongWordFromSprint } from '../../../controllers/api-services/games';
 
 const groupNumber: number = getGroupNumber();
 let pageNumber: number;
@@ -146,10 +147,16 @@ const clickCorrect = () => {
     score += 10 * comboMod;
     combo += 1;
     comboCounter();
+    if (localStorage.getItem('token')) {
+      addUsersRightWordFromSprint(rightWord.id);
+    }
     rightWords.push(rightWord);
   } else {
     combo = 0;
     comboCounter();
+    if (localStorage.getItem('token')) {
+      addUsersWrongWordFromSprint(rightWord.id);
+    }
     wrongWords.push(rightWord);
   }
 };
@@ -159,10 +166,16 @@ const clickWrong = () => {
     score += 10 * comboMod;
     combo += 1;
     comboCounter();
+    if (localStorage.getItem('token')) {
+      addUsersRightWordFromSprint(rightWord.id);
+    }
     rightWords.push(rightWord);
   } else {
     combo = 0;
     comboCounter();
+    if (localStorage.getItem('token')) {
+      addUsersWrongWordFromSprint(rightWord.id);
+    }
     wrongWords.push(rightWord);
   }
 };
