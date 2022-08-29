@@ -12,7 +12,7 @@ export const newStatistics: Statistics = {
       5: [],
     },
     dayStat: {
-      today: `${new Date().setHours(0, 0, 0, 0)}`,
+      today: new Date().setHours(0, 0, 0, 0),
       newWordsAudiocall: 0,
       correctAudiocall: 0,
       totalAudiocall: 0,
@@ -23,7 +23,7 @@ export const newStatistics: Statistics = {
       maxStreakSprint: 0,
     },
     completeStat: {
-      [new Date().setHours(0, 0, 0, 0)]: [{ learnedWords: 0, totalLearnedWords: 0 }],
+      [new Date().setHours(0, 0, 0, 0)]: { learnedWords: 0, totalLearnedWords: 0 },
     },
   },
 };

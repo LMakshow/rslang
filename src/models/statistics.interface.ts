@@ -5,7 +5,7 @@ export interface Statistics {
       [group: string] : number[],
     };
     dayStat: {
-      today: string,
+      today: number,
       newWordsAudiocall: number,
       correctAudiocall: number,
       totalAudiocall: number,
@@ -16,10 +16,10 @@ export interface Statistics {
       maxStreakSprint: number,
     }
     completeStat: {
-      [date: string]: {
+      [date: number]: {
         learnedWords: number,
         totalLearnedWords: number,
-      }[]
+      }
     }
   }
 }
