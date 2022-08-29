@@ -323,4 +323,12 @@
 .results {
   width: 940px;
   height: 640px;
+
+  @media (max-width: $width-tablet) {
+    width: 740px;
+  }
+
+  @media (max-width: $width-mobile) {
+    min-height: 1019px;
+  }
 }

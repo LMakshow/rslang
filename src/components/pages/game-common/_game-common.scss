@@ -168,6 +168,14 @@
       gap: 16px;
     }
 
+    @media (max-width: $width-mobile) {
+      gap: 18px;
+    }
+
+    @media (max-width: 440px) {
+      width: 90%;
+    }
+
   }
 
   &__buttons {
@@ -180,6 +188,7 @@
     }
 
     @media (max-width: $width-mobile) {
+      gap: 17px;
       width: 80%;
       flex-wrap: wrap;
     }
@@ -288,13 +297,26 @@
   gap: 18px;
   align-items: center;
   justify-content: space-between;
-  padding: 24px;
+  padding: 24px 0;
+
+  @media (max-width: $width-mobile) {
+    position: relative;
+    width: 82%;
+    justify-content: space-between;
+    gap: 10px;
+  }
 
   &__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 95%;
+
+    @media (max-width: $width-mobile) {
+      flex-direction: column;
+      position: relative;
+      justify-content: flex-end;
+    }
   }
 
   &__heading {
@@ -302,6 +324,12 @@
     @include font(normal, 400, 4rem, 4.8rem);
     color: var(--color-dark);
     text-align: center;
+
+    @media (max-width: $width-mobile) {
+      font-size: 2.4rem;
+      line-height: 2.9rem;
+      width: 94%;
+    }
   }
 
   &__mark {
@@ -316,6 +344,16 @@
     justify-content: center;
     align-items: center;
     flex-basis: 42%;
+
+    @media (max-width: $width-tablet) {
+      width: 235px;
+      height: 276px;
+    }
+
+    @media (max-width: $width-mobile) {
+      position: absolute;
+      top: -70%;
+    }
   }
 
   &__statistic {
@@ -331,10 +369,18 @@
     &::-webkit-scrollbar {
       width: 7px;
       background-color: var(--color-btn);
+      border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb {
       background-color: var(--color-accent);
+      border-radius: 4px;
+    }
+
+    @media (max-width: $width-mobile) {
+      height: 491px;
+      flex-basis: auto;
+      min-width: 81%;
     }
   }
 
@@ -343,11 +389,23 @@
     @include font(normal, 400, 4.6rem, 6rem);
     color: var(--color-dark-accent);
     padding-top: 10px;
+
+    @media (max-width: $width-tablet) {
+      font-size: 3.4rem;
+      line-height: 4.1rem;
+    }
   }
 
   &__buttons {
     display: flex;
     gap: 24px;
+
+    @media (max-width: $width-mobile) {
+      position: absolute;
+      top: 31.5%;
+      flex-direction: column;
+      gap: 16px;
+    }
   }
 
   &__button {
@@ -358,28 +416,25 @@
     color: $color-basic;
     transition: background-color 0.3s linear;
 
+    @media (max-width: $width-mobile) {
+      border-width: 3px;
+      font-size: 1.6rem;
+    }
+
+    &:hover {
+      background-color: var(--color-accent)
+    }
+
+    &:active {
+      background-color: var(--color-active)
+    }
+
     &_play-game {
       background-color: var(--color-btn);
-
-      &:hover {
-        background-color: var(--color-accent)
-      }
-
-      &:active {
-        background-color: var(--color-active)
-      }
     }
 
     &_textbook {
       background-color: $color-additional;
-
-      &:hover {
-        background-color: var(--color-accent)
-      }
-
-      &:active {
-        background-color: var(--color-active)
-      }
     }
   }
 }
@@ -400,6 +455,10 @@
     @include font(normal, 400, 2.4rem, 2.9rem);
     color: var(--color-dark);
     text-align: center;
+  }
+
+  @media (max-width: $width-mobile) {
+    gap: 5px;
   }
 }
 
