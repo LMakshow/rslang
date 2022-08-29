@@ -3,7 +3,7 @@ import {
   templateAudiocall,
   templateAudiocallListening,
   templateAudiocallWindow,
-  templateResults, templateGameResults,
+  templateResults,
 } from './template';
 import { getWords } from '../../../controllers/api-services/vocabulary';
 import { getGroupPage } from '../vocabulary/storage';
@@ -14,6 +14,7 @@ import { randomizerWord } from '../game-common/game-common';
 import {
   addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall,
 } from '../../../controllers/api-services/games';
+import { templateGameResults } from '../game-common/game-templates';
 
 const groupNumber: number = getGroupNumber();
 

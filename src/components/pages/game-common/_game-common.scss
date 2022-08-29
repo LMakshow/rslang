@@ -346,6 +346,7 @@
     flex-basis: 42%;
 
     @media (max-width: $width-tablet) {
+      background-size: 235px 276px;
       width: 235px;
       height: 276px;
     }
@@ -357,7 +358,7 @@
   }
 
   &__statistic {
-    flex-basis: 42%;
+    flex-basis: 50%;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -380,7 +381,7 @@
     @media (max-width: $width-mobile) {
       height: 491px;
       flex-basis: auto;
-      min-width: 81%;
+      min-width: 100%;
     }
   }
 
