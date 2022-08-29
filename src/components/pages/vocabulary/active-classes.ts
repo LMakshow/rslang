@@ -3,8 +3,11 @@ import Loader from '../../../controllers/loader';
 import { Statistics } from '../../../models/statistics.interface';
 import { ReceivedUserWords, ReceivedUserWord } from '../../../models/users-words.interface';
 
-export const addActivePages = () => {
-  const url = `users/${localStorage.getItem('userId')}/statistics`;
+export const addLearnedPages = () => {
+  const userId = localStorage.getItem('userId');
+  if (!userId) return;
+
+  const url = `users/${userId}/statistics`;
   const token = localStorage.getItem('token');
   Loader.autorizedGet<Statistics>(url, token).then((data: Statistics) => {
     const serverGroup = data.optional.learnedPages[localStorage.getItem('group')];
@@ -18,7 +21,10 @@ export const addActivePages = () => {
 };
 
 export const addActiveWords = () => {
-  const url = `users/${localStorage.getItem('userId')}/words`;
+  const userId = localStorage.getItem('userId');
+  if (!userId) return;
+
+  const url = `users/${userId}/words`;
   const token = localStorage.getItem('token');
   Loader.autorizedGet<ReceivedUserWords>(url, token).then((serverWords) => {
     const storageWords: ReceivedUserWords = [];

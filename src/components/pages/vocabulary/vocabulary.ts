@@ -10,7 +10,7 @@ import { getWords } from '../../../controllers/api-services/vocabulary';
 import { Words } from '../../../models/words.interface';
 import { initWordCard, selectWordCard } from './word-card';
 import { setWords } from './words-map';
-import { addActivePages, addActiveWords } from './active-classes';
+import { addLearnedPages, addActiveWords } from './active-classes';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
 
@@ -79,7 +79,7 @@ const addSwitches: () => void = () => {
 
 const addPagination: () => void = () => {
   addSwitches();
-  addActivePages();
+  addLearnedPages();
 
   document.body.addEventListener('click', (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;

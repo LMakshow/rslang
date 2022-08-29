@@ -44,7 +44,7 @@ const checkPage = () => {
   const url = `users/${localStorage.getItem('userId')}/statistics`;
   const token = localStorage.getItem('token');
   const words = document.querySelectorAll('.word-list__card');
-  const learnedwords = Array.from(words).filter((word) => word.classList.contains('hard') || word.classList.contains('learned'));
+  const learnedwords = Array.from(words).filter((word) => word.classList.contains('learned'));
   const page = document.querySelector(`[data-page="${+localStorage.getItem('page') + 1}"]`);
   if (learnedwords.length === 20) {
     page.classList.add('learned');
