@@ -3,6 +3,7 @@ import { mapToURLParams } from './api-services/param.helper';
 import { Words } from '../models/words.interface';
 import { setStorageValues } from './api-services/storage';
 import { UsersWord } from '../models/users-words.interface';
+import { Statistics } from '../models/statistics.interface';
 
 export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 
@@ -28,7 +29,7 @@ export default class Loader {
     url: URL,
     method: string,
     token:string,
-    data?: BaseObject | UsersWord,
+    data?: BaseObject | UsersWord | Statistics,
   ): Promise<Response> {
     return fetch(url, {
       headers: {
@@ -102,5 +103,25 @@ export default class Loader {
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
     return Loader.autorizedLoad(query, 'DELETE', token);
+  };
+
+  public static updateLearnedPage = (data: Statistics, method: 'add' | 'remove') => {
+    const token = localStorage.getItem('token');
+    const query = new URL(`users/${localStorage.getItem('userId')}/statistics`, SERVER);
+    const group = +localStorage.getItem('group');
+    const page = +localStorage.getItem('page');
+
+    const params = { learnedWords: data.learnedWords, optional: data.optional };
+    if (method === 'add') params.optional.learnedPages[group].push(page);
+    else {
+      params.optional.learnedPages[group]
+        .splice(params.optional.learnedPages[group].indexOf(page), 1);
+    }
+    return Loader.autorizedLoad(query, 'PUT', token, params);
+  };
+
+  public static initStatistics = (userId: string, token: string, data: Statistics) => {
+    const query = new URL(`users/${userId}/statistics`, SERVER);
+    return Loader.autorizedLoad(query, 'PUT', token, data);
   };
 }

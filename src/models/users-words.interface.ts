@@ -14,3 +14,5 @@ export interface ReceivedUserWord extends UsersWord {
   id: string,
   wordId: string
 }
+
+export type ReceivedUserWords = ReceivedUserWord[];
