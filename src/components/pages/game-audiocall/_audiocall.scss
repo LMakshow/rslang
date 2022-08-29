@@ -49,7 +49,8 @@
     height: auto;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 440px) {
+    min-width: 0;
     width: 100%;
     border-left: 0;
     border-right: 0;
@@ -79,9 +80,16 @@
       gap: 36px;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 440px) {
+      align-items: center;
       border-left: 0;
       border-right: 0;
+    }
+  }
+
+  &__text-content {
+    @media (max-width: 440px) {
+      width: 85%;
     }
   }
 
@@ -165,6 +173,13 @@
       gap: 16px;
     }
 
+    @media (max-width: $width-mobile) {
+      gap: 18px;
+    }
+
+    @media (max-width: 440px) {
+      width: 85%;
+    }
   }
 
   &__buttons {
@@ -177,8 +192,13 @@
     }
 
     @media (max-width: $width-mobile) {
-      width: 80%;
+      gap: 17px;
+      width: 75%;
       flex-wrap: wrap;
+    }
+
+    @media (max-width: 440px) {
+      width: 80%;
     }
   }
 
@@ -238,6 +258,10 @@
     flex-direction: column;
     align-items: center;
     gap: 17px;
+
+    @media (max-width: 440px) {
+      width: 85%;
+    }
   }
 
   &__buttonBegin {
@@ -274,6 +298,17 @@
   box-shadow: 10px 10px $color-basic;
   border: 20px solid $color-additional;
 
+  @media (max-width: $width-tablet) {
+    width: 540px;
+    height: 740px;
+  }
+
+  @media (max-width: 440px) {
+    box-shadow: 0 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
   &__wrapper {
     width: 100%;
     height: 100%;
@@ -284,16 +319,33 @@
     padding-bottom: 12px;
 
     border: 5px solid $color-basic;
+
+    @media (max-width: $width-tablet) {
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 20px;
+
+      position: relative;
+    }
   }
 
   &__container {
     flex-basis: 52%;
+
+    @media (max-width: $width-tablet) {
+      position: absolute;
+      top: 20px;
+    }
   }
 
   &__listening {
     display: flex;
     flex-direction: column;
     padding-left: 17%;
+
+    @media (max-width: $width-tablet) {
+      padding-left: 0;
+    }
   }
 
   &__listening-button-wrapper {
@@ -331,6 +383,18 @@
     display: flex;
     flex-direction: column;
     gap: 3px;
+
+    @media (max-width: $width-tablet) {
+      flex-wrap: wrap;
+      flex-direction: initial;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 10px;
+    }
+
+    @media (max-width: $width-mobile) {
+      gap: 1px;
+    }
   }
 
   &__item {
@@ -344,6 +408,17 @@
     padding-bottom: 11px;
 
     cursor: pointer;
+
+    @media (max-width: $width-tablet) {
+      width: 228px;
+      height: 54px;
+    }
+
+    @media (max-width: $width-mobile) {
+      width: 198px;
+      height: 51px;
+      padding-bottom: 6px;
+    }
   }
 
   &__image {
@@ -352,6 +427,9 @@
     bottom: 0;
     right: 0;
     left: 0;
+
+    width: 100%;
+    height: 100%;
 
     &_bg {
       fill: $color-additional;
@@ -365,6 +443,14 @@
     text-align: center;
 
     position: relative;
+
+    @media (max-width: $width-tablet) {
+      font-size: 1.9rem;
+    }
+
+    @media (max-width: $width-mobile) {
+      font-size: 1.6rem;
+    }
   }
 
   &__button {
@@ -383,8 +469,14 @@
     &:active {
       background-color: $color-button-audiocall-active;
     }
-  }
 
+    @media (max-width: $width-mobile) {
+      width: 200px;
+      padding: 10px 0;
+      font-size: 1.6rem;
+      border-width: 3px;
+    }
+  }
 }
 
 .audiocall-results {
@@ -392,11 +484,19 @@
   flex-direction: column;
   gap: 24px;
 
+  @media (max-width: $width-tablet) {
+    gap: 15px;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: center;
+
+    @media (max-width: $width-mobile) {
+      gap: 4px;
+    }
   }
 
   &__name {
@@ -426,6 +526,14 @@
     width: 100%;
     max-width: 100%;
     max-height: 260px;
+
+    @media (max-width: $width-tablet) {
+      max-height: 245px;
+    }
+
+    @media (max-width: $width-mobile) {
+      max-width: 300px;
+    }
   }
 }
 
@@ -445,13 +553,26 @@
   gap: 18px;
   align-items: center;
   justify-content: space-between;
-  padding: 24px;
+  padding: 24px 0;
+
+  @media (max-width: $width-mobile) {
+    position: relative;
+    width: 82%;
+    justify-content: space-between;
+    gap: 10px;
+  }
 
   &__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 95%;
+    width: 100%;
+
+    @media (max-width: $width-mobile) {
+      flex-direction: column;
+      position: relative;
+      justify-content: end;
+    }
   }
 
   &__heading {
@@ -459,12 +580,18 @@
     @include font(normal, 400, 4rem, 4.8rem);
     color: $color-game;
     text-align: center;
+
+    @media (max-width: $width-mobile) {
+      font-size: 2.4rem;
+      line-height: 2.9rem;
+      width: 94%;
+    }
   }
 
   &__mark {
     background-image: url("./assets/images/game-audiocall/results-dog.svg");
     background-repeat: no-repeat;
-    background-size: 295px 347px;
+    background-size: 100% 100%;
     background-position: center;
 
     width: 320px;
@@ -473,6 +600,16 @@
     justify-content: center;
     align-items: center;
     flex-basis: 42%;
+
+    @media (max-width: $width-tablet) {
+      width: 235px;
+      height: 276px;
+    }
+
+    @media (max-width: $width-mobile) {
+      position: absolute;
+      top: -70%;
+    }
   }
 
   &__statistic {
@@ -481,7 +618,30 @@
     flex-direction: column;
     gap: 16px;
     overflow-y: auto;
-    height: 345px;
+    height: 340px;
+    scrollbar-color: $color-game $color-button-audiocall;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: $color-button-audiocall;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-game;
+      border-radius: 4px;
+    }
+
+    @media (max-width: $width-mobile) {
+      height: 491px;
+      flex-basis: auto;
+      min-width: 81%;
+    }
   }
 
   &__text {
@@ -489,12 +649,23 @@
     @include font(normal, 400, 5rem, 6rem);
     color: $color-game;
     padding-top: 10px;
+
+    @media (max-width: $width-tablet) {
+      font-size: 3.4rem;
+      line-height: 4.1rem;
+    }
   }
 
   &__buttons {
-    padding-top: 15px;
     display: flex;
     gap: 24px;
+
+    @media (max-width: $width-mobile) {
+      position: absolute;
+      top: 31.5%;
+      flex-direction: column;
+      gap: 16px;
+    }
   }
 
   &__button {
@@ -505,16 +676,21 @@
     color: $color-basic;
     transition: background-color 0.3s linear;
 
+    @media (max-width: $width-mobile) {
+      border-width: 3px;
+      font-size: 1.6rem;
+    }
+
+    &:hover {
+      background-color: $color-button-audiocall-accent;
+    }
+
+    &:active {
+      background-color: $color-button-audiocall-active;
+    }
+
     &_play-game {
       background-color: $color-button-audiocall;
-
-      &:hover {
-        background-color: $color-button-audiocall-accent;
-      }
-
-      &:active {
-        background-color: $color-button-audiocall-active;
-      }
     }
 
     &_textbook {
@@ -532,14 +708,18 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+    padding-right: 3px;
   }
 
   &__heading {
     font-family: $font-family-additional;
     @include font(normal, 400, 2.4rem, 2.9rem);
     color: $color-game;
+    text-align: center;
+  }
 
-    padding-bottom: 8px;
+  @media (max-width: $width-mobile) {
+    gap: 5px;
   }
 }
 
@@ -561,6 +741,14 @@
 .results {
   width: 940px;
   height: 640px;
+
+  @media (max-width: $width-tablet) {
+    width: 740px;
+  }
+
+  @media (max-width: $width-mobile) {
+    min-height: 1019px;
+  }
 }
 
 
