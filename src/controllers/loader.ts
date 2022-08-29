@@ -25,7 +25,7 @@ export default class Loader {
       .then((res: Response) => Loader.errorHandler(res));
   }
 
-  private static autorizedLoad(
+  private static authorizedLoad(
     url: URL,
     method: string,
     token:string,
@@ -71,7 +71,7 @@ export default class Loader {
       query.search = new URLSearchParams(mapToURLParams(params)).toString();
     }
 
-    return Loader.autorizedLoad(query, 'GET', token).then((res) => res.json());
+    return Loader.authorizedLoad(query, 'GET', token).then((res) => res.json());
   }
 
   public static createUser(user: BaseObject) {
@@ -88,21 +88,21 @@ export default class Loader {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
-    return Loader.autorizedLoad(query, 'POST', token, params);
+    return Loader.authorizedLoad(query, 'POST', token, params);
   };
 
   public static updateWord = (wordId: string, params: UsersWord) => {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
-    return Loader.autorizedLoad(query, 'PUT', token, params);
+    return Loader.authorizedLoad(query, 'PUT', token, params);
   };
 
   public static deleteWord = (wordId: string) => {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
-    return Loader.autorizedLoad(query, 'DELETE', token);
+    return Loader.authorizedLoad(query, 'DELETE', token);
   };
 
   public static updateLearnedPage = (data: Statistics, method: 'add' | 'remove') => {
@@ -117,11 +117,11 @@ export default class Loader {
       params.optional.learnedPages[group]
         .splice(params.optional.learnedPages[group].indexOf(page), 1);
     }
-    return Loader.autorizedLoad(query, 'PUT', token, params);
+    return Loader.authorizedLoad(query, 'PUT', token, params);
   };
 
   public static initStatistics = (userId: string, token: string, data: Statistics) => {
     const query = new URL(`users/${userId}/statistics`, SERVER);
-    return Loader.autorizedLoad(query, 'PUT', token, data);
+    return Loader.authorizedLoad(query, 'PUT', token, data);
   };
 }
