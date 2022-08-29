@@ -13,7 +13,7 @@ const postUserWord: (wordId: string, params: UsersWord) => Promise<UsersWord> = 
 const putUserWord: (wordId: string, params: UsersWord) => Promise<UsersWord> = (
   wordId: string,
   params: UsersWord,
-) => Loader.udateWord(wordId, params).then((res: Response) => res.json());
+) => Loader.updateWord(wordId, params).then((res: Response) => res.json());
 
 const checkDifficultyWhenRightAnswer = (usersWord: UsersWord) => {
   const wordProperties = usersWord;
@@ -85,7 +85,6 @@ const addUsersWrongWordFromAudiocall = (_wordId: string) => {
       );
     });
 };
-
 
 const addUsersRightWordFromSprint = (_wordId: string) => {
   getUserWord(_wordId)
