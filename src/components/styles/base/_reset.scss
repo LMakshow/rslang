@@ -22,7 +22,7 @@ input:focus {
 button {
   cursor: pointer;
   border: none;
-  background: inherit;
+  background: none;
   margin: 0;
   padding: 0;
   padding-inline: 0;
@@ -34,6 +34,9 @@ button {
 h1,
 h2,
 h3,
+h4,
+h5,
+h6,
 p,
 ul,
 ol,

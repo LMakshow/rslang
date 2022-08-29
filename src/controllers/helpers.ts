@@ -6,6 +6,8 @@
  * @param classStyle - add a style (string) or multiple styles (string array)
  * @param isAfter - if true, the created element is added at the end of the container
  */
+import { Words } from '../models/words.interface';
+
 const renderElement = (
   tag: string,
   templateElement: string,
@@ -20,7 +22,7 @@ const renderElement = (
   }
 
   if (Array.isArray(classStyle)) {
-    classStyle.forEach((style) => element.classList.add(style));
+    classStyle.filter(Boolean).forEach((style) => element.classList.add(style));
   }
 
   element.innerHTML = templateElement;
@@ -32,4 +34,32 @@ const renderElement = (
   }
 };
 
-export default renderElement;
+const getGroupNumber: () => number = () => {
+  const query = new URLSearchParams(window.location.search);
+  const numOfGroup: number | null = query.has('group') ? +query.get('group') : null;
+
+  return numOfGroup;
+};
+
+const countGameResults: (rightWords: Words, wrongWords: Words) => string = (
+  rightWords: Words,
+  wrongWords: Words,
+) => {
+  const mark: number = (rightWords.length * 100) / (rightWords.length + wrongWords.length);
+
+  switch (true) {
+    case mark === 100:
+      return 'Идеально!';
+    case mark >= 80:
+      return 'Отлично!';
+    case mark >= 60:
+      return 'Хорошо!';
+    case mark >= 40:
+      return 'Неплохо!';
+
+    default:
+      return 'Еще раз?';
+  }
+};
+
+export { renderElement, getGroupNumber, countGameResults };

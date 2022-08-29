@@ -124,4 +124,11 @@ export default class Loader {
     const query = new URL(`users/${userId}/statistics`, SERVER);
     return Loader.authorizedLoad(query, 'PUT', token, data);
   };
+
+  public static getUserWord: (wordId: string) => Promise<UsersWord> = (wordId: string) => {
+    const token = localStorage.getItem('token');
+    const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
+
+    return Loader.authorizedLoad(query, 'GET', token).then((res: Response) => res.json());
+  };
 }

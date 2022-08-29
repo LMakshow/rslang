@@ -1,5 +1,5 @@
 import templateHeader from './template';
-import renderElement from '../../controllers/helpers';
+import { renderElement } from '../../controllers/helpers';
 import { renderAutorization } from '../autorization/autorization';
 
 const closeMobileMenu: () => void = () => {

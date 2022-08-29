@@ -1,5 +1,5 @@
 import { Popup } from '../../models/popup.namespace';
-import renderElement from '../../controllers/helpers';
+import { renderElement } from '../../controllers/helpers';
 import { addAutorization } from '../autorization/autorization';
 
 const addPopup = (template: string) => {

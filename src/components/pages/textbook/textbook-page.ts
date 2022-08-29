@@ -1,5 +1,6 @@
 import templateTextbook from './template';
-import renderElement from '../../../controllers/helpers';
+import { renderElement } from '../../../controllers/helpers';
+import { setStorageItem } from '../vocabulary/storage';
 
 const saveGroupNum: () => void = () => {
   document.body.addEventListener('click', (event: MouseEvent) => {
@@ -10,9 +11,8 @@ const saveGroupNum: () => void = () => {
       return;
     }
 
-    localStorage.setItem('group', eventTargetClosest.dataset.group);
-    localStorage.setItem('page', '0');
-    localStorage.removeItem('id');
+    setStorageItem('group', eventTargetClosest.dataset.group);
+    setStorageItem('id', null);
   });
 };
 
