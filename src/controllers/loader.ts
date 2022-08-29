@@ -2,13 +2,15 @@ import { BaseObject } from '../models/base.interface';
 import { mapToURLParams } from './api-services/param.helper';
 import { Words } from '../models/words.interface';
 import { setStorageValues } from './api-services/storage';
+import { UsersWord } from '../models/users-words.interface';
+import { Statistics } from '../models/statistics.interface';
 
 export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 
 export default class Loader {
   private static errorHandler(res: Response): Response {
     if (!res.ok) {
-      throw Error(res.status.toString());
+      console.log('Loader error');
     }
 
     return res;
@@ -23,11 +25,11 @@ export default class Loader {
       .then((res: Response) => Loader.errorHandler(res));
   }
 
-  private static autorizedLoad(
+  private static authorizedLoad(
     url: URL,
     method: string,
     token:string,
-    data?: BaseObject,
+    data?: BaseObject | UsersWord | Statistics,
   ): Promise<Response> {
     return fetch(url, {
       headers: {
@@ -62,16 +64,14 @@ export default class Loader {
     return Loader.load(query, 'GET').then((res: Response) => res.json());
   }
 
-  public static autorizedGet(url: string, token:string, params?: BaseObject) {
+  public static autorizedGet<T>(url: string, token:string, params?: BaseObject): Promise<T> {
     const query = new URL(url, SERVER);
 
     if (params) {
       query.search = new URLSearchParams(mapToURLParams(params)).toString();
     }
 
-    return Loader.autorizedLoad(query, 'GET', token).then((res) => res.json()).then((data) => {
-      setStorageValues(['token', data.token], ['refreshToken', data.refreshToken], ['tokenTime', `${Date.now()}`]);
-    });
+    return Loader.authorizedLoad(query, 'GET', token).then((res) => res.json());
   }
 
   public static createUser(user: BaseObject) {
@@ -83,4 +83,45 @@ export default class Loader {
       setStorageValues(['userId', data.userId], ['name', data.name], ['token', data.token], ['refreshToken', data.refreshToken], ['tokenTime', `${Date.now()}`]);
     });
   }
+
+  public static createWord = (wordId: string, params: UsersWord) => {
+    const token = localStorage.getItem('token');
+    const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
+
+    return Loader.authorizedLoad(query, 'POST', token, params);
+  };
+
+  public static updateWord = (wordId: string, params: UsersWord) => {
+    const token = localStorage.getItem('token');
+    const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
+
+    return Loader.authorizedLoad(query, 'PUT', token, params);
+  };
+
+  public static deleteWord = (wordId: string) => {
+    const token = localStorage.getItem('token');
+    const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
+
+    return Loader.authorizedLoad(query, 'DELETE', token);
+  };
+
+  public static updateLearnedPage = (data: Statistics, method: 'add' | 'remove') => {
+    const token = localStorage.getItem('token');
+    const query = new URL(`users/${localStorage.getItem('userId')}/statistics`, SERVER);
+    const group = +localStorage.getItem('group');
+    const page = +localStorage.getItem('page');
+
+    const params = { learnedWords: data.learnedWords, optional: data.optional };
+    if (method === 'add') params.optional.learnedPages[group].push(page);
+    else {
+      params.optional.learnedPages[group]
+        .splice(params.optional.learnedPages[group].indexOf(page), 1);
+    }
+    return Loader.authorizedLoad(query, 'PUT', token, params);
+  };
+
+  public static initStatistics = (userId: string, token: string, data: Statistics) => {
+    const query = new URL(`users/${userId}/statistics`, SERVER);
+    return Loader.authorizedLoad(query, 'PUT', token, data);
+  };
 }
