@@ -18,7 +18,7 @@
 
 .sprint-game {
   width: 900px;
-  height: 600px;
+  height: 640px;
 
   background: url("./assets/images/game-sprint/sprint-game-bg.png") no-repeat;
   background-size: cover;
@@ -28,6 +28,18 @@
 
   box-shadow: 10px 10px $color-basic;
   border: 20px solid $color-additional;
+
+  @media (max-width: $width-mobile) {
+    height: auto;
+  }
+
+  @media (max-width: 400px) {
+    width: 100%;
+    min-width: auto;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: 0 10px $color-basic;
+  }
 
   &__wrapper {
     width: 100%;
@@ -40,11 +52,25 @@
     padding-bottom: 12px;
 
     border: 5px solid $color-basic;
+
+    @media (max-width: $width-mobile) {
+      gap: 24px;
+      padding: 16px;
+    }
   }
 
   &__hud {
     display: flex;
     justify-content: space-around;
+
+    @media (max-width: $width-mobile) {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @media (max-width: 540px) {
+      gap: 16px;
+    }
   }
 
   &__word {
@@ -56,7 +82,12 @@
   &__buttons {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    column-gap: 16px;
+    row-gap: 8px;
+
+    @media (max-width: $width-mobile) {
+      flex-wrap: wrap;
+    }
   }
 }
 
@@ -68,12 +99,21 @@
 
   &__label {
     font-family: $font-family-additional;
-    @include font(normal, 400, 3rem, auto);
+    @include font(normal, 400, 3rem, normal);
+
+    @media (max-width: $width-mobile) {
+      display: none;
+    }
   }
 
   &__img {
     width: 165px;
     height: 94px;
+
+    @media (max-width: $width-mobile) {
+      width: 140px;
+      height: 80px;
+    }
 
     &.x1 {
       background: url("./assets/images/game-sprint/sprint-combo-x1.png") no-repeat center/cover;
@@ -94,14 +134,29 @@
 
   &__number {
     font-family: $font-family-additional;
-    @include font(normal, 400, 5.4rem, auto);
+    @include font(normal, 400, 5.4rem, normal);
     margin-top: -8px;
+
+    @media (max-width: $width-mobile) {
+      font-size: 4rem;
+    }
   }
 }
 
 .sprint-resleeng-img {
-  width: 300px;
-  height: 330px;
+  width: 301px;
+  height: 350px;
+  margin-top: -8px;
+  margin-left: -24px;
+
+  @media (max-width: $width-mobile) {
+    width: 200px;
+    height: 230px;
+  }
+
+  @media (max-width: 540px) {
+    order: 1;
+  }
 
   &.x1 {
     background: url("./assets/images/game-sprint/sprint-bonus-art-x1.png") no-repeat center/cover;
@@ -128,17 +183,28 @@
 
   &__label {
     font-family: $font-family-additional;
-    @include font(normal, 400, 3rem, auto);
+    @include font(normal, 400, 3rem, normal);
+
+    @media (max-width: $width-mobile) {
+      display: none;
+    }
   }
 
   &__number {
     width: 160px;
-    height: 165px;
+    height: 168px;
     background: url("./assets/images/game-sprint/sprint-time-left-bg.png") no-repeat center/cover;
     font-family: $font-family-additional;
-    @include font(normal, 400, 5.4rem, auto);
-    padding: 55px 0 50px;
+    @include font(normal, 400, 5.4rem, normal);
+    padding: 57px 0 51px;
     text-align: center;
+
+    @media (max-width: $width-mobile) {
+      font-size: 4rem;
+      width: 120px;
+      height: 125px;
+      padding: 43px 0 38px;
+    }
   }
 }
 
@@ -150,7 +216,13 @@
   gap: 16px;
 
   &__text {
-    @include font(normal, 700, 4rem, auto);
+    @include font(normal, 700, 4rem, normal);
+    margin-left: 56px;
+
+    @media (max-width: $width-mobile) {
+      font-size: 2.8rem;
+      margin-left: 46px;
+    }
   }
 }
 
@@ -164,8 +236,17 @@
   background-color: $color-sprint-btn;
   transition: all 0.2s;
 
+  @media (max-width: $width-mobile) {
+    width: 30px;
+    height: 30px;
+  }
+
   &>.btn-listen__img {
     filter: $filter-sprint-dark-accent;
+
+    @media (max-width: $width-mobile) {
+      width: 17px;
+    }
   }
 
   &:hover {
@@ -183,8 +264,12 @@
 }
 
 .sprint-word-ru {
-  @include font(normal, 400, 3.4rem, auto);
+  @include font(normal, 400, 3.4rem, normal);
   text-align: center;
+
+  @media (max-width: $width-mobile) {
+    font-size: 2.4rem;
+  }
 }
 
 .sprint-button__wrong {
@@ -195,6 +280,12 @@
   @include font(normal, 700, 2.4rem, 100%);
   color: $color-basic;
   transition: background-color 0.3s linear;
+
+  @media (max-width: $width-mobile) {
+    font-size: 1.6rem;
+    padding: 8px 0;
+    border-width: 3px;
+  }
 
   &:hover {
     background-color: $color-sprint-btn-accent;
@@ -213,6 +304,12 @@
   @include font(normal, 700, 2.4rem, 100%);
   color: $color-basic;
   transition: background-color 0.3s linear;
+
+  @media (max-width: $width-mobile) {
+    font-size: 1.6rem;
+    padding: 8px 0;
+    border-width: 3px;
+  }
 
   &:hover {
     background-color: $color-sprint-btn-correct-accent;
