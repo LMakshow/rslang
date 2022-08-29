@@ -28,7 +28,7 @@ const renderWordList: () => void = () => {
     page: getGroupPage(groupNumber),
   }).then((words: Words) => {
     const templatesOfWords: string = words.map((word, i) => {
-      if (i === 0) localStorage.setItem('id', word.id);
+      if (i === 0) setStorageItem('id', word.id);
       return templateWordCard(word);
     }).join('');
 

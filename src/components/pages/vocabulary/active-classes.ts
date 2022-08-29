@@ -2,6 +2,7 @@ import { setStorageValues } from '../../../controllers/api-services/storage';
 import Loader from '../../../controllers/loader';
 import { Statistics } from '../../../models/statistics.interface';
 import { ReceivedUserWords, ReceivedUserWord } from '../../../models/users-words.interface';
+import { getStorageItem } from './storage';
 
 const addActiveBtns = (
   word: HTMLDivElement,
@@ -49,7 +50,7 @@ export const addActiveWords = () => {
     });
     setStorageValues(['userWords', JSON.stringify(storageWords)]);
 
-    const wordId = localStorage.getItem('id');
+    const wordId = getStorageItem('id') as string;
     const word = document.querySelector(`[data-word="${wordId}"]`) as HTMLDivElement;
     const btnHard = document.querySelector('.btn-hard') as HTMLButtonElement;
     const btnLearn = document.querySelector('.btn-learn') as HTMLButtonElement;
@@ -65,7 +66,7 @@ const updateGamesParams = (data: ReceivedUserWord) => {
 };
 
 export const addActiveCardBtns = (btnHard: HTMLButtonElement, btnLearn: HTMLButtonElement) => {
-  const word = document.querySelector(`[data-word="${localStorage.getItem('id')}"]`) as HTMLDivElement;
+  const word = document.querySelector(`[data-word="${getStorageItem('id') as string}"]`) as HTMLDivElement;
   if (!word) return;
   addActiveBtns(word, btnHard, btnLearn);
 

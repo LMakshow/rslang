@@ -3,6 +3,7 @@ import { BaseObject } from '../../../models/base.interface';
 import { Statistics } from '../../../models/statistics.interface';
 import { ReceivedUserWord, UsersWord } from '../../../models/users-words.interface';
 import { addActiveCardBtns } from './active-classes';
+import { getStorageItem } from './storage';
 
 const sendWord = (wordId: string, difficulty: string) => {
   const query = `users/${localStorage.getItem('userId')}/words/${wordId}`;
@@ -64,7 +65,7 @@ const addCardButtons = () => {
     });
   }
 
-  const wordId = localStorage.getItem('id');
+  const wordId = getStorageItem('id') as string;
   const btnHard = document.querySelector('.btn-hard');
   const btnLearn = document.querySelector('.btn-learn');
   const card = document.querySelector(`.word-list__card[data-word="${wordId}"]`);
