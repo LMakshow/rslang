@@ -10,7 +10,7 @@ export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 export default class Loader {
   private static errorHandler(res: Response): Response {
     if (!res.ok) {
-      throw Error(res.status.toString());
+      console.log('Loader error');
     }
 
     return res;

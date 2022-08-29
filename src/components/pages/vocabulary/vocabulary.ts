@@ -21,7 +21,10 @@ const renderWordList: () => void = () => {
     group: +localStorage.getItem('group'),
     page: +localStorage.getItem('page'),
   }).then((words: Words) => {
-    const templatesOfWords: string = words.map((word) => templateWordCard(word)).join('');
+    const templatesOfWords: string = words.map((word, i) => {
+      if (i === 0) localStorage.setItem('id', word.id);
+      return templateWordCard(word);
+    }).join('');
 
     wordList.innerHTML = templatesOfWords;
 
