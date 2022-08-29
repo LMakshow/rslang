@@ -63,7 +63,6 @@ const addUsersWrongWordFromAudiocall = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
       const usersWord: UsersWord = { ...wordProperties };
-
       if (usersWord.difficulty === 'learned') usersWord.difficulty = 'new';
       usersWord.optional.successStreak = 0;
       usersWord.optional.audioTotal += 1;
@@ -86,6 +85,7 @@ const addUsersWrongWordFromAudiocall = (_wordId: string) => {
       );
     });
 };
+
 
 const addUsersRightWordFromSprint = (_wordId: string) => {
   getUserWord(_wordId)

@@ -3,6 +3,7 @@ import { renderElement } from '../../../controllers/helpers';
 import { SERVER } from '../../../controllers/loader';
 import { wordDisplayBox } from './templates';
 import { getWords } from './words-map';
+import { addCardButtons } from './word-card-buttons';
 import { getStorageItem, setStorageItem } from './storage';
 
 const playAudio = (audio: HTMLAudioElement) => {
@@ -51,6 +52,7 @@ const selectWordCard = () => {
   eventTargetClosest.classList.add('active');
 
   renderElement('div', wordDisplayBox(getWords()[wordId]), wordDisplay, 'word-display__box');
+  addCardButtons();
   enableAudio(getWords()[wordId]);
 
   const buttonCardSwitchLeft: HTMLElement = document.querySelector('.word-display__btn.left');

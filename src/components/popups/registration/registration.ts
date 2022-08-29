@@ -1,4 +1,5 @@
 import Loader from '../../../controllers/loader';
+import { newStatistics } from '../../../controllers/statistics';
 
 const registration = () => {
   const form = document.getElementById('registrationForm') as HTMLFormElement;
@@ -13,12 +14,13 @@ const registration = () => {
     const name = (document.querySelector('input[type=text]') as HTMLInputElement).value;
     const email = (document.querySelector('input[type=email]') as HTMLInputElement).value.toLowerCase();
     const password = (document.querySelector('input[type=password]') as HTMLInputElement).value;
-    Loader.createUser({ email, name, password }).then(() => {
-      Loader.loginUser({ email, password });
-    }).then(() => {
-      form.innerHTML = '<h4 class="popup__success">Поздравляем, вы зарегистрированы!</h4>';
-      setTimeout(document.location.reload.bind(document.location), 2000);
-    })
+    return Loader.createUser({ email, name, password })
+      .then(() => Loader.loginUser({ email, password }))
+      .then(() => {
+        Loader.initStatistics(localStorage.getItem('userId'), localStorage.getItem('token'), newStatistics);
+        form.innerHTML = '<h4 class="popup__success">Поздравляем, вы зарегистрированы!</h4>';
+        setTimeout(document.location.reload.bind(document.location), 2000);
+      })
       .catch((err) => {
         message.classList.remove('no-display');
         console.log('Registration error', err);

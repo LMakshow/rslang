@@ -12,7 +12,7 @@ const templateVocab = (groupNumber: number) => `
       <div class="page-selector">
         <div class="page-selector__btn" data-page="1"></div>
         <div class="page-selector__btn" data-page="2"></div>
-        <div class="page-selector__btn learned" data-page="3"></div>
+        <div class="page-selector__btn" data-page="3"></div>
         <div class="page-selector__btn" data-page="4"></div>
         <div class="page-selector__btn" data-page="5"></div>
         <div class="page-selector__btn" data-page="6"></div>

@@ -27,7 +27,7 @@ export const renderAutorization = () => {
   if (isExpiredToken) {
     const url = `users/${localStorage.getItem('userId')}/tokens`;
     const token = localStorage.getItem('refreshToken');
-    Loader.autorizedGet(url, token).then(() => {
+    Loader.authorizedGet(url, token).then(() => {
       renderLogout();
     }).catch(() => {
       removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime');
