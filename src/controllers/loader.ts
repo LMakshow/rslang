@@ -4,6 +4,7 @@ import { Words } from '../models/words.interface';
 import { setStorageValues } from './api-services/storage';
 import { UsersWord } from '../models/users-words.interface';
 import { Statistics } from '../models/statistics.interface';
+import { getStorageItem } from '../components/pages/vocabulary/storage';
 
 export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 
@@ -64,7 +65,7 @@ export default class Loader {
     return Loader.load(query, 'GET').then((res: Response) => res.json());
   }
 
-  public static autorizedGet<T>(url: string, token:string, params?: BaseObject): Promise<T> {
+  public static authorizedGet<T>(url: string, token:string, params?: BaseObject): Promise<T> {
     const query = new URL(url, SERVER);
 
     if (params) {
@@ -108,8 +109,8 @@ export default class Loader {
   public static updateLearnedPage = (data: Statistics, method: 'add' | 'remove') => {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/statistics`, SERVER);
-    const group = +localStorage.getItem('group');
-    const page = +localStorage.getItem('page');
+    const group = +getStorageItem('group');
+    const page = +getStorageItem('page');
 
     const params = { learnedWords: data.learnedWords, optional: data.optional };
     if (method === 'add') params.optional.learnedPages[group].push(page);

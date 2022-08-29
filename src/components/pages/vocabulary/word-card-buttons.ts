@@ -7,7 +7,7 @@ import { getStorageItem } from './storage';
 
 const sendWord = (wordId: string, difficulty: string) => {
   const query = `users/${localStorage.getItem('userId')}/words/${wordId}`;
-  Loader.autorizedGet<ReceivedUserWord>(query, localStorage.getItem('token')).then((data: ReceivedUserWord) => {
+  Loader.authorizedGet<ReceivedUserWord>(query, localStorage.getItem('token')).then((data: ReceivedUserWord) => {
     if (difficulty === data.difficulty) { // Повторное нажатие на кнопку для снятия выделения
       const isUsedWord = Object.keys(data.optional)
         .filter((option) => ((data.optional as BaseObject)[option] as number) !== 0).length !== 0;
@@ -50,11 +50,11 @@ const checkPage = () => {
   const page = document.querySelector(`[data-page="${+getStorageItem('page') + 1}"]`);
   if (learnedwords.length === 20) {
     page.classList.add('learned');
-    Loader.autorizedGet<Statistics>(url, token).then((data: Statistics) => Loader.updateLearnedPage(data, 'add'));
+    Loader.authorizedGet<Statistics>(url, token).then((data: Statistics) => Loader.updateLearnedPage(data, 'add'));
   }
   if (learnedwords.length < 20 && page.classList.contains('learned')) {
     page.classList.remove('learned');
-    Loader.autorizedGet<Statistics>(url, token).then((data: Statistics) => Loader.updateLearnedPage(data, 'remove'));
+    Loader.authorizedGet<Statistics>(url, token).then((data: Statistics) => Loader.updateLearnedPage(data, 'remove'));
   }
 };
 

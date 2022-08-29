@@ -19,7 +19,7 @@ export const addLearnedPages = () => {
 
   const url = `users/${userId}/statistics`;
   const token = localStorage.getItem('token');
-  Loader.autorizedGet<Statistics>(url, token).then((data: Statistics) => {
+  Loader.authorizedGet<Statistics>(url, token).then((data: Statistics) => {
     const serverGroup = data.optional.learnedPages[localStorage.getItem('group')];
     const pageSelectors = document.querySelectorAll('.page-selector__btn');
     pageSelectors.forEach((selector) => {
@@ -36,7 +36,7 @@ export const addActiveWords = () => {
 
   const url = `users/${userId}/words`;
   const token = localStorage.getItem('token');
-  Loader.autorizedGet<ReceivedUserWords>(url, token).then((serverWords) => {
+  Loader.authorizedGet<ReceivedUserWords>(url, token).then((serverWords) => {
     const storageWords: ReceivedUserWords = [];
     const words = document.querySelectorAll('.word-list__card');
     (Array.from(words) as HTMLDivElement[]).forEach((word) => {
