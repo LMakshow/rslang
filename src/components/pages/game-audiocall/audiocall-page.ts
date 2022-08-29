@@ -166,12 +166,13 @@ const addEventListeners: () => void = () => {
   // выбор варианта ответа
   document.addEventListener('click', (event: MouseEvent) => {
     const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
+    const audiocallContentItems: HTMLElement = document.querySelector('.audiocall-content__items');
 
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('[data-id]');
     const eventTargetRight: HTMLElement = document.querySelector(`[data-id="${rightAnswer?.id}"]`);
 
-    if (!eventTargetClosest) {
+    if (!eventTargetClosest || eventTargetClosest.parentElement.classList.contains('no-events')) {
       return;
     }
 
@@ -202,6 +203,8 @@ const addEventListeners: () => void = () => {
 
     audiocallGameContainer.innerHTML = templateResults(rightAnswer);
     eventTargetRight.classList.add('right');
+    audiocallContentItems.classList.add('no-events');
+
 
     changeButtonContinue();
   });
