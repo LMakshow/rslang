@@ -3,13 +3,14 @@ import { mapToURLParams } from './api-services/param.helper';
 import { Words } from '../models/words.interface';
 import { setStorageValues } from './api-services/storage';
 import { UsersWord } from '../models/users-words.interface';
+import { Statistics } from '../models/statistics.interface';
 
 export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 
 export default class Loader {
   private static errorHandler(res: Response): Response {
     if (!res.ok) {
-      throw Error(res.status.toString());
+      console.log('Loader error');
     }
 
     return res;
@@ -24,11 +25,11 @@ export default class Loader {
       .then((res: Response) => Loader.errorHandler(res));
   }
 
-  private static autorizedLoad(
+  private static authorizedLoad(
     url: URL,
     method: string,
     token:string,
-    data?: BaseObject | UsersWord,
+    data?: BaseObject | UsersWord | Statistics,
   ): Promise<Response> {
     return fetch(url, {
       headers: {
@@ -70,7 +71,7 @@ export default class Loader {
       query.search = new URLSearchParams(mapToURLParams(params)).toString();
     }
 
-    return Loader.autorizedLoad(query, 'GET', token).then((res) => res.json());
+    return Loader.authorizedLoad(query, 'GET', token).then((res) => res.json());
   }
 
   public static createUser(user: BaseObject) {
@@ -87,27 +88,47 @@ export default class Loader {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
-    return Loader.autorizedLoad(query, 'POST', token, params);
+    return Loader.authorizedLoad(query, 'POST', token, params);
   };
 
-  public static udateWord = (wordId: string, params: UsersWord) => {
+  public static updateWord = (wordId: string, params: UsersWord) => {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
-    return Loader.autorizedLoad(query, 'PUT', token, params);
+    return Loader.authorizedLoad(query, 'PUT', token, params);
   };
 
   public static deleteWord = (wordId: string) => {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
-    return Loader.autorizedLoad(query, 'DELETE', token);
+    return Loader.authorizedLoad(query, 'DELETE', token);
+  };
+
+  public static updateLearnedPage = (data: Statistics, method: 'add' | 'remove') => {
+    const token = localStorage.getItem('token');
+    const query = new URL(`users/${localStorage.getItem('userId')}/statistics`, SERVER);
+    const group = +localStorage.getItem('group');
+    const page = +localStorage.getItem('page');
+
+    const params = { learnedWords: data.learnedWords, optional: data.optional };
+    if (method === 'add') params.optional.learnedPages[group].push(page);
+    else {
+      params.optional.learnedPages[group]
+        .splice(params.optional.learnedPages[group].indexOf(page), 1);
+    }
+    return Loader.authorizedLoad(query, 'PUT', token, params);
+  };
+
+  public static initStatistics = (userId: string, token: string, data: Statistics) => {
+    const query = new URL(`users/${userId}/statistics`, SERVER);
+    return Loader.authorizedLoad(query, 'PUT', token, data);
   };
 
   public static getUserWord: (wordId: string) => Promise<UsersWord> = (wordId: string) => {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
-    return Loader.autorizedLoad(query, 'GET', token).then((res: Response) => res.json());
+    return Loader.authorizedLoad(query, 'GET', token).then((res: Response) => res.json());
   };
 }

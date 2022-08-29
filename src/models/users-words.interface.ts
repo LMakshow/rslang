@@ -5,6 +5,7 @@ export interface UsersWord {
     audioTotal: number,
     sprintSuccess: number,
     sprintTotal: number,
+    successStreak?: number,
   },
   wordId?: string,
   id?: string,
@@ -16,3 +17,5 @@ export interface ReceivedUserWord extends UsersWord {
   id: string,
   wordId: string
 }
+
+export type ReceivedUserWords = ReceivedUserWord[];
