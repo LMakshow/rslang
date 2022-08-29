@@ -205,7 +205,6 @@ const addEventListeners: () => void = () => {
     eventTargetRight.classList.add('right');
     audiocallContentItems.classList.add('no-events');
 
-
     changeButtonContinue();
   });
   // нажатие на кнопку Продолжить
