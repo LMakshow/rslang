@@ -16,14 +16,14 @@ const sendWord = (wordId: string, difficulty: string) => {
           difficulty: 'new',
           optional: data.optional,
         };
-        Loader.udateWord(wordId, params);
+        Loader.updateWord(wordId, params);
       }
     } else {
       const params = {
         difficulty,
         optional: data.optional,
       };
-      Loader.udateWord(wordId, params);
+      Loader.updateWord(wordId, params);
     }
   })
     .catch(() => {
@@ -34,6 +34,7 @@ const sendWord = (wordId: string, difficulty: string) => {
           audioTotal: 0,
           sprintSuccess: 0,
           sprintTotal: 0,
+          successStreak: 0,
         },
       };
       return Loader.createWord(wordId, params);

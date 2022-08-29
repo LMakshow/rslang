@@ -91,7 +91,7 @@ export default class Loader {
     return Loader.autorizedLoad(query, 'POST', token, params);
   };
 
-  public static udateWord = (wordId: string, params: UsersWord) => {
+  public static updateWord = (wordId: string, params: UsersWord) => {
     const token = localStorage.getItem('token');
     const query = new URL(`users/${localStorage.getItem('userId')}/words/${wordId}`, SERVER);
 
