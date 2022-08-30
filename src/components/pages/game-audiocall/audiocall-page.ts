@@ -265,11 +265,41 @@ const addEventListeners: () => void = () => {
   });
 };
 
+const addKeyboardEventListeners: () => void = () => {
+  document.addEventListener('keyup', (event: KeyboardEvent) => {
+    const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
+    const audiocallContentItems: HTMLElement = document.querySelector('.audiocall-content__items');
+
+    const eventTarget: HTMLElement = event.target as HTMLElement;
+    const eventTargetClosest: HTMLElement = eventTarget.closest('[data-id]');
+    const eventTargetRight: HTMLElement = document.querySelector(`[data-id="${rightAnswer?.id}"]`);
+
+    let userAnswerSelect: HTMLElement;
+
+    console.log(event.code);
+
+    if (event.code === 'Space') {
+      userAnswerSelect = document.querySelector('.audiocall-content__button');
+    } else if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+      userAnswerSelect = document.querySelector('.button-play-audio');
+    } else {
+      userAnswerSelect = document.querySelector(`[data-number="${event.key}"]`);
+    }
+
+    if (!userAnswerSelect) {
+      return;
+    }
+
+    userAnswerSelect.click();
+  });
+};
+
 const addAudiocallWindow: () => void = () => {
   const audiocallWindow: HTMLElement = document.querySelector('.game-window');
 
   renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', `${Number.isInteger(getGroupNumber()) ? 'active' : ''}`]);
   addEventListeners();
+  addKeyboardEventListeners();
 };
 
 const addAudiocall: () => void = () => {
