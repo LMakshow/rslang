@@ -1,5 +1,4 @@
 import { Settings, Statistics } from '../models/statistics.interface';
-import Loader from './loader';
 
 export const newOptions: Settings = {
   optional: {
@@ -21,17 +20,19 @@ export const newStatistics: Statistics = {
       today: new Date().setHours(0, 0, 0, 0),
       newWords: 0,
       learnedWords: 0,
-      newWordsAudiocall: 0,
-      correctAudiocall: 0,
-      totalAudiocall: 0,
-      maxStreakAudiocall: 0,
-      newWordsSprint: 0,
-      correctSprint: 0,
-      totalSprint: 0,
-      maxStreakSprint: 0,
+      audioNewWords: 0,
+      audioSuccess: 0,
+      audioTotal: 0,
+      audioStreakCurr: 0,
+      audioStreakMax: 0,
+      sprintNewWords: 0,
+      sprintSuccess: 0,
+      sprintTotal: 0,
+      sprintStreakCurr: 0,
+      sprintStreakMax: 0,
     },
     completeStat: {
-      [new Date().setHours(0, 0, 0, 0)]: { learnedWords: 0, totalLearnedWords: 0 },
+      [new Date().setHours(0, 0, 0, 0)]: { newWords: 0, totalLearnedWords: 0 },
     },
   },
 };
@@ -40,50 +41,144 @@ export const createNewDayStat = () => ({
   today: new Date().setHours(0, 0, 0, 0),
   newWords: 0,
   learnedWords: 0,
-  newWordsAudiocall: 0,
-  correctAudiocall: 0,
-  totalAudiocall: 0,
-  maxStreakAudiocall: 0,
-  newWordsSprint: 0,
-  correctSprint: 0,
-  totalSprint: 0,
-  maxStreakSprint: 0,
+  audioNewWords: 0,
+  audioSuccess: 0,
+  audioTotal: 0,
+  audioStreakCurr: 0,
+  audioStreakMax: 0,
+  sprintNewWords: 0,
+  sprintSuccess: 0,
+  sprintTotal: 0,
+  sprintStreakCurr: 0,
+  sprintStreakMax: 0,
 });
 
-export const addLearnedWordStat = async () => {
-  const stat = await Loader.getStatistics();
+export const addNewWordAudiocallStat = (_stat: Statistics) => {
   const today = new Date().setHours(0, 0, 0, 0);
-  stat.learnedWords += 1;
+  const stat = _stat;
   if (stat.optional.completeStat[today]) {
-    stat.optional.completeStat[today].learnedWords += 1;
-    stat.optional.completeStat[today].totalLearnedWords = stat.learnedWords;
+    stat.optional.completeStat[today].newWords += 1;
   } else {
     stat.optional.completeStat[today] = {
-      learnedWords: 1,
+      newWords: 1,
       totalLearnedWords: stat.learnedWords,
     };
   }
 
   if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
-  stat.optional.dayStat.learnedWords += 1;
-  Loader.upsertStatistics(stat);
+  stat.optional.dayStat.newWords += 1;
+  stat.optional.dayStat.audioNewWords += 1;
+  return stat;
 };
 
-export const removeLearnedWordStat = async () => {
-  const stat = await Loader.getStatistics();
+export const addNewWordSprintStat = (_stat: Statistics) => {
   const today = new Date().setHours(0, 0, 0, 0);
-  stat.learnedWords -= 1;
+  const stat = _stat;
   if (stat.optional.completeStat[today]) {
-    stat.optional.completeStat[today].learnedWords -= 1;
+    stat.optional.completeStat[today].newWords += 1;
+  } else {
+    stat.optional.completeStat[today] = {
+      newWords: 1,
+      totalLearnedWords: stat.learnedWords,
+    };
+  }
+
+  if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
+  stat.optional.dayStat.newWords += 1;
+  stat.optional.dayStat.sprintNewWords += 1;
+  return stat;
+};
+
+export const addWrongAudiocallStat = (_stat: Statistics) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const stat = _stat;
+
+  if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
+  if (stat.optional.dayStat.audioStreakCurr > stat.optional.dayStat.audioStreakMax) {
+    stat.optional.dayStat.audioStreakMax = stat.optional.dayStat.audioStreakCurr;
+  }
+  stat.optional.dayStat.audioTotal += 1;
+  stat.optional.dayStat.audioStreakCurr = 0;
+
+  return stat;
+};
+
+export const addRightAudiocallStat = (_stat: Statistics) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const stat = _stat;
+
+  if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
+  stat.optional.dayStat.audioStreakCurr += 1;
+  stat.optional.dayStat.audioTotal += 1;
+  stat.optional.dayStat.audioSuccess += 1;
+  if (stat.optional.dayStat.audioStreakCurr > stat.optional.dayStat.audioStreakMax) {
+    stat.optional.dayStat.audioStreakMax = stat.optional.dayStat.audioStreakCurr;
+  }
+
+  return stat;
+};
+
+export const addWrongSprintStat = (_stat: Statistics) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const stat = _stat;
+
+  if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
+  if (stat.optional.dayStat.sprintStreakCurr > stat.optional.dayStat.sprintStreakMax) {
+    stat.optional.dayStat.sprintStreakMax = stat.optional.dayStat.sprintStreakCurr;
+  }
+  stat.optional.dayStat.sprintTotal += 1;
+  stat.optional.dayStat.sprintStreakCurr = 0;
+
+  return stat;
+};
+
+export const addRightSprintStat = (_stat: Statistics) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const stat = _stat;
+
+  if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
+  stat.optional.dayStat.sprintStreakCurr += 1;
+  stat.optional.dayStat.sprintTotal += 1;
+  stat.optional.dayStat.sprintSuccess += 1;
+  if (stat.optional.dayStat.sprintStreakCurr > stat.optional.dayStat.sprintStreakMax) {
+    stat.optional.dayStat.sprintStreakMax = stat.optional.dayStat.sprintStreakCurr;
+  }
+
+  return stat;
+};
+
+export const addLearnedWordStat = (_stat: Statistics) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const stat = _stat;
+  stat.learnedWords += 1;
+  if (stat.optional.completeStat[today]) {
     stat.optional.completeStat[today].totalLearnedWords = stat.learnedWords;
   } else {
     stat.optional.completeStat[today] = {
-      learnedWords: -1,
+      newWords: 0,
       totalLearnedWords: stat.learnedWords,
     };
   }
 
   if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
   stat.optional.dayStat.learnedWords += 1;
-  Loader.upsertStatistics(stat);
+  return stat;
+};
+
+export const removeLearnedWordStat = (_stat: Statistics) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const stat = _stat;
+  stat.learnedWords -= 1;
+  if (stat.optional.completeStat[today]) {
+    stat.optional.completeStat[today].totalLearnedWords = stat.learnedWords;
+  } else {
+    stat.optional.completeStat[today] = {
+      newWords: 0,
+      totalLearnedWords: stat.learnedWords,
+    };
+  }
+
+  if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
+  stat.optional.dayStat.learnedWords += 1;
+  return stat;
 };

@@ -13,18 +13,20 @@ export interface Statistics {
       today: number,
       newWords: number,
       learnedWords: number,
-      newWordsAudiocall: number,
-      correctAudiocall: number,
-      totalAudiocall: number,
-      maxStreakAudiocall: number,
-      newWordsSprint: number,
-      correctSprint: number,
-      totalSprint: number,
-      maxStreakSprint: number,
+      audioNewWords: number,
+      audioSuccess: number,
+      audioTotal: number,
+      audioStreakCurr: number,
+      audioStreakMax: number,
+      sprintNewWords: number,
+      sprintSuccess: number,
+      sprintTotal: number,
+      sprintStreakCurr: number,
+      sprintStreakMax: number,
     }
     completeStat: {
       [date: number]: {
-        learnedWords: number,
+        newWords: number,
         totalLearnedWords: number,
       }
     }

@@ -62,16 +62,19 @@ const addCardButtons = () => {
     sendWord(wordId, 'hard');
     checkPage();
   });
-  btnLearn.addEventListener('click', () => {
+  btnLearn.addEventListener('click', async () => {
     if (!card) return;
     card.classList.toggle('learned');
     card.classList.remove('hard');
     btnHard.classList.remove('active');
     btnLearn.classList.toggle('active');
     sendWord(wordId, 'learned');
+
+    const stat = await Loader.getStatistics();
     if (btnLearn.classList.contains('active')) {
-      addLearnedWordStat();
-    } else removeLearnedWordStat();
+      addLearnedWordStat(stat);
+    } else removeLearnedWordStat(stat);
+    Loader.upsertStatistics(stat);
     checkPage();
   });
   addActiveCardBtns(btnHard as HTMLButtonElement, btnLearn as HTMLButtonElement);

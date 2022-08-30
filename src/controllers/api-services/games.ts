@@ -1,5 +1,16 @@
 import Loader from '../loader';
 import { UsersWord } from '../../models/users-words.interface';
+import {
+  addLearnedWordStat,
+  removeLearnedWordStat,
+  addNewWordAudiocallStat,
+  addNewWordSprintStat,
+  addRightAudiocallStat,
+  addRightSprintStat,
+  addWrongAudiocallStat,
+  addWrongSprintStat,
+} from '../statistics';
+import { Statistics } from '../../models/statistics.interface';
 
 const getUserWord: (wordId: string) => Promise<UsersWord> = (
   wordId: string,
@@ -34,6 +45,18 @@ const addUsersRightWordFromAudiocall = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
       let usersWord: UsersWord = { ...wordProperties };
+      const { successStreak } = { ...wordProperties }.optional;
+      const diff = { ...wordProperties }.difficulty;
+
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addRightAudiocallStat(stat);
+          if ((successStreak >= 3 && diff === 'new')
+            || (successStreak >= 5 && diff === 'hard')) {
+            newStat = addLearnedWordStat(newStat);
+          }
+          Loader.upsertStatistics(newStat);
+        });
 
       usersWord.optional.audioSuccess += 1;
       usersWord.optional.successStreak += 1;
@@ -56,6 +79,12 @@ const addUsersRightWordFromAudiocall = (_wordId: string) => {
           },
         },
       );
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addNewWordAudiocallStat(stat);
+          newStat = addRightAudiocallStat(newStat);
+          Loader.upsertStatistics(newStat);
+        });
     });
 };
 
@@ -63,7 +92,18 @@ const addUsersWrongWordFromAudiocall = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
       const usersWord: UsersWord = { ...wordProperties };
-      if (usersWord.difficulty === 'learned') usersWord.difficulty = 'new';
+      const diff = { ...wordProperties }.difficulty;
+
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addWrongAudiocallStat(stat);
+          if (diff === 'learned') newStat = removeLearnedWordStat(newStat);
+          Loader.upsertStatistics(newStat);
+        });
+
+      if (diff === 'learned') {
+        usersWord.difficulty = 'new';
+      }
       usersWord.optional.successStreak = 0;
       usersWord.optional.audioTotal += 1;
 
@@ -83,6 +123,12 @@ const addUsersWrongWordFromAudiocall = (_wordId: string) => {
           },
         },
       );
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addNewWordAudiocallStat(stat);
+          newStat = addWrongAudiocallStat(newStat);
+          Loader.upsertStatistics(newStat);
+        });
     });
 };
 
@@ -90,6 +136,18 @@ const addUsersRightWordFromSprint = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
       let usersWord: UsersWord = { ...wordProperties };
+      const { successStreak } = { ...wordProperties }.optional;
+      const diff = { ...wordProperties }.difficulty;
+
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addRightSprintStat(stat);
+          if ((successStreak >= 3 && diff === 'new')
+            || (successStreak >= 5 && diff === 'hard')) {
+            newStat = addLearnedWordStat(newStat);
+          }
+          Loader.upsertStatistics(newStat);
+        });
 
       usersWord.optional.sprintSuccess += 1;
       usersWord.optional.sprintTotal += 1;
@@ -112,6 +170,12 @@ const addUsersRightWordFromSprint = (_wordId: string) => {
           },
         },
       );
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addNewWordSprintStat(stat);
+          newStat = addRightSprintStat(newStat);
+          Loader.upsertStatistics(newStat);
+        });
     });
 };
 
@@ -119,8 +183,18 @@ const addUsersWrongWordFromSprint = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
       const usersWord: UsersWord = { ...wordProperties };
+      const diff = { ...wordProperties }.difficulty;
 
-      if (usersWord.difficulty === 'learned') usersWord.difficulty = 'new';
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addWrongSprintStat(stat);
+          if (diff === 'learned') newStat = removeLearnedWordStat(newStat);
+          Loader.upsertStatistics(newStat);
+        });
+
+      if (diff === 'learned') {
+        usersWord.difficulty = 'new';
+      }
       usersWord.optional.successStreak = 0;
       usersWord.optional.sprintTotal += 1;
 
@@ -140,6 +214,12 @@ const addUsersWrongWordFromSprint = (_wordId: string) => {
           },
         },
       );
+      Loader.getStatistics()
+        .then((stat: Statistics) => {
+          let newStat = addNewWordSprintStat(stat);
+          newStat = addWrongSprintStat(newStat);
+          Loader.upsertStatistics(newStat);
+        });
     });
 };
 
