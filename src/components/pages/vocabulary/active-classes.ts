@@ -1,5 +1,5 @@
 import Loader from '../../../controllers/loader';
-import { Statistics } from '../../../models/statistics.interface';
+import { Settings } from '../../../models/statistics.interface';
 import { ReceivedUserWords, ReceivedUserWord } from '../../../models/users-words.interface';
 import { setStorageValues, getStorageItem } from '../../../controllers/api-services/storage';
 
@@ -16,17 +16,33 @@ export const addLearnedPages = () => {
   const userId = localStorage.getItem('userId');
   if (!userId) return;
 
-  const url = `users/${userId}/statistics`;
+  const url = `users/${userId}/settings`;
   const token = localStorage.getItem('token');
-  Loader.authorizedGet<Statistics>(url, token).then((data: Statistics) => {
+  Loader.authorizedGet<Settings>(url, token).then((data: Settings) => {
     const serverGroup = data.optional.learnedPages[localStorage.getItem('group')];
     const pageSelectors = document.querySelectorAll('.page-selector__btn');
-    pageSelectors.forEach((selector) => {
-      if (serverGroup.includes(+(selector as HTMLDivElement).dataset.page - 1)) {
+    pageSelectors.forEach((selector, index) => {
+      if (serverGroup[index] === 1) {
         selector.classList.add('learned');
       }
     });
   });
+};
+
+export const checkPage = () => {
+  const url = `users/${localStorage.getItem('userId')}/settings`;
+  const token = localStorage.getItem('token');
+  const words = document.querySelectorAll('.word-list__card');
+  const learnedwords = Array.from(words).filter((word) => word.classList.contains('learned'));
+  const page = document.querySelector(`[data-page="${+getStorageItem('page') + 1}"]`);
+  if (learnedwords.length === 20) {
+    page.classList.add('learned');
+    Loader.authorizedGet<Settings>(url, token).then((data: Settings) => Loader.updateLearnedPage(data, 'add'));
+  }
+  if (learnedwords.length < 20 && page.classList.contains('learned')) {
+    page.classList.remove('learned');
+    Loader.authorizedGet<Settings>(url, token).then((data: Settings) => Loader.updateLearnedPage(data, 'remove'));
+  }
 };
 
 const updateGamesParams = (data: ReceivedUserWord) => {
@@ -64,6 +80,7 @@ export const addActiveWords = () => {
     const recievedWord = (Array.from(storageWords) as ReceivedUserWords)
       .find((serverWord: ReceivedUserWord) => serverWord.wordId === word.dataset.word);
     if (recievedWord) updateGamesParams(recievedWord);
+    checkPage();
   });
 };
 

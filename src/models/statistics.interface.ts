@@ -1,23 +1,32 @@
-export interface Statistics {
-  learnedWords: number,
+export interface Settings {
   optional: {
     learnedPages: {
       [group: string] : number[],
     };
+  }
+}
+
+export interface Statistics {
+  learnedWords: number,
+  optional: {
     dayStat: {
       today: number,
-      newWordsAudiocall: number,
-      correctAudiocall: number,
-      totalAudiocall: number,
-      maxStreakAudiocall: number,
-      newWordsSprint: number,
-      correctSprint: number,
-      totalSprint: number,
-      maxStreakSprint: number,
+      newWords: number,
+      learnedWords: number,
+      audioNewWords: number,
+      audioSuccess: number,
+      audioTotal: number,
+      audioStreakCurr: number,
+      audioStreakMax: number,
+      sprintNewWords: number,
+      sprintSuccess: number,
+      sprintTotal: number,
+      sprintStreakCurr: number,
+      sprintStreakMax: number,
     }
     completeStat: {
       [date: number]: {
-        learnedWords: number,
+        newWords: number,
         totalLearnedWords: number,
       }
     }

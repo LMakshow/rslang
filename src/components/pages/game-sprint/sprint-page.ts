@@ -1,4 +1,5 @@
-import { filterAsync, getGroupNumber, renderElement } from '../../../controllers/helpers';
+/* eslint-disable no-await-in-loop */
+import { getGroupNumber, notLearnedMongoDBQuery, renderElement } from '../../../controllers/helpers';
 import {
   templateSprint,
   templateSprintGame,
@@ -12,7 +13,7 @@ import { playAudio, randomizerWord } from '../game-common/game-common';
 import { templateGameResults } from '../game-common/game-templates';
 import { addUsersRightWordFromSprint, addUsersWrongWordFromSprint } from '../../../controllers/api-services/games';
 import Loader from '../../../controllers/loader';
-import { ReceivedUserWord } from '../../../models/users-words.interface';
+import { AggregatedUserWord, AggregatedUserWords, ReceivedUserAggregatedWords } from '../../../models/users-words.interface';
 
 const groupNumber: number = getGroupNumber();
 let pageNumber: number;
@@ -29,8 +30,8 @@ let time: number;
 let timer: NodeJS.Timer;
 
 let gameStarted: boolean;
-let gameWords: Words;
-let gameWordsCurrent: Set<Word>;
+let gameWords: Words | AggregatedUserWords;
+let gameWordsCurrent: Set<Word | AggregatedUserWord>;
 
 const rightWords: Words = [];
 const wrongWords: Words = [];
@@ -48,18 +49,32 @@ const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
 };
 
 /** Генерация слов при переходе со страницы учебника.
- * Если авторизован, удалить изученные слова из списка слов. */
+ * Если не авторизован, вернуть слова с указанной страницы.
+ * Если авторизован, запросить и вернуть только
+ * изученные слова с указанной страницы. */
 const getVocabWords = async (group: number, page: number) => {
-  const promiseArray: Promise<Words> = getWords({ group, page });
   const userId = localStorage.getItem('userId');
-  if (!userId) return promiseArray.then((words: Words) => words);
 
-  const url = `users/${userId}/words`;
+  if (!userId) {
+    const promiseArray: Promise<Words> = getWords({ group, page });
+    return promiseArray.then((words: Words) => words);
+  }
+
+  const query = `group=${group}&page=0&wordsPerPage=20&filter=${notLearnedMongoDBQuery(page)}`;
+  const url = `users/${userId}/aggregatedWords?${query}`;
   const token = localStorage.getItem('token');
 
-  const checkLearned = async (word: Word) => (await Loader.authorizedGet<ReceivedUserWord>(`${url}/${word.id}`, token)).difficulty !== 'learned';
-  const vocabWords = filterAsync(await promiseArray, checkLearned);
-  return vocabWords;
+  const vocabWords = (
+    await Loader.authorizedGet<ReceivedUserAggregatedWords>(url, token)
+  )[0].paginatedResults;
+
+  const vocabWordsWithId = vocabWords.map((word) => {
+    const newWord = word;
+    // eslint-disable-next-line no-underscore-dangle
+    newWord.id = newWord._id;
+    return word;
+  });
+  return vocabWordsWithId;
 };
 
 // Счётчик комбо
@@ -98,11 +113,12 @@ const newGameRound = async () => {
   const sprint: HTMLButtonElement = document.querySelector('.sprint');
 
   if (gameWordsCurrent.size < 1) {
-    if (pageNumberCurrent > 0) {
+    while (pageNumberCurrent > 0 && gameWordsCurrent.size < 1) {
       pageNumberCurrent -= 1;
       const newWords = await getVocabWords(groupNumber, pageNumberCurrent);
-      gameWordsCurrent = new Set([...gameWordsCurrent, ...newWords]);
-    } else {
+      gameWordsCurrent = new Set(newWords);
+    }
+    if (gameWordsCurrent.size < 1) {
       clearInterval(timer);
       gameStarted = false;
       renderGameResultsScreen();
@@ -311,7 +327,8 @@ const addEventListeners: () => void = () => {
 };
 
 /** Генерация стартового экрана.
- * Если с учебника, сразу загружает слова и кнопку Начать.
+ * Если с учебника (есть номер страницы), сразу загружает слова
+ * и показывает кнопку Начать (блокируя ее на время загрузки).
  * Если с меню, покажет экран выбора категории */
 const addSprintWindow: () => Promise<void> = async () => {
   const sprintWindow: HTMLElement = document.querySelector('.game-window');
@@ -321,22 +338,25 @@ const addSprintWindow: () => Promise<void> = async () => {
     const startGameButton: HTMLButtonElement = document.querySelector('.button-play-game');
     startGameButton.disabled = true;
     gameWords = await getVocabWords(groupNumber, pageNumber);
+
     while (gameWords.length < 1) {
       if (pageNumber === 0) {
         const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
         const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
         gameVocabText.classList.add('no-display');
         gameNoVocabWordsText.classList.remove('no-display');
-        // eslint-disable-next-line no-await-in-loop
         gameWords = await getGroupWords(groupNumber);
         break;
       }
       pageNumber -= 1;
-      // eslint-disable-next-line no-await-in-loop
       gameWords = await getVocabWords(groupNumber, pageNumber);
     }
+
+    console.log(`Загружено ${gameWords.length} слов`);
     startGameButton.disabled = false;
-  } else {
+  }
+
+  if (pageNumber === undefined || pageNumber < 0) {
     renderElement('div', templateSprintWindow, sprintWindow, 'game-window__wrapper');
   }
 
