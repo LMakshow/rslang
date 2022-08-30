@@ -3,16 +3,18 @@ import {
   templateAudiocall,
   templateAudiocallListening,
   templateAudiocallWindow,
-  templateResults, templateGameResults,
+  templateResults,
 } from './template';
 import { getWords } from '../../../controllers/api-services/vocabulary';
-import { getGroupPage } from '../vocabulary/storage';
+import { getGroupPage } from '../../../controllers/api-services/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
+import { randomizerWord } from '../game-common/game-common';
 import {
   addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall,
 } from '../../../controllers/api-services/games';
+import { templateGameResults } from '../game-common/game-templates';
 
 const groupNumber: number = getGroupNumber();
 
@@ -24,14 +26,6 @@ let allGroupWords: Words;
 const rightWords: Words = [];
 const wrongWords: Words = [];
 
-const randomizerWord = (wordsSet: Set<Word>) => {
-  const answer: Word = Array.from(wordsSet)[Math.floor(Math.random() * wordsSet.size)];
-
-  wordsSet.delete(answer);
-
-  return answer;
-};
-
 const randomizerWords = (array: Words, answer: Word) => {
   const wordsSet: Set<Word> = new Set([answer]);
 
@@ -41,7 +35,6 @@ const randomizerWords = (array: Words, answer: Word) => {
 
   const result: Words = Array.from(wordsSet).slice(1);
   result.splice(Math.floor(Math.random() * (result.length + 1)), 0, answer);
-
   return result;
 };
 
@@ -280,7 +273,7 @@ const addAudiocallWindow: () => void = () => {
 };
 
 const addAudiocall: () => void = () => {
-  renderElement('main', templateAudiocall, document.body, 'audiocall');
+  renderElement('main', templateAudiocall, document.body, ['audiocall', 'color-audiocall']);
   addAudiocallWindow();
 };
 

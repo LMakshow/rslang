@@ -16,7 +16,7 @@ import {
   getStorageItem,
   savePages,
   setStorageItem,
-} from './storage';
+} from '../../../controllers/api-services/storage';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
 const groupNumber: number = getGroupNumber() || 0;

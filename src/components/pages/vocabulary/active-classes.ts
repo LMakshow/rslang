@@ -1,8 +1,7 @@
-import { setStorageValues } from '../../../controllers/api-services/storage';
 import Loader from '../../../controllers/loader';
 import { Statistics } from '../../../models/statistics.interface';
 import { ReceivedUserWords, ReceivedUserWord } from '../../../models/users-words.interface';
-import { getStorageItem } from './storage';
+import { setStorageValues, getStorageItem } from '../../../controllers/api-services/storage';
 
 const addActiveBtns = (
   word: HTMLDivElement,
@@ -30,6 +29,13 @@ export const addLearnedPages = () => {
   });
 };
 
+const updateGamesParams = (data: ReceivedUserWord) => {
+  document.querySelector('.games-stat__audio-success').textContent = String(data.optional.audioSuccess);
+  document.querySelector('.games-stat__audio-total').textContent = String(data.optional.audioTotal);
+  document.querySelector('.games-stat__sprint-success').textContent = String(data.optional.sprintSuccess);
+  document.querySelector('.games-stat__sprint-total').textContent = String(data.optional.sprintTotal);
+};
+
 export const addActiveWords = () => {
   const userId = localStorage.getItem('userId');
   if (!userId) return;
@@ -55,14 +61,10 @@ export const addActiveWords = () => {
     const btnHard = document.querySelector('.btn-hard') as HTMLButtonElement;
     const btnLearn = document.querySelector('.btn-learn') as HTMLButtonElement;
     addActiveBtns(word, btnHard, btnLearn);
+    const recievedWord = (Array.from(storageWords) as ReceivedUserWords)
+      .find((serverWord: ReceivedUserWord) => serverWord.wordId === word.dataset.word);
+    if (recievedWord) updateGamesParams(recievedWord);
   });
-};
-
-const updateGamesParams = (data: ReceivedUserWord) => {
-  document.querySelector('.games-stat__audio-success').textContent = String(data.optional.audioSuccess);
-  document.querySelector('.games-stat__audio-total').textContent = String(data.optional.audioTotal);
-  document.querySelector('.games-stat__sprint-success').textContent = String(data.optional.sprintSuccess);
-  document.querySelector('.games-stat__sprint-total').textContent = String(data.optional.sprintTotal);
 };
 
 export const addActiveCardBtns = (btnHard: HTMLButtonElement, btnLearn: HTMLButtonElement) => {

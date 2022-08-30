@@ -5,7 +5,7 @@ export interface UsersWord {
     audioTotal: number,
     sprintSuccess: number,
     sprintTotal: number,
-    successStreak?: number,
+    successStreak: number,
   },
   wordId?: string,
   id?: string,

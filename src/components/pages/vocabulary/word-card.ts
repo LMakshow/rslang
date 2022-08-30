@@ -4,7 +4,7 @@ import { SERVER } from '../../../controllers/loader';
 import { wordDisplayBox } from './templates';
 import { getWords } from './words-map';
 import { addCardButtons } from './word-card-buttons';
-import { getStorageItem, setStorageItem } from './storage';
+import { getStorageItem, setStorageItem } from '../../../controllers/api-services/storage';
 
 const playAudio = (audio: HTMLAudioElement) => {
   audio?.play();

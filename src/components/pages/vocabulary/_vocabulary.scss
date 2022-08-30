@@ -5,7 +5,11 @@
 
   z-index: 0;
   background: center / cover no-repeat;
-  min-height: calc(100vh - 82px - 82.5px);
+  min-height: calc(100vh - #{$header-height} - #{$footer-height});
+
+  @media (max-width: $width-mobile) {
+    min-height: calc(100vh - #{$header-height} - #{$footer-mobile-height});
+  }
 
   &.a1 {
     background-image: url("./assets/images/vocabulary/background-a1.svg");
@@ -481,7 +485,7 @@
   display: flex;
   align-items: center;
   text-align: center;
-  @include font(normal, 700, 2rem, auto);
+  @include font(normal, 700, 2rem, normal);
   height: 50%;
 
   @media (max-width: $width-desktop) {
@@ -650,7 +654,7 @@
 }
 
 .word-display__en {
-  @include font(normal, 700, 3.4rem, auto);
+  @include font(normal, 700, 3.4rem, normal);
 
   @media (max-width: $width-desktop) {
     font-size: 3.2rem;
@@ -663,7 +667,7 @@
 
 .word-display__ru,
 .word-display__sound {
-  @include font(normal, 400, 2.2rem, auto);
+  @include font(normal, 400, 2.2rem, normal);
   text-align: center;
 
   @media (max-width: $width-laptop) {
@@ -897,7 +901,7 @@
 .word-display__example-head {
   font-family: $font-family-additional;
   color: var(--color-dark);
-  @include font(normal, 700, 1.8rem, auto);
+  @include font(normal, 700, 1.8rem, normal);
   text-align: left;
 }
 
@@ -910,7 +914,7 @@
 .word-display__meaning-en,
 .word-display__example-en {
   text-align: left;
-  @include font(normal, 400, 1.8rem, auto);
+  @include font(normal, 400, 1.8rem, normal);
 
   @media (max-width: $width-desktop) {
     font-size: 1.6rem;
@@ -924,7 +928,7 @@
 .word-display__meaning-ru,
 .word-display__example-ru {
   text-align: right;
-  @include font(normal, 400, 1.8rem, auto);
+  @include font(normal, 400, 1.8rem, normal);
 
   @media (max-width: $width-desktop) {
     font-size: 1.6rem;
