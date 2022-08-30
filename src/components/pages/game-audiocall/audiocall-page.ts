@@ -265,11 +265,32 @@ const addEventListeners: () => void = () => {
   });
 };
 
+const addKeyboardEventListeners: () => void = () => {
+  document.addEventListener('keyup', (event: KeyboardEvent) => {
+    let userAnswerSelect: HTMLElement;
+
+    if (event.code === 'Space') {
+      userAnswerSelect = document.querySelector('.audiocall-content__button');
+    } else if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+      userAnswerSelect = document.querySelector('.button-play-audio');
+    } else {
+      userAnswerSelect = document.querySelector(`[data-number="${event.key}"]`);
+    }
+
+    if (!userAnswerSelect) {
+      return;
+    }
+
+    userAnswerSelect.click();
+  });
+};
+
 const addAudiocallWindow: () => void = () => {
   const audiocallWindow: HTMLElement = document.querySelector('.game-window');
 
   renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', `${Number.isInteger(getGroupNumber()) ? 'active' : ''}`]);
   addEventListeners();
+  addKeyboardEventListeners();
 };
 
 const addAudiocall: () => void = () => {
