@@ -267,16 +267,7 @@ const addEventListeners: () => void = () => {
 
 const addKeyboardEventListeners: () => void = () => {
   document.addEventListener('keyup', (event: KeyboardEvent) => {
-    const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
-    const audiocallContentItems: HTMLElement = document.querySelector('.audiocall-content__items');
-
-    const eventTarget: HTMLElement = event.target as HTMLElement;
-    const eventTargetClosest: HTMLElement = eventTarget.closest('[data-id]');
-    const eventTargetRight: HTMLElement = document.querySelector(`[data-id="${rightAnswer?.id}"]`);
-
     let userAnswerSelect: HTMLElement;
-
-    console.log(event.code);
 
     if (event.code === 'Space') {
       userAnswerSelect = document.querySelector('.audiocall-content__button');
