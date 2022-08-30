@@ -391,7 +391,7 @@
     overflow-y: auto;
     height: 400px;
     scrollbar-width: thin;
-    scrollbar-color: var(--color-accent) var(--color-btn);
+    scrollbar-color: var(--color-dark) var(--color-btn);
 
     &::-webkit-scrollbar {
       width: 7px;
@@ -400,7 +400,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: var(--color-accent);
+      background-color: var(--color-dark);
       border-radius: 4px;
     }
 
