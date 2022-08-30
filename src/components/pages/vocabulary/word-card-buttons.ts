@@ -1,9 +1,9 @@
 import Loader from '../../../controllers/loader';
 import { BaseObject } from '../../../models/base.interface';
-import { Statistics } from '../../../models/statistics.interface';
 import { ReceivedUserWord, UsersWord } from '../../../models/users-words.interface';
-import { addActiveCardBtns } from './active-classes';
+import { addActiveCardBtns, checkPage } from './active-classes';
 import { getStorageItem } from '../../../controllers/api-services/storage';
+import { addLearnedWordStat, removeLearnedWordStat } from '../../../controllers/statistics';
 
 const sendWord = (wordId: string, difficulty: string) => {
   const query = `users/${localStorage.getItem('userId')}/words/${wordId}`;
@@ -42,22 +42,6 @@ const sendWord = (wordId: string, difficulty: string) => {
     });
 };
 
-const checkPage = () => {
-  const url = `users/${localStorage.getItem('userId')}/statistics`;
-  const token = localStorage.getItem('token');
-  const words = document.querySelectorAll('.word-list__card');
-  const learnedwords = Array.from(words).filter((word) => word.classList.contains('learned'));
-  const page = document.querySelector(`[data-page="${+getStorageItem('page') + 1}"]`);
-  if (learnedwords.length === 20) {
-    page.classList.add('learned');
-    Loader.authorizedGet<Statistics>(url, token).then((data: Statistics) => Loader.updateLearnedPage(data, 'add'));
-  }
-  if (learnedwords.length < 20 && page.classList.contains('learned')) {
-    page.classList.remove('learned');
-    Loader.authorizedGet<Statistics>(url, token).then((data: Statistics) => Loader.updateLearnedPage(data, 'remove'));
-  }
-};
-
 const addCardButtons = () => {
   if (localStorage.getItem('token')) {
     ['.btn-hard', '.btn-learn', '.games-stat'].forEach((elem) => {
@@ -85,6 +69,9 @@ const addCardButtons = () => {
     btnHard.classList.remove('active');
     btnLearn.classList.toggle('active');
     sendWord(wordId, 'learned');
+    if (btnLearn.classList.contains('active')) {
+      addLearnedWordStat();
+    } else removeLearnedWordStat();
     checkPage();
   });
   addActiveCardBtns(btnHard as HTMLButtonElement, btnLearn as HTMLButtonElement);

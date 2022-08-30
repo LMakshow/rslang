@@ -1,11 +1,18 @@
-export interface Statistics {
-  learnedWords: number,
+export interface Settings {
   optional: {
     learnedPages: {
       [group: string] : number[],
     };
+  }
+}
+
+export interface Statistics {
+  learnedWords: number,
+  optional: {
     dayStat: {
       today: number,
+      newWords: number,
+      learnedWords: number,
       newWordsAudiocall: number,
       correctAudiocall: number,
       totalAudiocall: number,

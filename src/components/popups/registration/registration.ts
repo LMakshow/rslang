@@ -1,5 +1,5 @@
 import Loader from '../../../controllers/loader';
-import { newStatistics } from '../../../controllers/statistics';
+import { newOptions, newStatistics } from '../../../controllers/statistics';
 
 const registration = () => {
   const form = document.getElementById('registrationForm') as HTMLFormElement;
@@ -17,6 +17,7 @@ const registration = () => {
     return Loader.createUser({ email, name, password })
       .then(() => Loader.loginUser({ email, password }))
       .then(() => {
+        Loader.initSettings(localStorage.getItem('userId'), localStorage.getItem('token'), newOptions);
         Loader.initStatistics(localStorage.getItem('userId'), localStorage.getItem('token'), newStatistics);
         form.innerHTML = '<h4 class="popup__success">Поздравляем, вы зарегистрированы!</h4>';
         setTimeout(document.location.reload.bind(document.location), 2000);
