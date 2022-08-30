@@ -29,7 +29,7 @@ const templateAudiocallWindow: string = `
     
     <div class="game-window__begin">
       <p class="game-window__text">Используются слова со страницы учебника</p>
-      <button class="button game-window__buttonBegin button-play-game">Начать!</button>
+      <button class="button game-window__buttonBegin button-play-game"></button>
     </div>
 `;
 

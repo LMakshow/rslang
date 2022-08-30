@@ -1,4 +1,4 @@
-import { getGroupNumber, renderElement } from '../../../controllers/helpers';
+import { filterAsync, getGroupNumber, renderElement } from '../../../controllers/helpers';
 import {
   templateSprint,
   templateSprintGame,
@@ -11,6 +11,8 @@ import { Word } from '../../../models/word.interface';
 import { playAudio, randomizerWord } from '../game-common/game-common';
 import { templateGameResults } from '../game-common/game-templates';
 import { addUsersRightWordFromSprint, addUsersWrongWordFromSprint } from '../../../controllers/api-services/games';
+import Loader from '../../../controllers/loader';
+import { ReceivedUserWord } from '../../../models/users-words.interface';
 
 const groupNumber: number = getGroupNumber();
 let pageNumber: number;
@@ -33,6 +35,7 @@ let gameWordsCurrent: Set<Word>;
 const rightWords: Words = [];
 const wrongWords: Words = [];
 
+/** Генерация слов всей категории (если из меню) */
 const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
   const promiseArray: Promise<Words>[] = Array(30)
     .fill(null)
@@ -44,12 +47,22 @@ const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
   });
 };
 
-const getVocabWords = (group: number, page: number) => {
+/** Генерация слов при переходе со страницы учебника.
+ * Если авторизован, удалить изученные слова из списка слов. */
+const getVocabWords = async (group: number, page: number) => {
   const promiseArray: Promise<Words> = getWords({ group, page });
+  const userId = localStorage.getItem('userId');
+  if (!userId) return promiseArray.then((words: Words) => words);
 
-  return promiseArray.then((words: Words) => words);
+  const url = `users/${userId}/words`;
+  const token = localStorage.getItem('token');
+
+  const checkLearned = async (word: Word) => (await Loader.authorizedGet<ReceivedUserWord>(`${url}/${word.id}`, token)).difficulty !== 'learned';
+  const vocabWords = filterAsync(await promiseArray, checkLearned);
+  return vocabWords;
 };
 
+// Счётчик комбо
 const comboCounter = () => {
   if (combo < 4) comboMod = 1;
   if (combo >= 4 && combo < 8) comboMod = 2;
@@ -57,6 +70,7 @@ const comboCounter = () => {
   if (combo >= 12) comboMod = 8;
 };
 
+/** Вывод экрана результатов */
 const renderGameResultsScreen: () => void = () => {
   const gameWrapper: HTMLElement = document.querySelector('.sprint-game__wrapper');
   const sprintGame: HTMLElement = document.querySelector('.sprint-game');
@@ -77,6 +91,9 @@ const renderGameResultsScreen: () => void = () => {
   }
 };
 
+/** Новое загаданное слово.
+ * Если слов больше не осталось, попробовать добыть еще.
+ * Если все равно нет, показать экран результатов */
 const newGameRound = async () => {
   const sprint: HTMLButtonElement = document.querySelector('.sprint');
 
@@ -121,6 +138,9 @@ const newGameRound = async () => {
   }
 };
 
+/** Начало игры.
+ * Сбросить очки, комбо, время, запустить таймер
+ * и начать загадывать слова. */
 const startGame = () => {
   gameWordsCurrent = new Set(gameWords);
   score = 0;
@@ -142,6 +162,7 @@ const startGame = () => {
   newGameRound();
 };
 
+/** Если нажатие на кнопку "Верно" */
 const clickCorrect = () => {
   if (correctAnswer) {
     score += 10 * comboMod;
@@ -161,6 +182,7 @@ const clickCorrect = () => {
   }
 };
 
+/** Если нажатие на кнопку "Неверно" */
 const clickWrong = () => {
   if (!correctAnswer) {
     score += 10 * comboMod;
@@ -180,6 +202,7 @@ const clickWrong = () => {
   }
 };
 
+// Добавление ивентлиснеров для кнопок (спасибо, Белла!)
 const addEventListeners: () => void = () => {
   // переход из ссылки хедера
   document.addEventListener('click', async (event: MouseEvent) => {
@@ -197,14 +220,13 @@ const addEventListeners: () => void = () => {
   // Переход из учебника и начало игры по кнопке Начать
   document.addEventListener('click', async (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
-    const eventTargetClosest: HTMLElement = eventTarget.closest('.button-play-game');
+    const eventTargetClosest: HTMLElement = eventTarget.closest('.button-play-game:not([disabled])');
 
     if (!eventTargetClosest) {
       return;
     }
 
     pageNumberCurrent = pageNumber;
-    gameWords = await getVocabWords(groupNumber, pageNumberCurrent);
     startGame();
   });
 
@@ -288,13 +310,40 @@ const addEventListeners: () => void = () => {
   });
 };
 
-const addSprintWindow: () => void = () => {
+/** Генерация стартового экрана.
+ * Если с учебника, сразу загружает слова и кнопку Начать.
+ * Если с меню, покажет экран выбора категории */
+const addSprintWindow: () => Promise<void> = async () => {
   const sprintWindow: HTMLElement = document.querySelector('.game-window');
 
-  renderElement('div', templateSprintWindow, sprintWindow, ['game-window__wrapper', `${Number.isInteger(getGroupNumber()) ? 'active' : ''}`]);
+  if (pageNumber >= 0) {
+    renderElement('div', templateSprintWindow, sprintWindow, ['game-window__wrapper', 'active']);
+    const startGameButton: HTMLButtonElement = document.querySelector('.button-play-game');
+    startGameButton.disabled = true;
+    gameWords = await getVocabWords(groupNumber, pageNumber);
+    while (gameWords.length < 1) {
+      if (pageNumber === 0) {
+        const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+        const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
+        gameVocabText.classList.add('no-display');
+        gameNoVocabWordsText.classList.remove('no-display');
+        // eslint-disable-next-line no-await-in-loop
+        gameWords = await getGroupWords(groupNumber);
+        break;
+      }
+      pageNumber -= 1;
+      // eslint-disable-next-line no-await-in-loop
+      gameWords = await getVocabWords(groupNumber, pageNumber);
+    }
+    startGameButton.disabled = false;
+  } else {
+    renderElement('div', templateSprintWindow, sprintWindow, 'game-window__wrapper');
+  }
+
   addEventListeners();
 };
 
+/** Базовое окно, в котором будет рисоваться блок игры */
 const addSprint: () => void = () => {
   renderElement('main', templateSprint, document.body, ['sprint', 'color-sprint']);
   addSprintWindow();

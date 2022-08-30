@@ -17,12 +17,12 @@ const putUserWord: (wordId: string, params: UsersWord) => Promise<UsersWord> = (
 
 const checkDifficultyWhenRightAnswer = (usersWord: UsersWord) => {
   const wordProperties = usersWord;
-  if (usersWord.optional.successStreak > 3
+  if (usersWord.optional.successStreak >= 3
     && wordProperties.difficulty === 'new') {
     wordProperties.difficulty = 'learned';
   }
 
-  if (usersWord.optional.successStreak > 5
+  if (usersWord.optional.successStreak >= 5
     && wordProperties.difficulty === 'hard') {
     wordProperties.difficulty = 'learned';
   }

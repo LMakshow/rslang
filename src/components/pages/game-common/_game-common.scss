@@ -135,6 +135,19 @@
     }
   }
 
+  &__no-vocab-words {
+    font-size: 2.2rem;
+    line-height: normal;
+
+    @media (max-width: $width-desktop) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: $width-mobile) {
+      font-size: 1.6rem;
+    }
+  }
+
   &__note {
     @include font(normal, 400, 1.8rem, 2.1rem);
     color: $color-basic;
@@ -267,12 +280,25 @@
       line-height: auto;
     }
 
+    &::after {
+      content: "Начать!";
+    }
+
     &:hover {
       background-color: var(--color-accent);
     }
   
     &:active {
       background-color: var(--color-active);
+    }
+
+    &:disabled {
+      background-color: $color-additional-dark;
+      border-color: $color-basic;
+      cursor: default;
+      &::after {
+        content: "Загрузка...";
+      }
     }
   }
 }
