@@ -1,3 +1,5 @@
+import { Word } from './word.interface';
+
 export interface UsersWord {
   difficulty: string,
   optional: {
@@ -19,3 +21,26 @@ export interface ReceivedUserWord extends UsersWord {
 }
 
 export type ReceivedUserWords = ReceivedUserWord[];
+
+export interface AggregatedUserWord extends Word {
+  _id: string,
+  userWord: {
+    difficulty: string,
+    optional: {
+      audioSuccess: number,
+      audioTotal: number,
+      sprintSuccess: number,
+      sprintTotal: number,
+      successStreak: number,
+    },
+  }
+}
+
+export type AggregatedUserWords = AggregatedUserWord[];
+
+export type ReceivedUserAggregatedWords = {
+  paginatedResults: AggregatedUserWord[],
+  totalCount: {
+    count: number
+  }
+}[];

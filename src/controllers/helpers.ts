@@ -62,6 +62,8 @@ const countGameResults: (rightWords: Words, wrongWords: Words) => string = (
   }
 };
 
+export const notLearnedMongoDBQuery = (page: number) => `{"$and":[{"$or":[{"userWord.difficulty":"new"}, {"userWord.difficulty":"hard"}, {"userWord":null}]},{"page":${page}}]}`;
+
 export const mapAsync = <T, U>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => Promise<U>,
