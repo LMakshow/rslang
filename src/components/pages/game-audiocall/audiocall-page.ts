@@ -301,7 +301,8 @@ const addEventListeners: () => void = () => {
       return;
     }
 
-    startRound();
+    // startRound();
+    startAudiocall(groupNumber, getGroupPage(groupNumber));
   });
   // начало игры по кнопке Еще раз(страница результатов)
   document.addEventListener('click', async (event: MouseEvent) => {
