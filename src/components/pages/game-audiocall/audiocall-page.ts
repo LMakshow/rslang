@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import {
   getGroupNumber,
   notLearnedMongoDBQuery,
@@ -92,7 +93,8 @@ const formPageWords: (array: Words) => void = async (array: Words) => {
         page: +getStorageItem('page'),
       });
 
-      pageWords = [...array, ...pageWords.filter((item: Word) => array.every((word: Word) => word.id !== item.id))].slice(0, 20);
+      pageWords = [...array, ...pageWords
+        .filter((item: Word) => array.every((word: Word) => word.id !== item.id))].slice(0, 20);
 
       pageWordsSet = new Set(pageWords.filter((item: Word) => array
         .some((arrayItem: Word) => item.id === arrayItem.id)));
@@ -140,8 +142,6 @@ const getVocabWords = async (group: number, page: number) => {
     newWord.id = newWord._id;
     return word;
   });
-  // вывод количества слов в раунде
-  console.log(vocabWordsWithId.length);
 
   return vocabWordsWithId;
 };
@@ -360,60 +360,60 @@ const addAudiocallWindow: () => void = async () => {
 
   if (!Number.isInteger(getGroupNumber())) {
     renderElement('div', templateAudiocallWindow, audiocallWindow, 'game-window__wrapper');
+  } else if (!localStorage.getItem('token')) {
+    renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
+    const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+    const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
+
+    gameVocabText.classList.remove('no-display');
+    buttonBeginGame.disabled = true;
+
+    const currentWords: Words = await getWords({
+      group: groupNumber,
+      page: getGroupPage(groupNumber),
+    });
+    await formPageWords(currentWords);
+
+    buttonBeginGame.disabled = false;
   } else {
-    if (!localStorage.getItem('token')) {
-      renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
-      const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
-      const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
+    renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
+    const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+    const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
 
-      gameVocabText.classList.remove('no-display');
-      buttonBeginGame.disabled = true;
+    buttonBeginGame.disabled = true;
 
-      const currentWords: Words = await getWords({
-        group: groupNumber,
-        page: getGroupPage(groupNumber),
+    let currentWords: Words | AggregatedUserWords = (await getAggregatedUserWords(
+      groupNumber,
+      getGroupPage(groupNumber),
+    ))
+      .map((word: AggregatedUserWord) => {
+        const newWord = word;
+        // eslint-disable-next-line no-underscore-dangle
+        newWord.id = newWord._id;
+        return word;
       });
-      await formPageWords(currentWords);
 
-      buttonBeginGame.disabled = false;
-    } else {
-      renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
-      const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
-      const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
-
+    if (currentWords.length < 20) {
       buttonBeginGame.disabled = true;
+      currentWords = await getVocabWords(groupNumber, getGroupPage(groupNumber));
 
-      let currentWords: Words | AggregatedUserWords = (await getAggregatedUserWords(groupNumber, getGroupPage(groupNumber)))
-        .map((word: AggregatedUserWord) => {
-          const newWord = word;
-          // eslint-disable-next-line no-underscore-dangle
-          newWord.id = newWord._id;
-          return word;
-        });
+      if (!currentWords.length) {
+        const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
 
-      if (currentWords.length < 20) {
+        gameNoVocabWordsText.classList.remove('no-display');
+
+        currentWords = await getGroupWords(groupNumber);
+
         buttonBeginGame.disabled = true;
-        currentWords = await getVocabWords(groupNumber, getGroupPage(groupNumber));
-
-        if(!currentWords.length) {
-          const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
-          const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
-
-          gameNoVocabWordsText.classList.remove('no-display');
-
-          currentWords = await getGroupWords(groupNumber);
-
-          buttonBeginGame.disabled = true;
-        } else {
-          gameVocabText.classList.remove('no-display');
-        }
       } else {
         gameVocabText.classList.remove('no-display');
       }
-
-      await formPageWords(currentWords);
-      buttonBeginGame.disabled = false;
+    } else {
+      gameVocabText.classList.remove('no-display');
     }
+
+    await formPageWords(currentWords);
+    buttonBeginGame.disabled = false;
   }
 
   addEventListeners();
