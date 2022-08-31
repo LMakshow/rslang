@@ -92,6 +92,8 @@ const formPageWords: (array: Words) => void = async (array: Words) => {
         page: +getStorageItem('page'),
       });
 
+      pageWords = [...array, ...pageWords.filter((item: Word) => array.every((word: Word) => word.id !== item.id))].slice(0, 20);
+
       pageWordsSet = new Set(pageWords.filter((item: Word) => array
         .some((arrayItem: Word) => item.id === arrayItem.id)));
     }
@@ -141,11 +143,7 @@ const getVocabWords = async (group: number, page: number) => {
   // вывод количества слов в раунде
   console.log(vocabWordsWithId.length);
 
-  if (vocabWordsWithId.length) {
-    return vocabWordsWithId;
-  } else {
-    return await getGroupWords(groupNumber);
-  }
+  return vocabWordsWithId;
 };
 
 const startAudiocall = (group: number, page: number) => {
@@ -301,8 +299,7 @@ const addEventListeners: () => void = () => {
       return;
     }
 
-    // startRound();
-    startAudiocall(groupNumber, getGroupPage(groupNumber));
+    startRound();
   });
   // начало игры по кнопке Еще раз(страница результатов)
   document.addEventListener('click', async (event: MouseEvent) => {
@@ -365,17 +362,28 @@ const addAudiocallWindow: () => void = async () => {
     renderElement('div', templateAudiocallWindow, audiocallWindow, 'game-window__wrapper');
   } else {
     if (!localStorage.getItem('token')) {
-      const gameWindowWrapper: HTMLElement = document.querySelector('.game-window__wrapper');
+      renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
+      const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+      const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
 
-      gameWindowWrapper.classList.add('active');
+      gameVocabText.classList.remove('no-display');
+      buttonBeginGame.disabled = true;
 
       const currentWords: Words = await getWords({
         group: groupNumber,
         page: getGroupPage(groupNumber),
       });
       await formPageWords(currentWords);
+
+      buttonBeginGame.disabled = false;
     } else {
-      const currentWords: AggregatedUserWords = (await getAggregatedUserWords(groupNumber, getGroupPage(groupNumber)))
+      renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
+      const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+      const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
+
+      buttonBeginGame.disabled = true;
+
+      let currentWords: Words | AggregatedUserWords = (await getAggregatedUserWords(groupNumber, getGroupPage(groupNumber)))
         .map((word: AggregatedUserWord) => {
           const newWord = word;
           // eslint-disable-next-line no-underscore-dangle
@@ -383,18 +391,24 @@ const addAudiocallWindow: () => void = async () => {
           return word;
         });
 
-      renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
-
-      const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
-
-      if (!currentWords.length) {
-        const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
-        const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
-
+      if (currentWords.length < 20) {
         buttonBeginGame.disabled = true;
+        currentWords = await getVocabWords(groupNumber, getGroupPage(groupNumber));
 
-        gameVocabText.classList.add('no-display');
-        gameNoVocabWordsText.classList.remove('no-display');
+        if(!currentWords.length) {
+          const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+          const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
+
+          gameNoVocabWordsText.classList.remove('no-display');
+
+          currentWords = await getGroupWords(groupNumber);
+
+          buttonBeginGame.disabled = true;
+        } else {
+          gameVocabText.classList.remove('no-display');
+        }
+      } else {
+        gameVocabText.classList.remove('no-display');
       }
 
       await formPageWords(currentWords);
