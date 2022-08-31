@@ -28,7 +28,8 @@ const templateAudiocallWindow: string = `
     </div>
     
     <div class="game-window__begin">
-      <p class="game-window__text">Используются слова со страницы учебника</p>
+      <p class="game-window__text game-window__vocab-text">Используются слова со страницы учебника</p>
+      <p class="game-window__text game-window__no-vocab-words no-display">Игра будет со словами из всей категории.<br>На текущей и предыдущих страницах<br>учебника нет неизученных слов.</p>
       <button class="button game-window__buttonBegin button-play-game"></button>
     </div>
 `;
