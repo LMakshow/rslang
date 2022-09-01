@@ -415,7 +415,7 @@
   column-gap: 24px;
   row-gap: 8px;
   margin-top: 10px;
-  margin-bottom: auto;
+  // margin-bottom: auto;
 
   @media (max-width: $width-desktop) {
     column-gap: 16px;
@@ -722,6 +722,7 @@
 
   &.active {
     background-color: var(--color-dark-accent);
+    cursor: auto;
 
     &>.btn-listen__img {
       filter: invert(100%);
