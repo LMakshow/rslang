@@ -23,7 +23,7 @@ export const getAllStorage = () => {
   return objectStorage;
 };
 
-export const getStorageItem = (key: string) => getAllStorage()[key];
+export const getStorageItem = (key: string) => getAllStorage()?.[key];
 
 export const setStorageItem = (key: string, value: string | number | boolean | BaseObject) => {
   const object: StorageObject = { ...getAllStorage(), [key]: value };

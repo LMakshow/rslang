@@ -34,7 +34,7 @@ const templateHeader: string = `
       <span class="navigation-link__text menu__link_text text">Спринт</span>
     </a>
     
-        <a class="navigation-link menu__link link-basic" href="#">
+        <a class="navigation-link menu__link link-basic" href="statistics.html">
       <svg class="navigation-link__icon" width="27" height="29" viewBox="0 0 27 29" xmlns="http://www.w3.org/2000/svg">
         <path d="M7.60605 28.5H0.606049V21.5H7.60605V28.5ZM16.9394 18H9.93938V28.5H16.9394V18ZM26.2727 13.3333H19.2727V28.5H26.2727V13.3333ZM26.2727 0.5L19.2727 1.9245L21.2747 3.91717L13.283 11.7723L9.78188 8.27L0.634049 17.3665L2.27905 19.0208L9.77722 11.5658L13.2667 15.0577L22.9267 5.5645L24.8715 7.50117L26.2727 0.5V0.5Z"/>
       </svg>
