@@ -46,16 +46,14 @@ const templateStatistics = (userStat: Statistics) => {
               </div>
               <div class="info-item">
                 <img class="info-item_icon" src="./assets/images/statistics/icon-4.svg" alt="Percentage of correct answers per day">
-                <span class="info-item__text">Процент правильных ответов за день: <span class="info-item__count">${totalPercent}%</span></span>
+                <span class="info-item__text">Правильные ответы за день: <span class="info-item__count">${totalPercent}%</span></span>
               </div>
             </div>
             <div class="app-stat__diagram"><canvas class="app-stat__diagram-canvas"></canvas></div>
           </div>
           <div class="total-stat__games">
             <div class="game-stat audiocall-stat">
-              <div class="game-stat__img audiocall-stat__img">
-              <img src="./assets/images/statistics/dog-audiocall.svg" alt="Audiocall game">
-              </div>
+              <div class="game-stat__img audiocall-stat__img"></div>
               <div class="game-stat__content">
                 <span class="game-stat__heading">Аудиовызов</span>
                 <div class="game-stat__info game-items">
@@ -75,9 +73,7 @@ const templateStatistics = (userStat: Statistics) => {
               </div>
             </div>
             <div class="game-stat sprint-stat">
-              <div class="game-stat__img sprint-stat__img">
-              <img src="./assets/images/statistics/dog-sprint.svg" alt="Sprint game">
-              </div>
+              <div class="game-stat__img sprint-stat__img"></div>
               <div class="game-stat__content">
                 <span class="game-stat__heading">Спринт</span>
                 <div class="game-stat__info game-items">

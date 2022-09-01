@@ -21,6 +21,10 @@ export const wordsLearnedPieData = {
 };
 
 export const wordsLearnedPieOptions = {
+  maintainAspectRatio: false,
+  layout: {
+    padding: 8,
+  },
   plugins: {
     legend: {
       labels: {
