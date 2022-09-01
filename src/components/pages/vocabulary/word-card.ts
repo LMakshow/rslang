@@ -5,6 +5,7 @@ import { wordDisplayBox } from './templates';
 import { getWords } from './words-map';
 import { addCardButtons } from './word-card-buttons';
 import { getStorageItem, setStorageItem } from '../../../controllers/api-services/storage';
+import { HARD_WORDS_LIMIT } from './hard-page';
 
 const playAudio = (audio: HTMLAudioElement) => {
   audio?.play();
@@ -43,6 +44,12 @@ const enableAudio = (word: Word) => {
 const selectWordCard = () => {
   const wordId: string = (getStorageItem('id') as string) || Object.keys(getWords())[0];
   const eventTargetClosest: HTMLElement = document.querySelector(`[data-word="${wordId}"]`);
+  if (!eventTargetClosest) {
+    const wordList = document.querySelector('.word-list') as HTMLDivElement;
+    const message = `<p class="word-list__message">У вас нет сохраненных сложных слов. Вы можете добавить до ${HARD_WORDS_LIMIT} сложных слов в свой личный список с любой страницы учебника.</p>`;
+    wordList.innerHTML = message;
+    return;
+  }
 
   const wordActive: HTMLElement = document.querySelector('.word-list__card.active');
   const wordDisplay: HTMLElement = document.querySelector('.word-display');

@@ -1,5 +1,6 @@
 import { Word } from '../../../models/word.interface';
 import { SERVER } from '../../../controllers/loader';
+import { HARD_WORDS_LIMIT } from './hard-page';
 
 const templateVocab = (groupNumber: number) => `
 <div class="vocab__wrapper wrapper">
@@ -85,6 +86,7 @@ const wordDisplayBox = (word: Word) => `
   </div>
   <div class="word-display__picture">
     <img src="${SERVER + word.image}" alt="${word.word} image" class="word-display__picture-img">
+    <p class="word-display__message">Вы уже добавили предельное количество слов в сложные - ${HARD_WORDS_LIMIT}. Попробуйте сначала изучить их.</p>
     <button class="btn-hard no-display">
       <div class="btn-hard__img"></div>
     </button>

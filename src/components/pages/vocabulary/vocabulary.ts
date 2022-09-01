@@ -13,38 +13,58 @@ import { setWords } from './words-map';
 import { addLearnedPages, addActiveWords } from './active-classes';
 import {
   getGroupPage,
-  getStorageItem,
   savePages,
   setStorageItem,
 } from '../../../controllers/api-services/storage';
+import Loader from '../../../controllers/loader';
+import { getHarddWords, stylizeEmptyBlocks } from './hard-page';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
 const groupNumber: number = getGroupNumber() || 0;
 
+const renderWords = (wordList: HTMLElement, words: Words) => {
+  const templatesOfWords: string = words.map((word, i) => {
+    if (i === 0) setStorageItem('id', word.id);
+    return templateWordCard(word);
+  }).join('');
+
+  // eslint-disable-next-line
+  wordList.innerHTML = templatesOfWords;
+
+  setWords(
+    words.reduce(
+      (wordsMap: Record<string, Word>, word: Word) => ({ ...wordsMap, [word.id]: word }),
+      {},
+    ),
+  );
+
+  addActiveWords();
+  selectWordCard();
+};
+
 const renderWordList: () => void = () => {
   const wordList: HTMLElement = document.querySelector('.word-list') as HTMLElement;
 
-  getWords({
-    group: groupNumber,
-    page: getGroupPage(groupNumber),
-  }).then((words: Words) => {
-    const templatesOfWords: string = words.map((word, i) => {
-      if (i === 0 && !getStorageItem('id')) setStorageItem('id', word.id);
-      return templateWordCard(word);
-    }).join('');
-
-    wordList.innerHTML = templatesOfWords;
-
-    setWords(
-      words.reduce(
-        (wordsMap: Record<string, Word>, word: Word) => ({ ...wordsMap, [word.id]: word }),
-        {},
-      ),
-    );
-
-    addActiveWords();
-    selectWordCard();
-  });
+  if (document.querySelector('main').classList.contains('colors-hard')) {
+    Loader.getAggregatedUserWords().then((data) => {
+      const hardWords = getHarddWords(data);
+      renderWords(wordList, hardWords);
+    }).then(() => {
+      if (wordList.querySelectorAll('.word-list__card').length === 0) {
+        throw new Error();
+      }
+    })
+      .catch(() => {
+        stylizeEmptyBlocks();
+      });
+  } else {
+    getWords({
+      group: groupNumber,
+      page: getGroupPage(groupNumber),
+    }).then((words: Words) => {
+      renderWords(wordList, words);
+    });
+  }
 };
 
 const setPage = (currentPage: number = 0, isRemoveId?: boolean) => {

@@ -1,7 +1,6 @@
 .vocab {
   display: flex;
   justify-content: center;
-  // align-items: center;
 
   z-index: 0;
   background: center / cover no-repeat;
@@ -144,7 +143,6 @@
     width: 97%;
     margin: 24px auto;
 
-
     @media (max-width: $width-laptop) {
       max-width: 1240px;
       gap: 16px;
@@ -245,9 +243,7 @@
   width: 832px;
   display: flex;
   flex-shrink: 0;
-  // justify-content: space-between;
   flex-direction: column;
-
 
   @media (max-width: $width-desktop) {
     width: 760px;
@@ -419,6 +415,7 @@
   column-gap: 24px;
   row-gap: 8px;
   margin-top: 10px;
+  margin-bottom: auto;
 
   @media (max-width: $width-desktop) {
     column-gap: 16px;
@@ -427,6 +424,11 @@
   @media (max-width: $width-mobile) {
     justify-content: center;
     column-gap: 12px;
+  }
+
+  &__message {
+    @include font(normal, 400, 1.8rem, 2.5rem);
+    padding-top: 20px;
   }
 }
 
@@ -506,7 +508,6 @@
   padding-right: 19px;
   padding-left: 10px;
   padding-bottom: 20px;
-  // hyphens: auto;
 
   @media (max-width: $width-desktop) {
     font-size: 1.4rem;
@@ -598,6 +599,23 @@
   @media (max-width: $width-mobile) {
     width: 90%;
     min-width: 320px;
+  }
+
+  &__message {
+    position: absolute;
+    display: none;
+    animation-name: fadeMessage;
+    animation-timing-function: cubic-bezier(0.000, 0.300, 0.000, 1.000);
+    top: 50px;
+    margin-left: 9px;
+    margin-right: 9px;
+    padding: 5px;
+    background-color:  rgba(0,0,0,0.5);
+    color: var(--color-main);
+    @include font(normal, 400, 1.2rem, 1.5rem);
+
+    animation-duration: 3.5s;
+    animation-fill-mode: both;
   }
 }
 
@@ -941,4 +959,16 @@
 
 .no-display {
   display: none;
+}
+
+@keyframes fadeMessage {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

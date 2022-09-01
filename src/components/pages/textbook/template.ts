@@ -4,6 +4,11 @@ const templateTextbook: string = `
       <h2 class="textbook__heading">Выберите категорию</h2>
       <div  class="textbook__image">
         <img class="textbook__dog" src="assets/images/textbook/textbook-dog.png" alt="Risling">
+        <a class="textbook__hard"  data-group="6" href="vocabulary.html?group=6">
+          <div class="textbook__cloud"></div>
+          <h4 class="textbook__subtitle">Сложные слова</h4>
+          <p class="textbook__description">Сохраненные лично вами</p>
+        </a>
       </div>
       <div class="textbook__content">
         <ul class="textbook__list">

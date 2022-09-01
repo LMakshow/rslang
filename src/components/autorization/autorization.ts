@@ -11,7 +11,7 @@ const renderLogout = () => {
   addLogout();
   const buttonOut = document.querySelector('.autorization__out');
   buttonOut.addEventListener('click', () => {
-    removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime');
+    removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime', 'hardWordsCount');
     (document.querySelector('.popup-overlay') as HTMLDivElement).style.display = 'none';
     document.location.reload();
   });
@@ -30,7 +30,7 @@ export const renderAutorization = () => {
     Loader.authorizedGet(url, token).then(() => {
       renderLogout();
     }).catch(() => {
-      removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime');
+      removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime', 'hardWordsCount');
       addLogin();
     });
   } else {

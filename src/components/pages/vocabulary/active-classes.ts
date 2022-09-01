@@ -8,6 +8,7 @@ const addActiveBtns = (
   btnHard: HTMLButtonElement,
   btnLearn: HTMLButtonElement,
 ) => {
+  if (!word) return;
   if (word.classList.contains('hard')) btnHard.classList.add('active');
   if (word.classList.contains('learned')) btnLearn.classList.add('active');
 };
@@ -30,6 +31,7 @@ export const addLearnedPages = () => {
 };
 
 export const checkPage = () => {
+  if (document.querySelector('main').classList.contains('colors-hard')) return;
   const url = `users/${localStorage.getItem('userId')}/settings`;
   const token = localStorage.getItem('token');
   const words = document.querySelectorAll('.word-list__card');
