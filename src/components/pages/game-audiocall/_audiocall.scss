@@ -173,7 +173,7 @@
 
     @media (max-width: $width-tablet) {
       width: 228px;
-      height: 54px;
+      height: 58px;
     }
 
     @media (max-width: $width-mobile) {
@@ -200,10 +200,10 @@
   }
 
   &__text {
-    @include font(normal, 700, 2.4rem, 90%);
+    @include font(normal, 700, 2.4rem, 100%);
     color: $color-basic;
     text-align: center;
-
+    padding: 0 10px;
     position: relative;
 
     @media (max-width: $width-tablet) {

@@ -1,4 +1,9 @@
-import { getGroupNumber, renderElement } from '../../../controllers/helpers';
+/* eslint-disable no-await-in-loop */
+import {
+  getGroupNumber,
+  notLearnedMongoDBQuery,
+  renderElement,
+} from '../../../controllers/helpers';
 import {
   templateAudiocall,
   templateAudiocallListening,
@@ -6,15 +11,20 @@ import {
   templateResults,
 } from './template';
 import { getWords } from '../../../controllers/api-services/vocabulary';
-import { getGroupPage } from '../../../controllers/api-services/storage';
+import { getGroupPage, getStorageItem } from '../../../controllers/api-services/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
-import { SERVER } from '../../../controllers/loader';
+import Loader, { SERVER } from '../../../controllers/loader';
 import { randomizerWord } from '../game-common/game-common';
 import {
   addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall,
 } from '../../../controllers/api-services/games';
 import { templateGameResults } from '../game-common/game-templates';
+import {
+  AggregatedUserWord,
+  AggregatedUserWords,
+  ReceivedUserAggregatedWords,
+} from '../../../models/users-words.interface';
 
 const groupNumber: number = getGroupNumber();
 
@@ -53,21 +63,7 @@ const startRound = () => {
   playAudio(rightAnswer);
 };
 
-const formPageWords: (array: Words) => void = (array: Words) => {
-  pageWords = array;
-  pageWordsSet = new Set(array);
-};
-
-const startAudiocall = (group: number, page: number) => {
-  getWords({
-    group,
-    page,
-  }).then((words: Words) => {
-    formPageWords(words);
-    startRound();
-  });
-};
-
+// генерация слов для игры из меню (20 любых слов без учета изученных/сложных)
 const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
   const promiseArray: Promise<Words>[] = Array(30)
     .fill(null)
@@ -83,6 +79,80 @@ const getGroupWords: (group: number) => Promise<Words> = (group: number) => {
     }
 
     return Array.from(wordsSet);
+  });
+};
+
+const formPageWords: (array: Words) => void = async (array: Words) => {
+  if (array.length < 5) {
+    if (!array.length) {
+      pageWords = await getGroupWords(groupNumber);
+      pageWordsSet = new Set(pageWords);
+    } else {
+      pageWords = await getWords({
+        group: groupNumber,
+        page: +getStorageItem('page'),
+      });
+
+      pageWords = [...array, ...pageWords
+        .filter((item: Word) => array.every((word: Word) => word.id !== item.id))].slice(0, 20);
+
+      pageWordsSet = new Set(pageWords.filter((item: Word) => array
+        .some((arrayItem: Word) => item.id === arrayItem.id)));
+    }
+  } else {
+    pageWords = array;
+    pageWordsSet = new Set(array);
+  }
+};
+
+const getAggregatedUserWords = async (group: number, page: number) => {
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+  const query = `group=${group}&page=0&wordsPerPage=20&filter=${notLearnedMongoDBQuery(page)}`;
+  const url = `users/${userId}/aggregatedWords?${query}`;
+
+  return (
+    await Loader.authorizedGet<ReceivedUserAggregatedWords>(url, token)
+  )[0].paginatedResults;
+};
+
+// генерация слов для игры из учебника (20 слов со страницы - для незарег. пользователей,
+// для зарег. пользователей - с учетом изученных слов)
+const getVocabWords = async (group: number, page: number) => {
+  let currentPage: number = page;
+  const userId = localStorage.getItem('userId');
+
+  let vocabWords: AggregatedUserWords = [];
+
+  if (!userId) {
+    const promiseArray: Promise<Words> = getWords({ group, page });
+    return promiseArray.then((words: Words) => words);
+  }
+
+  while (currentPage >= 0 && vocabWords.length < 20) {
+    const words: AggregatedUserWords = await getAggregatedUserWords(group, currentPage);
+
+    vocabWords = [...vocabWords, ...words];
+    currentPage -= 1;
+  }
+
+  const vocabWordsWithId = vocabWords.slice(0, 20).map((word: AggregatedUserWord) => {
+    const newWord = word;
+    // eslint-disable-next-line no-underscore-dangle
+    newWord.id = newWord._id;
+    return word;
+  });
+
+  return vocabWordsWithId;
+};
+
+const startAudiocall = (group: number, page: number) => {
+  getVocabWords(
+    group,
+    page,
+  ).then(async (words: Words) => {
+    await formPageWords(words);
+    startRound();
   });
 };
 
@@ -147,8 +217,8 @@ const addEventListeners: () => void = () => {
     }
 
     getGroupWords(+eventTargetClosest.dataset.group)
-      .then((words: Words) => {
-        formPageWords(words);
+      .then(async (words: Words) => {
+        await formPageWords(words);
         startRound();
       });
   });
@@ -229,10 +299,10 @@ const addEventListeners: () => void = () => {
       return;
     }
 
-    startAudiocall(groupNumber, getGroupPage(groupNumber));
+    startRound();
   });
   // начало игры по кнопке Еще раз(страница результатов)
-  document.addEventListener('click', (event: MouseEvent) => {
+  document.addEventListener('click', async (event: MouseEvent) => {
     const eventTarget: HTMLElement = event.target as HTMLElement;
     const eventTargetClosest: HTMLElement = eventTarget.closest('.game-results__button_play-game');
 
@@ -246,7 +316,7 @@ const addEventListeners: () => void = () => {
     if (Number.isInteger(getGroupNumber())) {
       startAudiocall(groupNumber, getGroupPage(groupNumber));
     } else {
-      formPageWords(randomizerArrayOfWords(allGroupWords));
+      await formPageWords(randomizerArrayOfWords(allGroupWords));
       startRound();
     }
   });
@@ -285,10 +355,67 @@ const addKeyboardEventListeners: () => void = () => {
   });
 };
 
-const addAudiocallWindow: () => void = () => {
+const addAudiocallWindow: () => void = async () => {
   const audiocallWindow: HTMLElement = document.querySelector('.game-window');
 
-  renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', `${Number.isInteger(getGroupNumber()) ? 'active' : ''}`]);
+  if (!Number.isInteger(getGroupNumber())) {
+    renderElement('div', templateAudiocallWindow, audiocallWindow, 'game-window__wrapper');
+  } else if (!localStorage.getItem('token')) {
+    renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
+    const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+    const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
+
+    gameVocabText.classList.remove('no-display');
+    buttonBeginGame.disabled = true;
+
+    const currentWords: Words = await getWords({
+      group: groupNumber,
+      page: getGroupPage(groupNumber),
+    });
+    await formPageWords(currentWords);
+
+    buttonBeginGame.disabled = false;
+  } else {
+    renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
+    const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+    const buttonBeginGame: HTMLButtonElement = document.querySelector('.game-window__buttonBegin');
+
+    buttonBeginGame.disabled = true;
+
+    let currentWords: Words | AggregatedUserWords = (await getAggregatedUserWords(
+      groupNumber,
+      getGroupPage(groupNumber),
+    ))
+      .map((word: AggregatedUserWord) => {
+        const newWord = word;
+        // eslint-disable-next-line no-underscore-dangle
+        newWord.id = newWord._id;
+        return word;
+      });
+
+    if (currentWords.length < 20) {
+      buttonBeginGame.disabled = true;
+      currentWords = await getVocabWords(groupNumber, getGroupPage(groupNumber));
+
+      if (!currentWords.length) {
+        const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
+
+        gameNoVocabWordsText.classList.remove('no-display');
+
+        currentWords = await getGroupWords(groupNumber);
+
+        buttonBeginGame.disabled = true;
+      } else {
+        gameVocabText.classList.remove('no-display');
+      }
+    } else {
+      gameVocabText.classList.remove('no-display');
+    }
+
+    await formPageWords(currentWords);
+    buttonBeginGame.disabled = false;
+  }
+
   addEventListeners();
   addKeyboardEventListeners();
 };
