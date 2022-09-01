@@ -1,0 +1,283 @@
+@import '../../styles/base/constants';
+
+.statistics {
+    display: flex;
+    flex-direction: column;
+
+  min-height: calc(100vh - #{$header-height} - #{$footer-height});
+
+  @media (max-width: $width-mobile) {
+    min-height: calc(100vh - #{$header-height} - #{$footer-mobile-height});
+  }
+
+  &__heading {
+    border-top: 5px solid $color-basic;
+    border-bottom: 5px solid $color-basic;
+
+    &_text {
+      @include font(normal, 700, 6rem, 100%);
+      color: $color-basic;
+      font-family: $font-family-additional;
+    }
+  }
+}
+
+.total-stat {
+  flex: 0 0 auto;
+
+  background: url("./assets/images/statistics/bg-stat.png") no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  padding: 40px 0 55px;
+
+  &__heading {
+    background-color: $color-bg-heading-stat-stat;
+  }
+
+  &__heading-wrapper {
+    padding: 15px 0;
+    background-image: url("./assets/images/statistics/stat-head-left.svg"), url("./assets/images/statistics/stat-head-right.svg");
+    background-repeat: no-repeat;
+    background-position: left, right;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  &__wrapper {
+    margin-top: -120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 56px;
+  }
+
+  &__games {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+  }
+}
+
+.app-stat {
+  display: flex;
+  gap: 57px;
+  align-items: end;
+  justify-content: center;
+
+  &__date {
+    width: 240px;
+    height: 480px;
+    border: 5px solid $color-basic;
+    background-color: $color-additional;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    &_img {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 5px solid $color-basic;
+    }
+
+    &_text {
+      @include font(normal, 400, 4.6rem, 100%);
+      color: $color-basic;
+      font-family: $font-family-additional;
+      text-align: center;
+
+      padding: 21px 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        flex: 0;
+      }
+    }
+  }
+
+  &__diagram {
+    width: 300px;
+    height: 338px;
+    border: 5px solid $color-basic;
+    background-color: $color-additional;
+  }
+}
+
+.info-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-item {
+  min-width: 932px;
+  border: 5px solid $color-basic;
+  background-color: $color-bg-items-stat;
+  padding: 10px 24px;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+
+  &_icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  &__text {
+    @include font(normal, 400, 3rem, 100%);
+    font-family: $font-family-additional;
+    color: $color-basic;
+  }
+
+  &__count {
+    font-size: 3.5rem;
+  }
+}
+
+.item-total {
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  &__icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  &__text {
+    font-size: 4rem;
+  }
+
+  &__count {
+    font-weight: 700;
+    font-size: 4.5rem;
+  }
+}
+
+.game-stat {
+  border: 5px solid $color-basic;
+  display: flex;
+  padding: 10px 27px 0 0;
+  align-items: center;
+
+  &__img {
+    width: 243px;
+    display: flex;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__heading {
+    @include font(normal, 400, 4.2rem, 85%);
+    font-family: $font-family-additional;
+    color: $color-basic;
+    text-align: center;
+  }
+}
+
+.audiocall-stat {
+  background: url("./assets/images/statistics/bg-audiocall.png") no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  &__img {
+    justify-content: center;
+  }
+}
+
+.sprint-stat {
+  background: url("./assets/images/statistics/bg-sprint.png") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.game-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.game-item {
+  border: 5px solid $color-basic;
+  background-color: $color-bg-items-stat;
+  padding: 5px 6px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 370px;
+
+  &_icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  &__text {
+    @include font(normal, 400, 2.4rem, 100%);
+    font-family: $font-family-additional;
+    color: $color-basic;
+  }
+
+  &__count {
+    font-size: 2.7rem;
+  }
+}
+
+.daily-stat {
+  &__heading {
+    &__heading {
+      background-color: $color-bg-heading-stat-prog;
+      background-image: url("./assets/images/statistics/prog-head-left.svg"), url("./assets/images/statistics/prog-head-right.svg");
+      background-repeat: no-repeat;
+      background-position: left, right;
+    }
+  }
+}
+
+.daily-stat {
+  flex: 1 0 100%;
+
+  background: url("./assets/images/statistics/bg-progress.png") no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  padding: 55px 0 67px;
+  display: flex;
+  flex-direction: column;
+  gap: 65px;
+
+  &__heading {
+    background-color: $color-bg-heading-stat-prog;
+  }
+
+  &__heading-wrapper {
+    padding: 15px 0;
+    background-image: url("./assets/images/statistics/prog-head-left.svg"), url("./assets/images/statistics/prog-head-right.svg");
+    background-repeat: no-repeat;
+    background-position: left, right;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__chart {
+    width: 1108px;
+    height: 549px;
+    background-color: $color-additional;
+  }
+}
