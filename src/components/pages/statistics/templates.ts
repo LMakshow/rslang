@@ -1,5 +1,22 @@
-const templateStatistics = `
-      <div class="total-stat">
+import { Statistics } from '../../../models/statistics.interface';
+
+const templateStatistics = (userStat: Statistics) => {
+  const date = new Date(userStat.optional.dayStat.today).toLocaleDateString('ru', { day: 'numeric', month: 'long', year: 'numeric' });
+  const totalWords = userStat.learnedWords;
+  const {
+    newWords, learnedWords,
+    audioNewWords, audioSuccess,
+    audioTotal, audioStreakMax,
+    sprintNewWords, sprintSuccess,
+    sprintTotal, sprintStreakMax,
+  } = userStat.optional.dayStat;
+  const audioPercent = Math.round((audioSuccess / audioTotal) * 100);
+  const sprintPercent = Math.round((sprintSuccess / sprintTotal) * 100);
+  const totalPercent = Math.round(
+    ((audioSuccess + sprintSuccess) / (audioTotal + sprintTotal)) * 100,
+  );
+
+  return `<div class="total-stat">
         <div class="statistics__heading total-stat__heading">
           <div class="total-stat__heading-wrapper wrapper">
             <span class="statistics__heading_text">Статистика</span>
@@ -11,28 +28,28 @@ const templateStatistics = `
               <div class="app-stat__date_img">
                 <img src="./assets/images/statistics/date.svg" alt="Date">
               </div>
-              <div class="app-stat__date_text"><span>31 августа 2022</span></div>
+              <div class="app-stat__date_text"><span>${date}</span></div>
             </div>
             <div class="app-stat__info info-items">
               <div class="info-item item-total">
                 <img class="item-total_icon" src="./assets/images/statistics/icon-1.svg" alt="All learned words">
-                <span class="info-item__text item-total__text">Всего изученных слов: <span class="info-item__count item-total__count">1925
-              </span></span>
+                <span class="info-item__text item-total__text">Всего изученных слов: 
+                <span class="info-item__count item-total__count">${totalWords}</span></span>
               </div>
               <div class="info-item">
                 <img class="info-item_icon" src="./assets/images/statistics/icon-2.svg" alt="New words per day">
-                <span class="info-item__text">Новых слов за день: <span class="info-item__count">350</span></span>
+                <span class="info-item__text">Новых слов за день: <span class="info-item__count">${newWords}</span></span>
               </div>
               <div class="info-item">
                 <img class="info-item_icon" src="./assets/images/statistics/icon-3.svg" alt="Learned words per day">
-                <span class="info-item__text">Изученных слов за день: <span class="info-item__count">108</span></span>
+                <span class="info-item__text">Изученных слов за день: <span class="info-item__count">${learnedWords}</span></span>
               </div>
               <div class="info-item">
                 <img class="info-item_icon" src="./assets/images/statistics/icon-4.svg" alt="Percentage of correct answers per day">
-                <span class="info-item__text">Процент правильных ответов за день: <span class="info-item__count">50%</span></span>
+                <span class="info-item__text">Процент правильных ответов за день: <span class="info-item__count">${totalPercent}%</span></span>
               </div>
             </div>
-            <div class="app-stat__diagram"></div>
+            <div class="app-stat__diagram"><canvas class="app-stat__diagram-canvas"></canvas></div>
           </div>
           <div class="total-stat__games">
             <div class="game-stat audiocall-stat">
@@ -44,15 +61,15 @@ const templateStatistics = `
                 <div class="game-stat__info game-items">
                   <div class="game-item">
                     <img class="game-item_icon" src="./assets/images/statistics/icon-2.svg" alt="New words per day">
-                    <span class="game-item__text">Новых слов за день: <span class="game-item__count">180</span></span>
+                    <span class="game-item__text">Новых слов за день: <span class="game-item__count">${audioNewWords}</span></span>
                   </div>
                   <div class="game-item">
                     <img class="game-item_icon" src="./assets/images/statistics/icon-4.svg" alt="Percentage of correct answers">
-                    <span class="game-item__text">Правильные ответы: <span class="game-item__count">90%</span></span>
+                    <span class="game-item__text">Правильные ответы: <span class="game-item__count">${audioPercent}%</span></span>
                   </div>
                   <div class="game-item">
                     <img class="game-item_icon" src="./assets/images/statistics/icon-5.svg" alt="Longest streak">
-                    <span class="game-item__text">Самая длинная серия: <span class="game-item__count">96</span></span>
+                    <span class="game-item__text">Самая длинная серия: <span class="game-item__count">${audioStreakMax}</span></span>
                   </div>
                 </div>
               </div>
@@ -66,15 +83,15 @@ const templateStatistics = `
                 <div class="game-stat__info game-items">
                   <div class="game-item">
                     <img class="game-item_icon" src="./assets/images/statistics/icon-2.svg" alt="New words per day">
-                    <span class="game-item__text">Новых слов за день: <span class="game-item__count">180</span></span>
+                    <span class="game-item__text">Новых слов за день: <span class="game-item__count">${sprintNewWords}</span></span>
                   </div>
                   <div class="game-item">
                     <img class="game-item_icon" src="./assets/images/statistics/icon-4.svg" alt="Percentage of correct answers">
-                    <span class="game-item__text">Правильные ответы: <span class="game-item__count">90%</span></span>
+                    <span class="game-item__text">Правильные ответы: <span class="game-item__count">${sprintPercent}%</span></span>
                   </div>
                   <div class="game-item">
                     <img class="game-item_icon" src="./assets/images/statistics/icon-5.svg" alt="Longest streak">
-                    <span class="game-item__text">Самая длинная серия: <span class="game-item__count">96</span></span>
+                    <span class="game-item__text">Самая длинная серия: <span class="game-item__count">${sprintStreakMax}</span></span>
                   </div>
                 </div>
               </div>
@@ -90,8 +107,9 @@ const templateStatistics = `
           </div>
         </div>
         <div class="daily-stat__wrapper wrapper">
-        <div class="daily-stat__chart"></div>
+        <div class="daily-stat__chart"><canvas class="daily-stat__chart-canvas"></canvas></div>
         </div>
       </div>`;
+};
 
-export { templateStatistics }
+export { templateStatistics };
