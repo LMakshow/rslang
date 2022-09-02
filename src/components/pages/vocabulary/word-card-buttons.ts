@@ -4,6 +4,7 @@ import { ReceivedUserWord, UsersWord } from '../../../models/users-words.interfa
 import { addActiveCardBtns, checkPage } from './active-classes';
 import { getStorageItem } from '../../../controllers/api-services/storage';
 import { addLearnedWordStat, removeLearnedWordStat } from '../../../controllers/statistics';
+import { HARD_WORDS_LIMIT } from './hard-page';
 
 const sendWord = (wordId: string, difficulty: string) => {
   const query = `users/${localStorage.getItem('userId')}/words/${wordId}`;
@@ -55,10 +56,29 @@ const addCardButtons = () => {
   const card = document.querySelector(`.word-list__card[data-word="${wordId}"]`);
   btnHard.addEventListener('click', () => {
     if (!card) return;
+
+    let hardWordsCount = +localStorage.getItem('hardWordsCount');
+    if (hardWordsCount && hardWordsCount === HARD_WORDS_LIMIT && !card.classList.contains('hard')) {
+      const message = document.querySelector('.word-display__message') as HTMLParagraphElement;
+      message.style.display = 'block';
+      setTimeout(() => {
+        message.style.display = 'none';
+      }, 3500);
+      return;
+    }
+
     card.classList.toggle('hard');
     card.classList.remove('learned');
     btnHard.classList.toggle('active');
     btnLearn.classList.remove('active');
+
+    if (card.classList.contains('hard')) {
+      hardWordsCount = hardWordsCount ? hardWordsCount + 1 : 1;
+    } else {
+      hardWordsCount -= 1;
+    }
+    localStorage.setItem('hardWordsCount', String(hardWordsCount));
+
     sendWord(wordId, 'hard');
     checkPage();
   });
