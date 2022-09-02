@@ -5,6 +5,7 @@ import { setStorageValues, getStorageItem } from './api-services/storage';
 import { UsersWord } from '../models/users-words.interface';
 import { Settings, Statistics } from '../models/statistics.interface';
 import { AggregatedWords } from '../models/aggregatedWords.interface';
+import { newStatistics } from './statistics';
 
 export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
 
@@ -29,7 +30,7 @@ export default class Loader {
   private static authorizedLoad(
     url: URL,
     method: string,
-    token:string,
+    token: string,
     data?: BaseObject | UsersWord | Statistics | Settings,
   ): Promise<Response> {
     return fetch(url, {
@@ -65,7 +66,7 @@ export default class Loader {
     return Loader.load(query, 'GET').then((res: Response) => res.json());
   }
 
-  public static authorizedGet<T>(url: string, token:string, params?: BaseObject): Promise<T> {
+  public static authorizedGet<T>(url: string, token: string, params?: BaseObject): Promise<T> {
     const query = new URL(url, SERVER);
 
     if (params) {
@@ -137,10 +138,13 @@ export default class Loader {
 
   public static async getStatistics(): Promise<Statistics> {
     const token = localStorage.getItem('token');
-    const query = new URL(`users/${localStorage.getItem('userId')}/statistics`, SERVER);
-    const response = await Loader.authorizedLoad(query, 'GET', token).then((res: Response) => res.json());
-    delete response.id;
-    return response;
+    if (token) {
+      const query = new URL(`users/${localStorage.getItem('userId')}/statistics`, SERVER);
+      const response = await Loader.authorizedLoad(query, 'GET', token).then((res: Response) => res.json());
+      delete response.id;
+      return response;
+    }
+    return newStatistics;
   }
 
   public static getUserWord: (wordId: string) => Promise<UsersWord> = (wordId: string) => {
