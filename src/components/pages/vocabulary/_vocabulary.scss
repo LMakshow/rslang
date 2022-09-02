@@ -617,7 +617,7 @@
     margin-left: 9px;
     margin-right: 9px;
     padding: 5px;
-    background-color:  rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     color: var(--color-main);
     @include font(normal, 400, 1.2rem, 1.5rem);
 
@@ -708,7 +708,7 @@
   align-items: center;
 }
 
-.btn-listen {
+.btn-listen-element {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -721,17 +721,27 @@
   &>.btn-listen__img {
     filter: var(--filter-dark-accent);
   }
+}
+
+.btn-listen {
 
   &:hover {
-    background-color: var(--color-accent);
     cursor: pointer;
+
+    &>.btn-listen-element {
+      background-color: var(--color-accent);
+    }
   }
 
   &.active {
-    background-color: var(--color-dark-accent);
     cursor: auto;
 
-    &>.btn-listen__img {
+    &>.btn-listen-element {
+      background-color: var(--color-dark-accent);
+      cursor: auto;
+    }
+
+    & .btn-listen__img {
       filter: invert(100%);
     }
   }
@@ -978,9 +988,11 @@
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
