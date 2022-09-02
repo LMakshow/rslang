@@ -82,7 +82,7 @@ export default class Loader {
 
   public static loginUser(user: BaseObject) {
     return Loader.load(new URL('signin', SERVER), 'POST', user).then((res: Response) => res.json()).then((data) => {
-      setStorageValues(['userId', data.userId], ['name', data.name], ['token', data.token], ['refreshToken', data.refreshToken], ['tokenTime', `${Date.now()}`]);
+      setStorageValues(['userId', data.userId], ['name', data.name], ['token', data.token], ['refreshToken', data.refreshToken]);
     });
   }
 

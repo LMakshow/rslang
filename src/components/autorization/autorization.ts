@@ -4,14 +4,13 @@ import { removeStorageValues } from '../../controllers/api-services/storage';
 import { registration } from '../popups/registration/registration';
 import { entrance } from '../popups/entrance/entrance';
 import Loader from '../../controllers/loader';
-
-const EXPIRATION_TIME = (4 * 60 * 60 * 1000) - 6000;
+import { BaseObject } from '../../models/base.interface';
 
 const renderLogout = () => {
   addLogout();
   const buttonOut = document.querySelector('.autorization__out');
   buttonOut.addEventListener('click', () => {
-    removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime', 'hardWordsCount');
+    removeStorageValues('userId', 'refreshToken', 'token', 'name', 'hardWordsCount');
     (document.querySelector('.popup-overlay') as HTMLDivElement).style.display = 'none';
     document.location.reload();
   });
@@ -22,20 +21,19 @@ export const renderAutorization = () => {
     addLogin();
     return;
   }
-  const tokenTime = +localStorage.getItem('tokenTime');
-  const isExpiredToken = tokenTime + EXPIRATION_TIME < Date.now();
-  if (isExpiredToken) {
-    const url = `users/${localStorage.getItem('userId')}/tokens`;
-    const token = localStorage.getItem('refreshToken');
-    Loader.authorizedGet(url, token).then(() => {
-      renderLogout();
-    }).catch(() => {
-      removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime', 'hardWordsCount');
-      addLogin();
-    });
-  } else {
+
+  const url = `users/${localStorage.getItem('userId')}/tokens`;
+  const token = localStorage.getItem('refreshToken');
+  Loader.authorizedGet<BaseObject>(url, token).then((data: BaseObject) => {
+    localStorage.setItem('token', data.token as string);
+    localStorage.setItem('refreshToken', data.refreshToken as string);
+    localStorage.removeItem('tokenTime');
+    console.log('success refreshToken');
     renderLogout();
-  }
+  }).catch(() => {
+    removeStorageValues('userId', 'refreshToken', 'token', 'name', 'hardWordsCount');
+    addLogin();
+  });
 };
 
 export const addAutorization = (type: string): void => {
