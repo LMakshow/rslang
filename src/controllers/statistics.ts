@@ -179,6 +179,6 @@ export const removeLearnedWordStat = (_stat: Statistics) => {
   }
 
   if (stat.optional.dayStat.today !== today) stat.optional.dayStat = createNewDayStat();
-  stat.optional.dayStat.learnedWords += 1;
+  stat.optional.dayStat.learnedWords -= 1;
   return stat;
 };

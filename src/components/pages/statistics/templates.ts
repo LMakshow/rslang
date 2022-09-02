@@ -10,11 +10,11 @@ const templateStatistics = (userStat: Statistics) => {
     sprintNewWords, sprintSuccess,
     sprintTotal, sprintStreakMax,
   } = userStat.optional.dayStat;
-  const audioPercent = Math.round((audioSuccess / audioTotal) * 100);
-  const sprintPercent = Math.round((sprintSuccess / sprintTotal) * 100);
-  const totalPercent = Math.round(
-    ((audioSuccess + sprintSuccess) / (audioTotal + sprintTotal)) * 100,
-  );
+  const audioPercent = audioTotal ? Math.round((audioSuccess / audioTotal) * 100) : 0;
+  const sprintPercent = sprintTotal ? Math.round((sprintSuccess / sprintTotal) * 100) : 0;
+  const totalPercent = (audioTotal + sprintTotal)
+    ? Math.round(((audioSuccess + sprintSuccess) / (audioTotal + sprintTotal)) * 100)
+    : 0;
 
   return `<div class="total-stat">
         <div class="statistics__heading total-stat__heading">
@@ -30,6 +30,15 @@ const templateStatistics = (userStat: Statistics) => {
               </div>
               <div class="app-stat__date_text"><span>${date}</span></div>
             </div>
+            <div class="app-stat__no-login info-items no-display">
+              <div class="info-item item-total">
+                <span class="info-item__text item-total__text">Статистика сохраняется для авторизованных пользователей</span>
+              </div>
+              <div class="info-item">
+                <span class="info-item__text">Авторизуйтесь или зарегистрируйтесь,
+                чтобы сохранять ваш прогресс в мини-играх, изученные слова и добавлять сложные слова в личный словарь</span> 
+              </div>
+            </div> 
             <div class="app-stat__info info-items">
               <div class="info-item item-total">
                 <img class="item-total_icon" src="./assets/images/statistics/icon-1.svg" alt="All learned words">

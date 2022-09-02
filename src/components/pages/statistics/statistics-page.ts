@@ -2,7 +2,7 @@ import { renderElement } from '../../../controllers/helpers';
 import Loader from '../../../controllers/loader';
 import { templateStatistics } from './templates';
 
-export const userStat = await Loader.getStatistics();
+const userStat = await Loader.getStatistics();
 
 export const wordsLearnedPieData = {
   labels: [
@@ -134,7 +134,7 @@ export const dailyChartOptions = {
     },
   },
   scales: {
-    x: { },
+    x: {},
     y: {
       beginAtZero: true,
       type: 'linear' as 'linear',
@@ -156,4 +156,9 @@ export const dailyChartOptions = {
 
 export const addStatistics: () => void = () => {
   renderElement('main', templateStatistics(userStat), document.body, 'statistics');
+
+  if (!localStorage.getItem('token')) {
+    document.querySelector('.app-stat__no-login').classList.remove('no-display');
+    document.querySelector('.app-stat__info').classList.add('no-display');
+  }
 };
