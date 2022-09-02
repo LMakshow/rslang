@@ -238,18 +238,6 @@ const addEventListeners: () => void = () => {
     playAudio(rightAnswer);
   });
 
-  //включение/выключение звука
-  document.addEventListener('click', (event: MouseEvent) => {
-    const eventTarget: HTMLElement = event.target as HTMLElement;
-    const eventTargetClosest: HTMLElement = eventTarget.closest('.sound');
-
-    if (!eventTargetClosest) {
-      return;
-    }
-
-    eventTargetClosest.classList.toggle('no-sound');
-  });
-
   // выбор варианта ответа
   document.addEventListener('click', (event: MouseEvent) => {
     const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');

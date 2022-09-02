@@ -30,12 +30,14 @@
 
     @media (max-width: $width-mobile) {
       flex-basis: 89.1%;
+      gap: 10px;
     }
   }
 
   &__container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex: 0 1 100%;
     position: relative;
 
@@ -333,4 +335,18 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 2;
+}
+
+.icon-sound-off {
+    display: none;
+}
+
+.no-sound {
+  .icon-sound-off {
+    display: block;
+  }
+
+  .icon-sound-on {
+    display: none;
+  }
 }
