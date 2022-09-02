@@ -38,3 +38,18 @@ export const DailyChart = new Chart(
     options: dailyChartOptions,
   },
 );
+
+window.addEventListener('resize', () => {
+  if (window.outerWidth <= 700) {
+    Chart.defaults.font.size = 14;
+    dailyChartOptions.plugins.legend.labels.font.size = 16;
+    dailyChartData.datasets[0].datalabels.font.size = 14;
+    dailyChartData.datasets[1].datalabels.font.size = 18;
+  }
+  if (window.outerWidth > 700) {
+    Chart.defaults.font.size = 16;
+    dailyChartOptions.plugins.legend.labels.font.size = 20;
+    dailyChartData.datasets[0].datalabels.font.size = 16;
+    dailyChartData.datasets[1].datalabels.font.size = 24;
+  }
+});

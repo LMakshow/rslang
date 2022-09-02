@@ -97,7 +97,7 @@ const templateStatistics = (userStat: Statistics) => {
       <div class="daily-stat">
         <div class="statistics__heading daily-stat__heading">
           <div class="daily-stat__heading-wrapper wrapper">
-            <span class="statistics__heading_text">Ежедневный прогресс</span>
+            <span class="statistics__subheading_text">Ежедневный прогресс</span>
           </div>
         </div>
         <div class="daily-stat__wrapper wrapper">

@@ -21,6 +21,7 @@
 
       @media (max-width: $width-tablet) {
         margin-left: 200px;
+        font-size: 5rem;
       }
 
       @media (max-width: $width-mobile) {
@@ -28,6 +29,22 @@
         font-size: 4rem;
         text-align: center;
       }
+    }
+  }
+
+  &__subheading_text {
+    @include font(normal, 700, 6rem, 100%);
+    color: $color-basic;
+    font-family: $font-family-additional;
+
+
+    @media (max-width: $width-tablet) {
+      font-size: 5rem;
+      text-align: center;
+    }
+
+    @media (max-width: $width-mobile) {
+      font-size: 2.8rem;
     }
   }
 }
@@ -95,6 +112,7 @@
     align-items: center;
     justify-content: stretch;
     flex-direction: column;
+    width: 100%;
     gap: 16px;
   }
 
@@ -145,6 +163,11 @@
 
       span {
         flex-basis: 70%;
+      }
+
+      @media (max-width: $width-mobile) {
+        font-size: 3rem;
+        padding: 10px 3px;
       }
     }
   }
@@ -221,7 +244,8 @@
   }
 
   @media (max-width: 500px) {
-    padding: 8px 2px 7px 6px;
+    padding: 8px 6px 7px 6px;
+    gap: 8px;
 
     &_icon {
       width: 24px;
@@ -330,8 +354,11 @@
     text-align: center;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: $width-mobile) {
     width: 100%;
+  }
+
+  @media (max-width: 500px) {
     height: 200px;
     padding-right: 14px;
     gap: 8px;
@@ -355,6 +382,7 @@
 
     @media (max-width: 500px) {
       background-size: 130px;
+      margin-right: 0px;
     }
   }
 }
@@ -431,16 +459,16 @@
   }
 }
 
-.daily-stat {
-  &__heading {
-    &__heading {
-      background-color: $color-bg-heading-stat-prog;
-      background-image: url("./assets/images/statistics/prog-head-left.png"), url("./assets/images/statistics/prog-head-right.png");
-      background-repeat: no-repeat;
-      background-position: left, right;
-    }
-  }
-}
+// .daily-stat {
+//   &__heading {
+//     &__heading {
+//       background-color: $color-bg-heading-stat-prog;
+//       background-image: url("./assets/images/statistics/prog-head-left.png"), url("./assets/images/statistics/prog-head-right.png");
+//       background-repeat: no-repeat;
+//       background-position: left, right;
+//     }
+//   }
+// }
 
 .daily-stat {
   flex: 1 0 100%;
@@ -448,10 +476,15 @@
   background: url("./assets/images/statistics/bg-progress.png") no-repeat;
   background-size: cover;
   background-position-x: center;
-  padding: 55px 0 67px;
+  padding: 55px 0 60px;
   display: flex;
   flex-direction: column;
-  gap: 65px;
+  gap: 40px;
+
+  @media (max-width: $width-laptop) {
+    padding: 30px 0 40px;
+    gap: 30px;
+  }
 
   &__heading {
     background-color: $color-bg-heading-stat-prog;
@@ -471,11 +504,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 1100px;
+
+    @media (max-width: $width-laptop) {
+      width: 92%;
+      overflow-x: scroll;
+      justify-content: flex-start;
+      scrollbar-width: thin;
+      scrollbar-color: $color-bg-heading-stat-prog $color-bg-heading-stat-stat;
+
+      &::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+        background-color: $color-bg-heading-stat-stat;
+        border-radius: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $color-bg-heading-stat-prog;
+        border-radius: 4px;
+      }
+    }
   }
 
   &__chart {
-    width: 1108px;
-    height: 549px;
+    width: 100%;
+    min-width: 700px;
     background-color: $color-additional;
   }
 }

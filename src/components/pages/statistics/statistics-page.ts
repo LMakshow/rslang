@@ -127,7 +127,7 @@ export const dailyChartOptions = {
   },
   layout: {
     padding: {
-      top: 32,
+      top: 8,
       right: 16,
       bottom: 16,
       left: 8,
