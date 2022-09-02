@@ -50,8 +50,6 @@ const templateStatistics = (userStat: Statistics) => {
               </div>
             </div>
             <div class="app-stat__diagram"><canvas class="app-stat__diagram-canvas"></canvas></div>
-          </div>
-          <div class="total-stat__games">
             <div class="game-stat audiocall-stat">
               <div class="game-stat__img audiocall-stat__img"></div>
               <div class="game-stat__content">
@@ -94,7 +92,7 @@ const templateStatistics = (userStat: Statistics) => {
             </div>
           </div>
         </div>
-      </div>
+
       
       <div class="daily-stat">
         <div class="statistics__heading daily-stat__heading">
