@@ -708,7 +708,7 @@
   align-items: center;
 }
 
-.btn-listen-element {
+.btn-listen {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -721,27 +721,17 @@
   &>.btn-listen__img {
     filter: var(--filter-dark-accent);
   }
-}
-
-.btn-listen {
 
   &:hover {
+    background-color: var(--color-accent);
     cursor: pointer;
-
-    &>.btn-listen-element {
-      background-color: var(--color-accent);
-    }
   }
 
   &.active {
+    background-color: var(--color-dark-accent);
     cursor: auto;
 
-    &>.btn-listen-element {
-      background-color: var(--color-dark-accent);
-      cursor: auto;
-    }
-
-    & .btn-listen__img {
+    &>.btn-listen__img {
       filter: invert(100%);
     }
   }

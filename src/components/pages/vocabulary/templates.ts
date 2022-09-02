@@ -80,9 +80,9 @@ const wordDisplayBox = (word: Word) => `
       <img src="./assets/images/icons/arrow-big.svg" class="word-display__btn right" alt=">">
     </div>
     <div class="word-display__ru">${word.wordTranslate}</div>
-    <div class="word-display__transcription btn-listen">
-      <button class="btn-listen-element"><img src="./assets/images/icons/btn-listen.svg" class="btn-listen__img"
-              alt="👂"></button>
+    <div class="word-display__transcription">
+      <button class="btn-listen"><img src="./assets/images/icons/btn-listen.svg" class="btn-listen__img"
+      alt="👂"></button>
       <div class="word-display__sound">${word.transcription}</div>
     </div>
   </div>
