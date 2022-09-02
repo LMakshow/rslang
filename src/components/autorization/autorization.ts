@@ -4,8 +4,9 @@ import { removeStorageValues } from '../../controllers/api-services/storage';
 import { registration } from '../popups/registration/registration';
 import { entrance } from '../popups/entrance/entrance';
 import Loader from '../../controllers/loader';
+import { BaseObject } from '../../models/base.interface';
 
-const EXPIRATION_TIME = (4 * 60 * 60 * 1000) - 6000;
+const EXPIRATION_TIME = (4 * 60 * 60 * 1000) - (1 * 60 * 1000);
 
 const renderLogout = () => {
   addLogout();
@@ -27,7 +28,10 @@ export const renderAutorization = () => {
   if (isExpiredToken) {
     const url = `users/${localStorage.getItem('userId')}/tokens`;
     const token = localStorage.getItem('refreshToken');
-    Loader.authorizedGet(url, token).then(() => {
+    Loader.authorizedGet<BaseObject>(url, token).then((data: BaseObject) => {
+      localStorage.setItem('token', data.token as string);
+      localStorage.setItem('refreshToken', data.refreshToken as string);
+      console.log('success refreshToken');
       renderLogout();
     }).catch(() => {
       removeStorageValues('userId', 'refreshToken', 'token', 'name', 'tokenTime', 'hardWordsCount');
