@@ -35,7 +35,8 @@ const templateStatistics = (userStat: Statistics) => {
                 <span class="info-item__text item-total__text">Статистика сохраняется для авторизованных пользователей</span>
               </div>
               <div class="info-item">
-                <span class="info-item__text">Авторизуйтесь или зарегистрируйтесь,
+                <span class="info-item__text"><span class="info-item__link" data-popup="entrance">Авторизуйтесь</span> или 
+                <span class="info-item__link" data-popup="registration">зарегистрируйтесь</span>,
                 чтобы сохранять ваш прогресс в мини-играх, изученные слова и добавлять сложные слова в личный словарь</span> 
               </div>
             </div> 

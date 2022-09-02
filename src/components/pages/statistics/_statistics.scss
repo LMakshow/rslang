@@ -204,7 +204,7 @@
 .info-item {
   border: 5px solid $color-basic;
   background-color: $color-bg-items-stat;
-  padding: 10px 24px;
+  padding: 8px 24px;
   display: flex;
   gap: 22px;
   align-items: center;
@@ -215,13 +215,22 @@
   }
 
   &__text {
-    @include font(normal, 400, 3rem, 100%);
+    @include font(normal, 400, 3rem, normal);
     font-family: $font-family-additional;
     color: $color-basic;
   }
 
   &__count {
     font-size: 3.5rem;
+  }
+
+  &__link {
+    color: $color-link-basic-active;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
   @media (max-width: $width-desktop) {
@@ -272,9 +281,6 @@
 }
 
 .item-total {
-  padding-top: 12px;
-  padding-bottom: 12px;
-
   &__icon {
     width: 46px;
     height: 46px;
@@ -315,8 +321,8 @@
   }
 
   @media (max-width: 500px) {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 
     &_icon {
       width: 24px;
