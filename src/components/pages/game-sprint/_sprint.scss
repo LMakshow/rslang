@@ -6,9 +6,11 @@
   align-items: center;
 
   z-index: 0;
-  background: url("./assets/images/game-sprint/sprint-bg.png") no-repeat;
-  background-size: cover;
-  background-position-x: center;
+  background: url("./assets/images/game-sprint/sprint-bg-bomb.png") no-repeat,
+    url("./assets/images/game-sprint/sprint-bg-clock.png") no-repeat, 
+    url("./assets/images/game-sprint/sprint-bg.png") no-repeat;
+  background-size: auto, auto, cover;
+  background-position: 0 10%, 100% 90%, center;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
 
   @media (max-width: $width-mobile) {

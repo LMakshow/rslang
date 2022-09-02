@@ -351,8 +351,6 @@ const addSprintWindow: () => Promise<void> = async () => {
       pageNumber -= 1;
       gameWords = await getVocabWords(groupNumber, pageNumber);
     }
-
-    console.log(`Загружено ${gameWords.length} слов`);
     startGameButton.disabled = false;
   }
 

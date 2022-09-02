@@ -11,8 +11,12 @@
   z-index: 0;
   background: url("./assets/images/main-page/background.jpg") no-repeat;
   background-size: cover;
-  background-position-x: center;
+  background-position: center left;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
+
+  @media (max-width: $width-tablet) {
+    background-position: center;
+  }
 
   @media (max-width: $width-mobile) {
     min-height: calc(100vh - #{$header-height} - #{$footer-mobile-height});
