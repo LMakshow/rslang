@@ -1,6 +1,7 @@
 import templateTextbook from './template';
 import { renderElement } from '../../../controllers/helpers';
 import { setStorageItem } from '../../../controllers/api-services/storage';
+import addAuthorizedStyles from './textbook-authorize';
 
 const saveGroupNum: () => void = () => {
   document.body.addEventListener('click', (event: MouseEvent) => {
@@ -19,4 +20,5 @@ const saveGroupNum: () => void = () => {
 export const addTextbook: () => void = () => {
   renderElement('main', templateTextbook, document.body, 'textbook');
   saveGroupNum();
+  addAuthorizedStyles();
 };

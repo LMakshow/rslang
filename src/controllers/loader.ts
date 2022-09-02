@@ -4,6 +4,7 @@ import { Words } from '../models/words.interface';
 import { setStorageValues, getStorageItem } from './api-services/storage';
 import { UsersWord } from '../models/users-words.interface';
 import { Settings, Statistics } from '../models/statistics.interface';
+import { AggregatedWords } from '../models/aggregatedWords.interface';
 import { newStatistics } from './statistics';
 
 export const SERVER = 'https://rslang-team-bam.herokuapp.com/';
@@ -152,4 +153,12 @@ export default class Loader {
 
     return Loader.authorizedLoad(query, 'GET', token).then((res: Response) => res.json());
   };
+
+  public static getAggregatedUserWords: (difficulty?: string) =>
+  Promise<AggregatedWords> = (difficulty = 'hard') => {
+      const token = localStorage.getItem('token');
+      const query = new URL(`users/${localStorage.getItem('userId')}/aggregatedWords?wordsPerPage=100&filter=%7B%22userWord.difficulty%22%3A%22${difficulty}%22%7D`, SERVER);
+
+      return Loader.authorizedLoad(query, 'GET', token).then((res: Response) => res.json());
+    };
 }
