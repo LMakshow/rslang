@@ -10,7 +10,7 @@ import { getGroupPage } from '../../../controllers/api-services/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import {
-  playAudio,
+  playAudio, playAudioAtResultsScreen,
   playAudioForCorrectAnswer,
   playAudioForWrongAnswer,
   randomizerWord,
@@ -101,6 +101,7 @@ const renderGameResultsScreen: () => void = () => {
   const statisticWrong: HTMLElement = document.querySelector('.statistic-wrong');
 
   sprintGame.classList.add('results');
+  playAudioAtResultsScreen();
 
   if (!rightWords.length) {
     statisticRight?.remove();

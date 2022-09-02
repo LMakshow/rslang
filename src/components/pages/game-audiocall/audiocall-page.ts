@@ -16,6 +16,7 @@ import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import Loader, { SERVER } from '../../../controllers/loader';
 import {
+  playAudioAtResultsScreen,
   playAudioForCorrectAnswer,
   playAudioForWrongAnswer,
   randomizerWord,
@@ -189,6 +190,7 @@ const renderGameResultsScreen: () => void = () => {
       const statisticWrong: HTMLElement = document.querySelector('.statistic-wrong');
 
       audiocallGame.classList.add('results');
+      playAudioAtResultsScreen();
 
       if (!rightWords.length) {
         statisticRight?.remove();

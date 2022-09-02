@@ -14,8 +14,8 @@ export const playAudio: (word: Word) => void = (word: Word) => {
   audio.autoplay = true;
 };
 
-export const playAudioForCorrectAnswer: () => void = () => {
-  const audio: HTMLAudioElement = new Audio('./assets/audio/right.mp3');
+const checkAudioSettings: (sound: HTMLAudioElement) => void = (sound: HTMLAudioElement) => {
+  const audio: HTMLAudioElement = sound;
 
   if (localStorage.getItem('isSoundOn') === 'true' || !localStorage.getItem('isSoundOn')) {
     audio.autoplay = true;
@@ -24,12 +24,20 @@ export const playAudioForCorrectAnswer: () => void = () => {
   }
 };
 
+export const playAudioForCorrectAnswer: () => void = () => {
+  const audio: HTMLAudioElement = new Audio('./assets/audio/right.mp3');
+
+  checkAudioSettings(audio);
+};
+
 export const playAudioForWrongAnswer: () => void = () => {
   const audio: HTMLAudioElement = new Audio('./assets/audio/wrong.mp3');
 
-  if (localStorage.getItem('isSoundOn') === 'true' || !localStorage.getItem('isSoundOn')) {
-    audio.autoplay = true;
-  } else {
-    audio.autoplay = false;
-  }
+  checkAudioSettings(audio);
+};
+
+export const playAudioAtResultsScreen: () => void = () => {
+  const audio: HTMLAudioElement = new Audio('./assets/audio/results.mp3');
+
+  checkAudioSettings(audio);
 };
