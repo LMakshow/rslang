@@ -25,6 +25,7 @@ import {
   AggregatedUserWords,
   ReceivedUserAggregatedWords,
 } from '../../../models/users-words.interface';
+import { parseAggregatedWords } from '../vocabulary/hard-page';
 
 const groupNumber: number = getGroupNumber();
 
@@ -127,6 +128,12 @@ const getVocabWords = async (group: number, page: number) => {
   if (!userId) {
     const promiseArray: Promise<Words> = getWords({ group, page });
     return promiseArray.then((words: Words) => words);
+  }
+
+  if (groupNumber === 6 && Number(localStorage.getItem('hardWordsCount')) >= 5) {
+    const hardWordsReceived = await Loader.getAggregatedUserWords();
+    const hardWords = parseAggregatedWords(hardWordsReceived);
+    return hardWords.slice(0, 20);
   }
 
   while (currentPage >= 0 && vocabWords.length < 20) {
@@ -358,7 +365,7 @@ const addKeyboardEventListeners: () => void = () => {
 const addAudiocallWindow: () => void = async () => {
   const audiocallWindow: HTMLElement = document.querySelector('.game-window');
 
-  if (!Number.isInteger(getGroupNumber())) {
+  if (!Number.isInteger(getGroupNumber()) || Number(localStorage.getItem('hardWordsCount')) < 5) {
     renderElement('div', templateAudiocallWindow, audiocallWindow, 'game-window__wrapper');
   } else if (!localStorage.getItem('token')) {
     renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);

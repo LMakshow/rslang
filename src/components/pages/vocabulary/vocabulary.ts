@@ -13,14 +13,15 @@ import { setWords } from './words-map';
 import { addLearnedPages, addActiveWords } from './active-classes';
 import {
   getGroupPage,
+  getStorageItem,
   savePages,
   setStorageItem,
 } from '../../../controllers/api-services/storage';
 import Loader from '../../../controllers/loader';
-import { getHarddWords, stylizeEmptyBlocks } from './hard-page';
+import { parseAggregatedWords, stylizeEmptyBlocks } from './hard-page';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
-const groupNumber: number = getGroupNumber() || 0;
+const groupNumber: number = getGroupNumber() || Number(getStorageItem('group')) || 0;
 
 const renderWords = (wordList: HTMLElement, words: Words) => {
   const templatesOfWords: string = words.map((word, i) => {
@@ -47,7 +48,7 @@ const renderWordList: () => void = () => {
 
   if (document.querySelector('main').classList.contains('colors-hard')) {
     Loader.getAggregatedUserWords().then((data) => {
-      const hardWords = getHarddWords(data);
+      const hardWords = parseAggregatedWords(data);
       renderWords(wordList, hardWords);
     }).then(() => {
       if (wordList.querySelectorAll('.word-list__card').length === 0) {
