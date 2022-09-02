@@ -6,7 +6,7 @@ import { entrance } from '../popups/entrance/entrance';
 import Loader from '../../controllers/loader';
 import { BaseObject } from '../../models/base.interface';
 
-const EXPIRATION_TIME = (4 * 60 * 60 * 1000) - (1 * 60 * 1000);
+const EXPIRATION_TIME = (4 * 60 * 60 * 1000) - (1 * 60 * 60 * 1000);
 
 const renderLogout = () => {
   addLogout();
