@@ -13,7 +13,8 @@ import { playAudio, randomizerWord } from '../game-common/game-common';
 import { templateGameResults } from '../game-common/game-templates';
 import { addUsersRightWordFromSprint, addUsersWrongWordFromSprint } from '../../../controllers/api-services/games';
 import Loader from '../../../controllers/loader';
-import { AggregatedUserWord, AggregatedUserWords, ReceivedUserAggregatedWords } from '../../../models/users-words.interface';
+import { AggregatedWord, AggregatedWords } from '../../../models/aggregatedWords.interface';
+import { parseAggregatedWords } from '../vocabulary/hard-page';
 
 const groupNumber: number = getGroupNumber();
 let pageNumber: number;
@@ -30,8 +31,8 @@ let time: number;
 let timer: NodeJS.Timer;
 
 let gameStarted: boolean;
-let gameWords: Words | AggregatedUserWords;
-let gameWordsCurrent: Set<Word | AggregatedUserWord>;
+let gameWords: Words | AggregatedWord[];
+let gameWordsCurrent: Set<Word | AggregatedWord>;
 
 const rightWords: Words = [];
 const wrongWords: Words = [];
@@ -64,16 +65,8 @@ const getVocabWords = async (group: number, page: number) => {
   const url = `users/${userId}/aggregatedWords?${query}`;
   const token = localStorage.getItem('token');
 
-  const vocabWords = (
-    await Loader.authorizedGet<ReceivedUserAggregatedWords>(url, token)
-  )[0].paginatedResults;
-
-  const vocabWordsWithId = vocabWords.map((word) => {
-    const newWord = word;
-    // eslint-disable-next-line no-underscore-dangle
-    newWord.id = newWord._id;
-    return word;
-  });
+  const vocabWords = await Loader.authorizedGet<AggregatedWords>(url, token);
+  const vocabWordsWithId = parseAggregatedWords(vocabWords);
   return vocabWordsWithId;
 };
 
@@ -337,19 +330,33 @@ const addSprintWindow: () => Promise<void> = async () => {
     renderElement('div', templateSprintWindow, sprintWindow, ['game-window__wrapper', 'active']);
     const startGameButton: HTMLButtonElement = document.querySelector('.button-play-game');
     startGameButton.disabled = true;
-    gameWords = await getVocabWords(groupNumber, pageNumber);
 
-    while (gameWords.length < 1) {
-      if (pageNumber === 0) {
-        const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
-        const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
-        gameVocabText.classList.add('no-display');
-        gameNoVocabWordsText.classList.remove('no-display');
-        gameWords = await getGroupWords(groupNumber);
-        break;
+    if (groupNumber === 6) {
+      if (Number(localStorage.getItem('hardWordsCount')) >= 1) {
+        const vocabWords = await Loader.getAggregatedUserWords();
+        const hardWords = parseAggregatedWords(vocabWords);
+        gameWords = hardWords;
+      } else {
+        sprintWindow.innerHTML = '';
+        pageNumber = -1;
       }
-      pageNumber -= 1;
+    }
+
+    if (groupNumber >= 0 && groupNumber < 6) {
       gameWords = await getVocabWords(groupNumber, pageNumber);
+
+      while (gameWords.length < 1) {
+        if (pageNumber === 0) {
+          const gameVocabText: HTMLElement = document.querySelector('.game-window__vocab-text');
+          const gameNoVocabWordsText: HTMLElement = document.querySelector('.game-window__no-vocab-words');
+          gameVocabText.classList.add('no-display');
+          gameNoVocabWordsText.classList.remove('no-display');
+          gameWords = await getGroupWords(groupNumber);
+          break;
+        }
+        pageNumber -= 1;
+        gameWords = await getVocabWords(groupNumber, pageNumber);
+      }
     }
     startGameButton.disabled = false;
   }

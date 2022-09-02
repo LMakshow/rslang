@@ -2,7 +2,7 @@ import { AggregatedWord, AggregatedWords } from '../../../models/aggregatedWords
 
 export const HARD_WORDS_LIMIT = 50;
 
-export const getHarddWords = (serverWords: AggregatedWords) => {
+export const parseAggregatedWords = (serverWords: AggregatedWords) => {
   const arr = serverWords[0].paginatedResults;
   return arr.map((word: AggregatedWord) => {
     // eslint-disable-next-line

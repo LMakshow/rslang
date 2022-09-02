@@ -43,7 +43,7 @@ const templateTextbook: string = `
           <li class="textbook__item textbook__item-c1" data-group="4">
             <a class="textbook__link" href="vocabulary.html?group=4">
               <h3 class="textbook__title">С1</h3>
-              <h4 class="textbook__subtitle">Сложный</h4>
+              <h4 class="textbook__subtitle">Эксперт</h4>
               <p class="textbook__description">Профессиональное общение</p>
             </a>
           </li>

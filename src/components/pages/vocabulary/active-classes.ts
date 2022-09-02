@@ -20,7 +20,7 @@ export const addLearnedPages = () => {
   const url = `users/${userId}/settings`;
   const token = localStorage.getItem('token');
   Loader.authorizedGet<Settings>(url, token).then((data: Settings) => {
-    const serverGroup = data.optional.learnedPages[localStorage.getItem('group')];
+    const serverGroup = data.optional.learnedPages[Number(getStorageItem('group'))];
     const pageSelectors = document.querySelectorAll('.page-selector__btn');
     pageSelectors.forEach((selector, index) => {
       if (serverGroup[index] === 1) {
