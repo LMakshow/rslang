@@ -9,7 +9,12 @@ import { getWords } from '../../../controllers/api-services/vocabulary';
 import { getGroupPage } from '../../../controllers/api-services/storage';
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
-import { playAudio, randomizerWord } from '../game-common/game-common';
+import {
+  playAudio,
+  playAudioForCorrectAnswer,
+  playAudioForWrongAnswer,
+  randomizerWord,
+} from '../game-common/game-common';
 import { templateGameResults } from '../game-common/game-templates';
 import { addUsersRightWordFromSprint, addUsersWrongWordFromSprint } from '../../../controllers/api-services/games';
 import Loader from '../../../controllers/loader';
@@ -188,6 +193,7 @@ const clickCorrect = () => {
       addUsersRightWordFromSprint(rightWord.id);
     }
     rightWords.push(rightWord);
+    playAudioForCorrectAnswer();
   } else {
     combo = 0;
     comboCounter();
@@ -195,6 +201,7 @@ const clickCorrect = () => {
       addUsersWrongWordFromSprint(rightWord.id);
     }
     wrongWords.push(rightWord);
+    playAudioForWrongAnswer();
   }
 };
 
@@ -208,6 +215,7 @@ const clickWrong = () => {
       addUsersRightWordFromSprint(rightWord.id);
     }
     rightWords.push(rightWord);
+    playAudioForCorrectAnswer();
   } else {
     combo = 0;
     comboCounter();
@@ -215,6 +223,7 @@ const clickWrong = () => {
       addUsersWrongWordFromSprint(rightWord.id);
     }
     wrongWords.push(rightWord);
+    playAudioForWrongAnswer();
   }
 };
 

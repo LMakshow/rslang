@@ -15,7 +15,11 @@ import { getGroupPage, getStorageItem } from '../../../controllers/api-services/
 import { Words } from '../../../models/words.interface';
 import { Word } from '../../../models/word.interface';
 import Loader, { SERVER } from '../../../controllers/loader';
-import { randomizerWord } from '../game-common/game-common';
+import {
+  playAudioForCorrectAnswer,
+  playAudioForWrongAnswer,
+  randomizerWord,
+} from '../game-common/game-common';
 import {
   addUsersRightWordFromAudiocall, addUsersWrongWordFromAudiocall,
 } from '../../../controllers/api-services/games';
@@ -233,6 +237,19 @@ const addEventListeners: () => void = () => {
 
     playAudio(rightAnswer);
   });
+
+  //включение/выключение звука
+  document.addEventListener('click', (event: MouseEvent) => {
+    const eventTarget: HTMLElement = event.target as HTMLElement;
+    const eventTargetClosest: HTMLElement = eventTarget.closest('.sound');
+
+    if (!eventTargetClosest) {
+      return;
+    }
+
+    eventTargetClosest.classList.toggle('no-sound');
+  });
+
   // выбор варианта ответа
   document.addEventListener('click', (event: MouseEvent) => {
     const audiocallGameContainer: HTMLElement = document.querySelector('.audiocall-game__container');
@@ -248,6 +265,7 @@ const addEventListeners: () => void = () => {
 
     if (eventTargetClosest.dataset.id === rightAnswer.id) {
       rightWords.push(rightAnswer);
+      playAudioForCorrectAnswer();
 
       if (localStorage.getItem('token')) {
         addUsersRightWordFromAudiocall(rightAnswer.id);
@@ -256,6 +274,7 @@ const addEventListeners: () => void = () => {
 
     if (eventTargetClosest.dataset.id === 'button-dont-know') {
       wrongWords.push(rightAnswer);
+      playAudioForWrongAnswer();
 
       if (localStorage.getItem('token')) {
         addUsersWrongWordFromAudiocall(rightAnswer.id);
@@ -265,6 +284,7 @@ const addEventListeners: () => void = () => {
     if (eventTargetClosest.dataset.id !== rightAnswer.id && eventTargetClosest.dataset.id !== 'button-dont-know') {
       eventTargetClosest.classList.add('wrong');
       wrongWords.push(rightAnswer);
+      playAudioForWrongAnswer();
 
       if (localStorage.getItem('token')) {
         addUsersWrongWordFromAudiocall(rightAnswer.id);

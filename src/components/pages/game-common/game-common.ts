@@ -13,3 +13,25 @@ export const playAudio: (word: Word) => void = (word: Word) => {
   const audio: HTMLAudioElement = new Audio(`${SERVER + word.audio}`);
   audio.autoplay = true;
 };
+
+export const playAudioForCorrectAnswer: () => void = () => {
+  const button: HTMLButtonElement = document.querySelector('.sound');
+  const audio: HTMLAudioElement = new Audio('./assets/audio/right.mp3');
+
+  if (!button.classList.contains('no-sound')) {
+    audio.autoplay = true;
+  } else {
+    audio.autoplay = false;
+  }
+}
+
+export const playAudioForWrongAnswer: () => void = () => {
+  const button: HTMLButtonElement = document.querySelector('.sound');
+  const audio: HTMLAudioElement = new Audio('./assets/audio/wrong.mp3');
+
+  if (!button.classList.contains('no-sound')) {
+    audio.autoplay = true;
+  } else {
+    audio.autoplay = false;
+  }
+}
