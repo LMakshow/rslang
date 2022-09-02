@@ -1,6 +1,6 @@
 const templateHeader: string = `
 <div class="header__wrapper wrapper">
-  <div class="header__container">
+  <button class="header__container">
     <div class="mobile-label">
       <span></span>
     </div>
@@ -12,7 +12,6 @@ const templateHeader: string = `
     </div>
     <nav class="navigation">
   <div class="navigation__links menu mobile-menu">
-  
     <a class="navigation-link menu__link link-basic" href="textbook.html">
       <svg class="navigation-link__icon" width="25" height="29" viewBox="0 0 25 29" xmlns="http://www.w3.org/2000/svg">
         <path d="M4.80476 2.83333H24.0606V0.5H4.22726C2.29526 0.5 0.727264 2.06683 0.727264 4V25C0.727264 26.9332 2.29526 28.5 4.22726 28.5H24.0606V5.16667H4.80476C3.19943 5.16667 3.19943 2.83333 4.80476 2.83333ZM5.39393 7.5H13.5606V15.6667L15.8939 13.3333L18.2273 15.6667V7.5H21.7273V26.1667H5.39393V7.5Z"/>
@@ -42,6 +41,11 @@ const templateHeader: string = `
     </a>
     
   </div>
+  
+  <button class="navigation-link menu__link link-basic sound">
+    <svg class="navigation-link__icon icon-sound-on" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{}</style></defs><title/><g data-name="Layer 34" id="Layer_34"><path class="cls-1" d="M18,29a1,1,0,0,1-.57-.18l-10-7A1,1,0,0,1,7,21V11a1,1,0,0,1,.43-.82l10-7a1,1,0,0,1,1-.07A1,1,0,0,1,19,4V28a1,1,0,0,1-.54.89A1,1,0,0,1,18,29ZM9,20.48l8,5.6V5.92l-8,5.6Z"/><path class="cls-1" d="M8,22H4a3,3,0,0,1-3-3V13a3,3,0,0,1,3-3H8a1,1,0,0,1,1,1V21A1,1,0,0,1,8,22ZM4,12a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1H7V12Z"/><path class="cls-1" d="M18,21V19a3,3,0,0,0,2.12-5.12l1.42-1.42A5,5,0,0,1,18,21Z"/><path class="cls-1" d="M26.48,25.48a1,1,0,0,1-.71-.29,1,1,0,0,1,0-1.42,11,11,0,0,0,0-15.54,1,1,0,1,1,1.42-1.42,13,13,0,0,1,0,18.38A1,1,0,0,1,26.48,25.48Z"/><path class="cls-1" d="M23.65,22.65a1,1,0,0,1-.7-.29A1,1,0,0,1,23,21a7,7,0,0,0,0-9.9,1,1,0,0,1,1.41-1.41,9,9,0,0,1,0,12.72A1,1,0,0,1,23.65,22.65Z"/></g></svg>
+    <svg class="navigation-link__icon icon-sound-off" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{}</style></defs><title/><g data-name="Layer 35" id="Layer_35"><path class="cls-1" d="M18,29a1,1,0,0,1-.57-.18l-10-7A1,1,0,0,1,7,21V11a1,1,0,0,1,.43-.82l10-7a1,1,0,0,1,1-.07A1,1,0,0,1,19,4V28a1,1,0,0,1-.54.89A1,1,0,0,1,18,29ZM9,20.48l8,5.6V5.92l-8,5.6Z"/><path class="cls-1" d="M8,22H4a3,3,0,0,1-3-3V13a3,3,0,0,1,3-3H8a1,1,0,0,1,1,1V21A1,1,0,0,1,8,22ZM4,12a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1H7V12Z"/><rect class="cls-1" height="12" transform="translate(-3.77 22.9) rotate(-45)" width="2" x="24.76" y="10"/><rect class="cls-1" height="2" transform="translate(-3.77 22.9) rotate(-45)" width="12" x="19.76" y="15"/></g></svg>
+  </button>
   
   <div class="navigation__links options">
   
