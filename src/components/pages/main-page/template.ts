@@ -16,6 +16,7 @@ const templateMain: string = `
           <a class="button button-additional button-start" href="textbook.html">Начать!</a>
           <a class="button button-basic button-team" href="team.html">О команде</a>
         </div>
+        <a class="main__video" href="https://youtu.be/ZPpoN514nOE" target="_blank"><span>Видео о проекте:</span><img class="main__video-img" src="./assets/images/main-page/video-button.png"></a>
       </div>
       <div class="main__image">
         <div class="speech">

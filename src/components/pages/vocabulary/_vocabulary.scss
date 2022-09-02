@@ -143,6 +143,7 @@
     max-width: 1380px;
     width: 97%;
     margin: 24px auto;
+    min-height: calc(100vh - #{$header-height} - #{$footer-height} - 70px);
 
     @media (max-width: $width-laptop) {
       max-width: 1240px;
@@ -152,6 +153,10 @@
     @media (max-width: $width-tablet) {
       flex-direction: column;
       align-items: center;
+    }
+
+    @media (max-width: $width-mobile) {
+      min-height: calc(100vh - #{$header-height} - #{$footer-mobile-height} - 70px);
     }
   }
 }
@@ -962,6 +967,11 @@
 
 .no-display {
   display: none;
+}
+
+.grayscale80 {
+  filter: grayscale(80%);
+  pointer-events: none;
 }
 
 @keyframes fadeMessage {
