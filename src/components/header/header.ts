@@ -13,13 +13,13 @@ const addGameSound: () => void = () => {
 
     if (!eventTargetClosest.classList.contains('no-sound')) {
       localStorage.setItem('isSoundOn', 'false');
-      eventTargetClosest.classList.add('no-sound')
+      eventTargetClosest.classList.add('no-sound');
     } else {
       localStorage.setItem('isSoundOn', 'true');
       eventTargetClosest.classList.remove('no-sound');
     }
   });
-}
+};
 
 const closeMobileMenu: () => void = () => {
   const header: HTMLElement = document.querySelector('.header');

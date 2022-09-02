@@ -15,7 +15,6 @@ export const playAudio: (word: Word) => void = (word: Word) => {
 };
 
 export const playAudioForCorrectAnswer: () => void = () => {
-  const button: HTMLButtonElement = document.querySelector('.sound');
   const audio: HTMLAudioElement = new Audio('./assets/audio/right.mp3');
 
   if (localStorage.getItem('isSoundOn') === 'true' || !localStorage.getItem('isSoundOn')) {
@@ -23,10 +22,9 @@ export const playAudioForCorrectAnswer: () => void = () => {
   } else {
     audio.autoplay = false;
   }
-}
+};
 
 export const playAudioForWrongAnswer: () => void = () => {
-  const button: HTMLButtonElement = document.querySelector('.sound');
   const audio: HTMLAudioElement = new Audio('./assets/audio/wrong.mp3');
 
   if (localStorage.getItem('isSoundOn') === 'true' || !localStorage.getItem('isSoundOn')) {
@@ -34,4 +32,4 @@ export const playAudioForWrongAnswer: () => void = () => {
   } else {
     audio.autoplay = false;
   }
-}
+};
