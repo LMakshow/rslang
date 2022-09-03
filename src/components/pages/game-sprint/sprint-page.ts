@@ -173,7 +173,7 @@ const startGame = () => {
       gameStarted = false;
       renderGameResultsScreen();
     }
-  }, 1000);
+  }, 500);
   newGameRound();
 };
 

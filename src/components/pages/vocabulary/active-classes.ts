@@ -38,8 +38,14 @@ export const checkPage = () => {
   const learnedwords = Array.from(words).filter((word) => word.classList.contains('learned'));
   const page = document.querySelector(`[data-page="${+getStorageItem('page') + 1}"]`);
   if (learnedwords.length === 20) {
+    document.querySelector('.words-page__audio-img').classList.add('grayscale80');
+    document.querySelector('.words-page__sprint-img').classList.add('grayscale80');
     page.classList.add('learned');
     Loader.authorizedGet<Settings>(url, token).then((data: Settings) => Loader.updateLearnedPage(data, 'add'));
+  }
+  if (learnedwords.length < 20) {
+    document.querySelector('.words-page__audio-img').classList.remove('grayscale80');
+    document.querySelector('.words-page__sprint-img').classList.remove('grayscale80');
   }
   if (learnedwords.length < 20 && page.classList.contains('learned')) {
     page.classList.remove('learned');

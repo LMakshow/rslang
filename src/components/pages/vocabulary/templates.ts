@@ -54,10 +54,12 @@ const templateVocab = (groupNumber: number) => `
     </div>
     <div class="word-list"></div>
     <div class="words-page__games">
-      <a href="audiocall.html?group=${groupNumber}"><img src="./assets/images/vocabulary/game-audio.png" alt="Мини-игра Аудиовызов"
-          class="words-page__audio-img"></a>
-      <a href="sprint.html?group=${groupNumber}""><img src="./assets/images/vocabulary/game-sprint.png" alt="Мини-игра Спринт"
-          class="words-page__sprint-img"></a>
+      <a class="words-page__audio-img" href="audiocall.html?group=${groupNumber}">
+        <img src="./assets/images/vocabulary/game-audio.png" class="words-page__audio-img" alt="Мини-игра Аудиовызов">
+      </a>
+      <a class="words-page__sprint-img" href="sprint.html?group=${groupNumber}">
+        <img src="./assets/images/vocabulary/game-sprint.png" class="words-page__sprint-img" alt="Мини-игра Спринт">
+      </a>
     </div>
   </div>
   <div class="word-display"></div>
@@ -80,7 +82,7 @@ const wordDisplayBox = (word: Word) => `
     <div class="word-display__ru">${word.wordTranslate}</div>
     <div class="word-display__transcription">
       <button class="btn-listen"><img src="./assets/images/icons/btn-listen.svg" class="btn-listen__img"
-              alt="👂"></button>
+      alt="👂"></button>
       <div class="word-display__sound">${word.transcription}</div>
     </div>
   </div>
