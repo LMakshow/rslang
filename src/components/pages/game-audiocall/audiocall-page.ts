@@ -141,6 +141,10 @@ const getVocabWords = async (group: number, page: number) => {
     return hardWords.slice(0, 20);
   }
 
+  if (groupNumber === 6 && Number(localStorage.getItem('hardWordsCount')) < 5) {
+    window.location.href = 'audiocall.html';
+  }
+
   while (currentPage >= 0 && vocabWords.length < 20) {
     const words: AggregatedUserWords = await getAggregatedUserWords(group, currentPage);
 
