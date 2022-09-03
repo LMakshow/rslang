@@ -179,6 +179,7 @@
     align-items: center;
     justify-content: center;
     @include font(normal, 700, 4rem, normal);
+    text-shadow: 2px 2px 2px $color-additional;
     transition: 0.3s all;
 
     @media (max-width: $width-mobile) {

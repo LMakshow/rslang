@@ -6,7 +6,7 @@
   align-items: center;
 
   z-index: 0;
-  background: url("./assets/images/game-audiocall/audiocall-bg.png") no-repeat;
+  background: url("./assets/images/game-audiocall/audiocall-bg.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
@@ -26,7 +26,7 @@
   width: 829px;
   height: 560px;
 
-  background: url("./assets/images/game-audiocall/audiocall-game-bg.png") no-repeat;
+  background: url("./assets/images/game-audiocall/audiocall-game-bg.jpg") no-repeat;
   background-size: cover;
   background-position: center;
 
@@ -86,7 +86,7 @@
   }
 
   &__listening-button-wrapper {
-    background: url("./assets/images/game-audiocall/button-bg.svg") no-repeat;
+    background: url("./assets/images/game-audiocall/button-bg.png") no-repeat;
     background-size: cover;
     background-position: center;
 
@@ -94,8 +94,8 @@
     align-items: center;
     justify-content: center;
 
-    width: 258px;
-    height: 220px;
+    width: 255px;
+    height: 218px;
   }
 
   &__listening-button {

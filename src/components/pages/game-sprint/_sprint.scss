@@ -8,7 +8,7 @@
   z-index: 0;
   background: url("./assets/images/game-sprint/sprint-bg-bomb.png") no-repeat,
     url("./assets/images/game-sprint/sprint-bg-clock.png") no-repeat, 
-    url("./assets/images/game-sprint/sprint-bg.png") no-repeat;
+    url("./assets/images/game-sprint/sprint-bg.jpg") no-repeat;
   background-size: auto, auto, cover;
   background-position: 0 10%, 100% 90%, center;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
@@ -22,7 +22,7 @@
   width: 900px;
   height: 640px;
 
-  background: url("./assets/images/game-sprint/sprint-game-bg.png") no-repeat;
+  background: url("./assets/images/game-sprint/sprint-game-bg.jpg") no-repeat;
   background-size: cover;
   background-position: center;
 
