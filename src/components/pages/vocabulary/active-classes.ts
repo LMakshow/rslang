@@ -15,7 +15,7 @@ const addActiveBtns = (
 
 export const addLearnedPages = () => {
   const userId = localStorage.getItem('userId');
-  if (!userId) return;
+  if (!userId || document.querySelector('main').classList.contains('colors-hard')) return;
 
   const url = `users/${userId}/settings`;
   const token = localStorage.getItem('token');
