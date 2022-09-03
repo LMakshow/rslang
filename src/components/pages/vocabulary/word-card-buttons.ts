@@ -54,7 +54,7 @@ const addCardButtons = () => {
   const btnHard = document.querySelector('.btn-hard');
   const btnLearn = document.querySelector('.btn-learn');
   const card = document.querySelector(`.word-list__card[data-word="${wordId}"]`);
-  btnHard.addEventListener('click', () => {
+  btnHard.addEventListener('click', async () => {
     if (!card) return;
 
     let hardWordsCount = +localStorage.getItem('hardWordsCount');
@@ -70,8 +70,12 @@ const addCardButtons = () => {
     card.classList.toggle('hard');
     card.classList.remove('learned');
     btnHard.classList.toggle('active');
-    btnLearn.classList.remove('active');
-
+    if (btnLearn.classList.contains('active')) {
+      const stat = await Loader.getStatistics();
+      removeLearnedWordStat(stat);
+      Loader.upsertStatistics(stat);
+      btnLearn.classList.remove('active');
+    }
     if (card.classList.contains('hard')) {
       hardWordsCount = hardWordsCount ? hardWordsCount + 1 : 1;
     } else {
