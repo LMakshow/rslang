@@ -36,6 +36,9 @@ const checkDifficultyWhenRightAnswer = (usersWord: UsersWord) => {
   if (usersWord.optional.successStreak >= 5
     && wordProperties.difficulty === 'hard') {
     wordProperties.difficulty = 'learned';
+    let hardWordsCount = +localStorage.getItem('hardWordsCount');
+    hardWordsCount -= 1;
+    localStorage.setItem('hardWordsCount', String(hardWordsCount));
   }
 
   return wordProperties;

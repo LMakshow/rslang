@@ -85,7 +85,13 @@ const addCardButtons = () => {
   btnLearn.addEventListener('click', async () => {
     if (!card) return;
     card.classList.toggle('learned');
-    card.classList.remove('hard');
+
+    if (card.classList.contains('hard')) {
+      let hardWordsCount = +localStorage.getItem('hardWordsCount');
+      hardWordsCount -= 1;
+      localStorage.setItem('hardWordsCount', String(hardWordsCount));
+      card.classList.remove('hard');
+    }
     btnHard.classList.remove('active');
     btnLearn.classList.toggle('active');
     sendWord(wordId, 'learned');
