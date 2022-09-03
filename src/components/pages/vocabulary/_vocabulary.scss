@@ -126,6 +126,10 @@
     & .word-display__box {
       background-image: url("./assets/images/vocabulary/word-display-background-hard.png");
     }
+
+    & .word-list {
+      margin-bottom: auto;
+    }
   }
 
   &__wrapper {
@@ -422,7 +426,6 @@
   column-gap: 24px;
   row-gap: 8px;
   margin-top: 10px;
-  margin-bottom: auto;
 
   @media (max-width: $width-desktop) {
     column-gap: 16px;
