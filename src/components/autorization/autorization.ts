@@ -28,7 +28,6 @@ export const renderAutorization = () => {
     localStorage.setItem('token', data.token as string);
     localStorage.setItem('refreshToken', data.refreshToken as string);
     localStorage.removeItem('tokenTime');
-    console.log('success refreshToken');
     renderLogout();
   }).catch(() => {
     removeStorageValues('userId', 'refreshToken', 'token', 'name', 'hardWordsCount');
