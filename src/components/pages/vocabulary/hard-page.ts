@@ -10,10 +10,3 @@ export const parseAggregatedWords = (serverWords: AggregatedWords) => {
     return word;
   });
 };
-
-export const stylizeEmptyBlocks = () => {
-  (document.querySelector('.vocab') as HTMLElement).style.height = '1px';
-  const container = document.querySelector('.vocab__container') as HTMLDivElement;
-  container.style.height = '100%';
-  container.style.paddingTop = '24px';
-};
