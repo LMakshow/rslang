@@ -18,7 +18,7 @@ import {
   setStorageItem,
 } from '../../../controllers/api-services/storage';
 import Loader from '../../../controllers/loader';
-import { parseAggregatedWords, stylizeEmptyBlocks } from './hard-page';
+import { parseAggregatedWords } from './hard-page';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
 const groupNumber: number = getGroupNumber() || Number(getStorageItem('group')) || 0;
@@ -56,7 +56,8 @@ const renderWordList: () => void = () => {
       }
     })
       .catch(() => {
-        stylizeEmptyBlocks();
+        (document.querySelector('.vocab__container') as HTMLDivElement).style.height = '1px';
+        if (wordList.innerHTML === '') wordList.innerHTML = '<p class="word-list__message">Войдите в аккаунт для доступа к сохраненным сложным словам</p>';
       });
   } else {
     getWords({
