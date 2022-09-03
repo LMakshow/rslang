@@ -1,6 +1,6 @@
 const templateHeader: string = `
 <div class="header__wrapper wrapper">
-  <button class="header__container">
+  <div class="header__container">
     <div class="mobile-label">
       <span></span>
     </div>
@@ -52,8 +52,6 @@ const templateHeader: string = `
   </div>  
 </nav>
   </div>
-</div>
-
-`;
+</div>`;
 
 export default templateHeader;
