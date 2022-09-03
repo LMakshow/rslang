@@ -375,7 +375,7 @@ const addKeyboardEventListeners: () => void = () => {
 const addAudiocallWindow: () => void = async () => {
   const audiocallWindow: HTMLElement = document.querySelector('.game-window');
 
-  if (!Number.isInteger(getGroupNumber()) || Number(localStorage.getItem('hardWordsCount')) < 5) {
+  if (!Number.isInteger(getGroupNumber()) || (groupNumber === 6 && Number(localStorage.getItem('hardWordsCount')) < 5)) {
     renderElement('div', templateAudiocallWindow, audiocallWindow, 'game-window__wrapper');
   } else if (!localStorage.getItem('token')) {
     renderElement('div', templateAudiocallWindow, audiocallWindow, ['game-window__wrapper', 'active']);
