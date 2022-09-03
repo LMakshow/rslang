@@ -41,10 +41,20 @@ const renderMobileMenu: () => void = () => {
   mobileBlackout.addEventListener('click', closeMobileMenu);
 };
 
+const addGameSoundEffectsButton: () => void = () => {
+  const soundButton: HTMLButtonElement = document.querySelector('.sound');
+  const url = window.location;
+
+  if (url.pathname !== '/audiocall.html' && url.pathname !== '/sprint.html') {
+    soundButton.classList.add('no-display');
+  }
+}
+
 export const addHeader: () => void = () => {
   renderElement('header', templateHeader, document.body, 'header');
   renderMobileMenu();
   renderAutorization();
+  addGameSoundEffectsButton();
   addGameSound();
 };
 
