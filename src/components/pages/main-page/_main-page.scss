@@ -84,18 +84,23 @@
 
   &__image {
     display: flex;
-    flex: 0 1 37.3%;
+    flex: 0 1 45%;
     flex-direction: column;
     justify-content: flex-end;
     align-self: center;
+    margin-right: -150px;
+    max-width: 800px;
 
     position: relative;
 
     @media (max-width: $width-desktop) {
-      flex-basis: 38.2%;
+      flex-basis: 50%;
+      margin-right: -100px;
     }
 
     @media (max-width: $width-laptop) {
+      flex-basis: 38.2%;
+      margin-right: 0;
       min-width: 0;
     }
 
@@ -112,6 +117,9 @@
   &__dog {
     width: 100%;
     filter: drop-shadow(0 11.2338px 12.1699px rgba(0, 0, 0, 0.72));
+    animation-name: fadeInRightBig;
+    animation-duration: 1.5s;
+    animation-fill-mode: both;
 
     @media (max-width: $width-laptop) {
       width: 522px;
@@ -139,6 +147,7 @@
   &__item {
     display: flex;
     align-items: center;
+    text-shadow: 2px 2px 1px #EFF26F;
 
     position: relative;
 
@@ -220,6 +229,11 @@
   left: 2%;
   z-index: 2;
 
+  animation-name: zoomIn;
+  animation-duration: 1.5s;
+  animation-fill-mode: both;
+  animation-delay: 1.5s;
+
   @media (max-width: $width-desktop) {
     padding: 41px 32px 53px;
     width: 256px;
@@ -270,5 +284,28 @@
       transform: rotate(0);
       font-size: 1.8rem;
     }
+  }
+}
+
+@keyframes fadeInRightBig {
+  0% {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
   }
 }
