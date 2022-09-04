@@ -84,18 +84,23 @@
 
   &__image {
     display: flex;
-    flex: 0 1 37.3%;
+    flex: 0 1 45%;
     flex-direction: column;
     justify-content: flex-end;
     align-self: center;
+    margin-right: -150px;
+    max-width: 800px;
 
     position: relative;
 
     @media (max-width: $width-desktop) {
-      flex-basis: 38.2%;
+      flex-basis: 50%;
+      margin-right: -100px;
     }
 
     @media (max-width: $width-laptop) {
+      flex-basis: 38.2%;
+      margin-right: 0;
       min-width: 0;
     }
 
@@ -142,6 +147,7 @@
   &__item {
     display: flex;
     align-items: center;
+    text-shadow: 2px 2px 1px #EFF26F;
 
     position: relative;
 
