@@ -112,6 +112,9 @@
   &__dog {
     width: 100%;
     filter: drop-shadow(0 11.2338px 12.1699px rgba(0, 0, 0, 0.72));
+    animation-name: fadeInRightBig;
+    animation-duration: 1.5s;
+    animation-fill-mode: both;
 
     @media (max-width: $width-laptop) {
       width: 522px;
@@ -220,6 +223,11 @@
   left: 2%;
   z-index: 2;
 
+  animation-name: zoomIn;
+  animation-duration: 1.5s;
+  animation-fill-mode: both;
+  animation-delay: 1.5s;
+
   @media (max-width: $width-desktop) {
     padding: 41px 32px 53px;
     width: 256px;
@@ -270,5 +278,28 @@
       transform: rotate(0);
       font-size: 1.8rem;
     }
+  }
+}
+
+@keyframes fadeInRightBig {
+  0% {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
   }
 }
