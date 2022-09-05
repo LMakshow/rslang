@@ -51,9 +51,9 @@
 
 .total-stat {
   flex: 0 0 auto;
-
-  background: #05D7E2 url("./assets/images/statistics/bg-stat.jpg");
-  background-size: cover;
+  background: url("./assets/images/statistics/bg-stat.svg"), #04A6B7;
+  background-size: contain;
+  background-repeat: repeat-x;
   background-position-x: center;
   padding: 40px 0 0;
 
