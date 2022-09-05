@@ -51,8 +51,10 @@
 
 .total-stat {
   flex: 0 0 auto;
-
-  background-color: #05D7E2;
+  background: url("./assets/images/statistics/bg-stat.svg"), #04A6B7;
+  background-size: contain;
+  background-repeat: repeat-x;
+  background-position-x: center;
   padding: 40px 0 0;
 
   &__heading {
@@ -70,11 +72,6 @@
   }
 
   &__wrapper {
-
-    background: url("./assets/images/statistics/bg-stat.jpg") no-repeat;
-    background-size: cover;
-    background-position-x: center;
-
     width: 100%;
     align-items: center;
     display: flex;

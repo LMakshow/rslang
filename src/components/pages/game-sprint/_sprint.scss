@@ -16,6 +16,12 @@
   @media (max-width: $width-mobile) {
     min-height: calc(100vh - #{$header-height} - #{$footer-mobile-height});
   }
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .sprint-game {
