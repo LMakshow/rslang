@@ -52,7 +52,10 @@
 .total-stat {
   flex: 0 0 auto;
 
-  background-color: #05D7E2;
+  background: #05D7E2 url("./assets/images/statistics/bg-stat.jpg");
+  //background-image: url("./assets/images/statistics/bg-stat.jpg") no-repeat;
+  background-size: cover;
+  background-position-x: center;
   padding: 40px 0 0;
 
   &__heading {
@@ -70,11 +73,6 @@
   }
 
   &__wrapper {
-
-    background: url("./assets/images/statistics/bg-stat.jpg") no-repeat;
-    background-size: cover;
-    background-position-x: center;
-
     width: 100%;
     align-items: center;
     display: flex;

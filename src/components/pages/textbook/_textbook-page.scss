@@ -273,6 +273,7 @@
         @media (max-width: $width-desktop) {
             background: url("./assets/images/textbook/cloud-middle-right.png") right 110%, url("./assets/images/textbook/cloud-middle-left.png") left 110%, url("./assets/images/textbook/textbook-background.jpg") center;
             background-repeat: no-repeat;
+            background-size: auto, auto, cover;
         }
     
         @media (max-width: 939px) {

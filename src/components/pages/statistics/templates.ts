@@ -17,12 +17,12 @@ const templateStatistics = (userStat: Statistics) => {
     : 0;
 
   return `<div class="total-stat">
-        <div class="statistics__heading total-stat__heading">
+            <div class="statistics__heading total-stat__heading">
           <div class="total-stat__heading-wrapper wrapper">
             <span class="statistics__heading_text">Статистика</span>
           </div>
         </div>
-        <div class="total-stat__wrapper wrapper">
+            <div class="total-stat__wrapper wrapper">
           <div class="total-stat__app app-stat">
             <div class="app-stat__date">
               <div class="app-stat__date_img">
@@ -102,9 +102,8 @@ const templateStatistics = (userStat: Statistics) => {
             </div>
           </div>
         </div>
-
-      
-      <div class="daily-stat">
+          </div>
+          <div class="daily-stat">
         <div class="statistics__heading daily-stat__heading">
           <div class="daily-stat__heading-wrapper wrapper">
             <span class="statistics__subheading_text">Ежедневный прогресс</span>
@@ -112,7 +111,7 @@ const templateStatistics = (userStat: Statistics) => {
         </div>
         <div class="daily-stat__wrapper wrapper">
         <div class="daily-stat__chart"><canvas class="daily-stat__chart-canvas"></canvas></div>
-        </div>
+      </div>
       </div>`;
 };
 
