@@ -40,12 +40,14 @@ export const checkPage = () => {
   if (learnedwords.length === 20) {
     document.querySelector('.words-page__audio-img').classList.add('grayscale80');
     document.querySelector('.words-page__sprint-img').classList.add('grayscale80');
+    document.querySelector('.word-list').classList.add('learned');
     page.classList.add('learned');
     Loader.authorizedGet<Settings>(url, token).then((data: Settings) => Loader.updateLearnedPage(data, 'add'));
   }
   if (learnedwords.length < 20) {
     document.querySelector('.words-page__audio-img').classList.remove('grayscale80');
     document.querySelector('.words-page__sprint-img').classList.remove('grayscale80');
+    document.querySelector('.word-list').classList.remove('learned');
   }
   if (learnedwords.length < 20 && page.classList.contains('learned')) {
     page.classList.remove('learned');
