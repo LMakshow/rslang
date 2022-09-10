@@ -288,12 +288,12 @@ const addEventListeners: () => void = () => {
   document.addEventListener('keydown', (e) => {
     if (!gameStarted) return;
 
-    if (e.code === 'ArrowLeft') {
+    if (e.code === 'ArrowLeft' && !e.repeat) {
       clickWrong();
       newGameRound();
     }
 
-    if (e.code === 'ArrowRight') {
+    if (e.code === 'ArrowRight' && !e.repeat) {
       clickCorrect();
       newGameRound();
     }
