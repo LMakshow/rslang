@@ -59,7 +59,7 @@ const selectWordCard = () => {
   eventTargetClosest.classList.add('active');
 
   renderElement('div', wordDisplayBox(getWords()[wordId]), wordDisplay, 'word-display__box');
-  addCardButtons();
+  if (localStorage.getItem('userId')) addCardButtons();
   enableAudio(getWords()[wordId]);
 
   const buttonCardSwitchLeft: HTMLElement = document.querySelector('.word-display__btn.left');

@@ -98,6 +98,7 @@ export const addActiveCardBtns = (btnHard: HTMLButtonElement, btnLearn: HTMLButt
   addActiveBtns(word, btnHard, btnLearn);
 
   const serverWords = JSON.parse(localStorage.getItem('userWords'));
+  if (!serverWords) return;
   const recievedWord = (Array.from(serverWords) as ReceivedUserWords)
     .find((serverWord: ReceivedUserWord) => serverWord.wordId === word.dataset.word);
   if (recievedWord) updateGamesParams(recievedWord);
