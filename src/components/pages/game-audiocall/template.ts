@@ -12,7 +12,7 @@ const templateAudiocallWindow: string = `
     <div class="game-window__text-content">
       <h4 class="game-window__heading">Аудиовызов</h4>
       <p class="game-window__text game-window__text_description">Прослушайте слово и выберите правильный вариант из пяти предложенных</p>
-      <p class="game-window__note">Для управления с клавиатуры используйте клавиши&nbsp;“1”–“5”, “Пробел”&nbsp;—&nbsp;пропустить.</p>
+      <p class="game-window__note">Для управления с клавиатуры используйте клавиши&nbsp;“1”–“5”, “Пробел”&nbsp;—&nbsp;пропустить, “Shift”&nbsp;—&nbsp;прослушать.</p>
     </div>
     
     <div class="game-window__categories">
