@@ -46,11 +46,12 @@ const renderWords = (wordList: HTMLElement, words: Words) => {
 
 const renderWordList: () => void = () => {
   const wordList: HTMLElement = document.querySelector('.word-list') as HTMLElement;
-  drawWaitForServer(wordList);
+  const loading = setTimeout(drawWaitForServer, 500, wordList);
 
   if (document.querySelector('main').classList.contains('colors-hard')) {
     Loader.getAggregatedUserWords().then((data) => {
       const hardWords = parseAggregatedWords(data);
+      clearTimeout(loading);
       renderWords(wordList, hardWords);
     }).then(() => {
       if (wordList.querySelectorAll('.word-list__card').length === 0) {
@@ -66,6 +67,7 @@ const renderWordList: () => void = () => {
       group: groupNumber,
       page: getGroupPage(groupNumber),
     }).then((words: Words) => {
+      clearTimeout(loading);
       renderWords(wordList, words);
     });
   }
