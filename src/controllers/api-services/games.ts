@@ -47,26 +47,26 @@ const checkDifficultyWhenRightAnswer = (usersWord: UsersWord) => {
 const addUsersRightWordFromAudiocall = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
-      let usersWord: UsersWord = { ...wordProperties };
+      const usersWord: UsersWord = { ...wordProperties };
       const { successStreak } = { ...wordProperties }.optional;
       const diff = { ...wordProperties }.difficulty;
+      usersWord.optional.audioSuccess += 1;
+      usersWord.optional.successStreak += 1;
+      usersWord.optional.audioTotal += 1;
 
       Loader.getStatistics()
         .then((stat: Statistics) => {
           let newStat = addRightAudiocallStat(stat);
-          if ((successStreak >= 3 && diff === 'new')
-            || (successStreak >= 5 && diff === 'hard')) {
+          if ((successStreak >= 2 && diff === 'new')
+          || (successStreak >= 4 && diff === 'hard')) {
             newStat = addLearnedWordStat(newStat);
           }
           Loader.upsertStatistics(newStat);
         });
 
-      usersWord.optional.audioSuccess += 1;
-      usersWord.optional.successStreak += 1;
-      usersWord.optional.audioTotal += 1;
-      usersWord = checkDifficultyWhenRightAnswer(usersWord);
+      const newUsersWord = checkDifficultyWhenRightAnswer(usersWord);
 
-      putUserWord(_wordId, (({ id, wordId, ...rest }: UsersWord) => rest)(usersWord));
+      putUserWord(_wordId, (({ id, wordId, ...rest }: UsersWord) => rest)(newUsersWord));
     })
     .catch(() => {
       postUserWord(
@@ -138,26 +138,26 @@ const addUsersWrongWordFromAudiocall = (_wordId: string) => {
 const addUsersRightWordFromSprint = (_wordId: string) => {
   getUserWord(_wordId)
     .then((wordProperties: UsersWord) => {
-      let usersWord: UsersWord = { ...wordProperties };
+      const usersWord: UsersWord = { ...wordProperties };
       const { successStreak } = { ...wordProperties }.optional;
       const diff = { ...wordProperties }.difficulty;
+      usersWord.optional.sprintSuccess += 1;
+      usersWord.optional.sprintTotal += 1;
+      usersWord.optional.successStreak += 1;
 
       Loader.getStatistics()
         .then((stat: Statistics) => {
           let newStat = addRightSprintStat(stat);
-          if ((successStreak >= 3 && diff === 'new')
-            || (successStreak >= 5 && diff === 'hard')) {
+          if ((successStreak >= 2 && diff === 'new')
+            || (successStreak >= 4 && diff === 'hard')) {
             newStat = addLearnedWordStat(newStat);
           }
           Loader.upsertStatistics(newStat);
         });
 
-      usersWord.optional.sprintSuccess += 1;
-      usersWord.optional.sprintTotal += 1;
-      usersWord.optional.successStreak += 1;
-      usersWord = checkDifficultyWhenRightAnswer(usersWord);
+      const newUsersWord = checkDifficultyWhenRightAnswer(usersWord);
 
-      putUserWord(_wordId, (({ id, wordId, ...rest }: UsersWord) => rest)(usersWord));
+      putUserWord(_wordId, (({ id, wordId, ...rest }: UsersWord) => rest)(newUsersWord));
     })
     .catch(() => {
       postUserWord(

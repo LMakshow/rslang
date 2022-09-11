@@ -156,6 +156,7 @@
 
     @media (max-width: $width-mobile) {
       gap: 1px;
+      flex-direction: column;
     }
   }
 
@@ -285,7 +286,7 @@
 
   &__image {
     display: block;
-    width: 100%;
+    // width: 100%;
     max-width: 100%;
     max-height: 260px;
 
@@ -295,6 +296,7 @@
 
     @media (max-width: $width-mobile) {
       max-width: 300px;
+      max-height: 200px;
     }
   }
 

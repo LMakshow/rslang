@@ -31,6 +31,7 @@ import {
   ReceivedUserAggregatedWords,
 } from '../../../models/users-words.interface';
 import { parseAggregatedWords } from '../vocabulary/hard-page';
+import { drawWaitForServer } from '../../preloader/preloader';
 
 const groupNumber: number = getGroupNumber();
 
@@ -233,9 +234,13 @@ const addEventListeners: () => void = () => {
       return;
     }
 
+    const gameText: HTMLElement = document.querySelector('.game-window__text-content') as HTMLElement;
+    const loading = setTimeout(drawWaitForServer, 500, gameText);
+
     getGroupWords(+eventTargetClosest.dataset.group)
       .then(async (words: Words) => {
         await formPageWords(words);
+        clearTimeout(loading);
         startRound();
       });
   });
