@@ -19,6 +19,7 @@ import {
 } from '../../../controllers/api-services/storage';
 import Loader from '../../../controllers/loader';
 import { parseAggregatedWords } from './hard-page';
+import { drawWaitForServer } from '../../preloader/preloader';
 
 const TEXTBOOK_GROUPS: string[] = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'hard'];
 const groupNumber: number = getGroupNumber() || Number(getStorageItem('group')) || 0;
@@ -45,10 +46,12 @@ const renderWords = (wordList: HTMLElement, words: Words) => {
 
 const renderWordList: () => void = () => {
   const wordList: HTMLElement = document.querySelector('.word-list') as HTMLElement;
+  const loading = setTimeout(drawWaitForServer, 500, wordList);
 
   if (document.querySelector('main').classList.contains('colors-hard')) {
     Loader.getAggregatedUserWords().then((data) => {
       const hardWords = parseAggregatedWords(data);
+      clearTimeout(loading);
       renderWords(wordList, hardWords);
     }).then(() => {
       if (wordList.querySelectorAll('.word-list__card').length === 0) {
@@ -57,13 +60,14 @@ const renderWordList: () => void = () => {
     })
       .catch(() => {
         (document.querySelector('.vocab__container') as HTMLDivElement).style.height = '1px';
-        if (wordList.innerHTML === '') wordList.innerHTML = '<p class="word-list__message">Войдите в аккаунт для доступа к сохраненным сложным словам</p>';
+        if (wordList.innerHTML === '' || wordList.querySelector('.wait-for-server')) wordList.innerHTML = '<p class="word-list__message">Войдите в аккаунт для доступа к сохраненным сложным словам</p>';
       });
   } else {
     getWords({
       group: groupNumber,
       page: getGroupPage(groupNumber),
     }).then((words: Words) => {
+      clearTimeout(loading);
       renderWords(wordList, words);
     });
   }

@@ -7,6 +7,8 @@ import { addCardButtons } from './word-card-buttons';
 import { getStorageItem, setStorageItem } from '../../../controllers/api-services/storage';
 import { HARD_WORDS_LIMIT } from './hard-page';
 
+let audioPlays = false;
+
 const playAudio = (audio: HTMLAudioElement) => {
   audio?.play();
 };
@@ -15,6 +17,9 @@ const enableAudio = (word: Word) => {
   const buttonListen: HTMLButtonElement = document.querySelector('.btn-listen');
 
   const playAllAudio = () => {
+    if (audioPlays) return;
+    audioPlays = true;
+
     buttonListen.classList.add('active');
     buttonListen.removeEventListener('click', playAllAudio);
 
@@ -31,8 +36,10 @@ const enableAudio = (word: Word) => {
         if (arrayOfAudio[index + 1]) {
           playAudio(arrayOfAudio[index + 1]);
         } else {
-          buttonListen.classList.remove('active');
-          buttonListen.addEventListener('click', playAllAudio);
+          const newButtonListen: HTMLButtonElement = document.querySelector('.btn-listen');
+          audioPlays = false;
+          newButtonListen.classList.remove('active');
+          newButtonListen.addEventListener('click', playAllAudio);
         }
       });
     });
@@ -61,6 +68,7 @@ const selectWordCard = () => {
   renderElement('div', wordDisplayBox(getWords()[wordId]), wordDisplay, 'word-display__box');
   if (localStorage.getItem('userId')) addCardButtons();
   enableAudio(getWords()[wordId]);
+  if (audioPlays) document.querySelector('.btn-listen').classList.add('active');
 
   const buttonCardSwitchLeft: HTMLElement = document.querySelector('.word-display__btn.left');
   const buttonCardSwitchRight: HTMLElement = document.querySelector('.word-display__btn.right');

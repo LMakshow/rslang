@@ -433,12 +433,22 @@
 
   @media (max-width: $width-mobile) {
     justify-content: center;
-    column-gap: 12px;
+    column-gap: 10px;
   }
 
   &__message {
     @include font(normal, 400, 1.8rem, 2.5rem);
     padding-top: 20px;
+  }
+
+  &.learned {
+    outline: 3px dotted var(--color-dark);
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 8px;
+
+    @media (max-width: $width-mobile) {
+      outline: 2px dotted var(--color-dark);
+    }
   }
 }
 
@@ -459,12 +469,12 @@
   }
 
   @media (max-width: $width-laptop) {
-    width: 144px;
+    width: 145px;
     height: 64px;
   }
 
   &.active {
-    border: 2px solid var(--color-dark);
+    outline: 2px solid var(--color-dark);
   }
 
   &.hard {
@@ -487,7 +497,7 @@
   }
 
   &:hover {
-    border: 2px solid var(--color-dark);
+    outline: 2px solid var(--color-dark);
     cursor: pointer;
     transform: scale(1.04);
   }
@@ -975,6 +985,11 @@
 .grayscale80 {
   filter: grayscale(80%);
   pointer-events: none;
+}
+
+.word-list .wait-for-server {
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 @keyframes fadeMessage {
