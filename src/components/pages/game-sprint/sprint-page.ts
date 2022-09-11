@@ -20,6 +20,7 @@ import { addUsersRightWordFromSprint, addUsersWrongWordFromSprint } from '../../
 import Loader from '../../../controllers/loader';
 import { AggregatedWord, AggregatedWords } from '../../../models/aggregatedWords.interface';
 import { parseAggregatedWords } from '../vocabulary/hard-page';
+import { drawWaitForServer } from '../../preloader/preloader';
 
 const groupNumber: number = getGroupNumber();
 let pageNumber: number;
@@ -232,7 +233,11 @@ const addEventListeners: () => void = () => {
       return;
     }
 
+    const gameText: HTMLElement = document.querySelector('.game-window__text-content') as HTMLElement;
+    const loading = setTimeout(drawWaitForServer, 500, gameText);
+
     gameWords = await getGroupWords(+eventTargetClosest.dataset.group);
+    clearTimeout(loading);
     startGame();
   });
 
